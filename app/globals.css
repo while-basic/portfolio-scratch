@@ -77,6 +77,8 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-white;
+    color: rgb(0, 0, 0);
+    background-color: black;
   }
 }

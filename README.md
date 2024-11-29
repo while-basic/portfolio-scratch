@@ -56,9 +56,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Development Roadmap
 
-- [x] Initial setup
-- [x] Navigation bar
-- [x] Dark mode implementation
+- [-] Initial setup
+- [ ] center navlinks
+- [-] Navigation bar
+- [-] Dark mode implementation
+- [] Light mode implementation
 - [ ] About section
 - [ ] Projects section
 - [ ] Skills section
