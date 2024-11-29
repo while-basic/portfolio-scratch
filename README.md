@@ -1,4 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Christopher Celaya Portfolio
+
+A modern, responsive portfolio website built with Next.js 14, Tailwind CSS, and shadcn/ui.
+
+## Features
+
+- Dark mode support
+- Fully responsive design
+- Modern UI with gradient effects
+- Fast page loads with Next.js
+- Clean and intuitive navigation
+- Sections for showcasing:
+  - About
+  - Projects
+  - Skills
+  - Experience
+  - Gallery
+  - Chat
+  - Dashboard
+
+## Tech Stack
+
+- [Next.js 14](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Getting Started
 
@@ -16,21 +42,42 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-Built using v0.dev, shadcn/ui, and shadcn/ui-docs.
+```
+├── app/                  # Next.js app directory
+├── components/          # React components
+│   ├── ui/             # shadcn/ui components
+│   └── ...             # Custom components
+├── lib/                # Utility functions
+├── public/             # Static assets
+└── styles/             # Global styles
+```
 
-# To-Do
-- [ ] create readme
-  - [ ] about
-  - [ ] projects
-  - [ ] contact
-  - [ ] skills
-  - [ ] education
-  - [ ] audio
-  - [ ] experience
-  - [ ] gallery
-  - [ ] chat
-  - [ ] blog
-  - [ ] dashboard
-- [ ] 
+## Development Roadmap
+
+- [x] Initial setup
+- [x] Navigation bar
+- [x] Dark mode implementation
+- [ ] About section
+- [ ] Projects section
+- [ ] Skills section
+- [ ] Experience section
+- [ ] Gallery section
+- [ ] Chat functionality
+- [ ] Dashboard
+- [ ] Contact form
+- [ ] Blog integration
+- [ ] Audio portfolio
+- [ ] Education section
+
+## License
+
+MIT License
+
+## Acknowledgments
+
+Built using:
+- [v0.dev](https://v0.dev)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [shadcn/ui-docs](https://ui.shadcn.com/docs)
