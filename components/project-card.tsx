@@ -9,6 +9,7 @@ interface ProjectCardProps {
   tags: string[];
   githubUrl?: string;
   liveUrl?: string;
+  slug: string; 
 }
 
 export function ProjectCard({ 
@@ -17,7 +18,8 @@ export function ProjectCard({
   imageUrl, 
   tags,
   githubUrl,
-  liveUrl 
+  liveUrl,
+  slug
 }: ProjectCardProps) {
   const CardContent = () => (
     <div className="bg-[#111111] rounded-lg overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300">
@@ -54,6 +56,7 @@ export function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+              onClick={(e) => e.stopPropagation()} 
             >
               <FaGithub className="text-lg" />
               <span>Code</span>
@@ -65,6 +68,7 @@ export function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+              onClick={(e) => e.stopPropagation()} 
             >
               <FaExternalLinkAlt className="text-lg" />
               <span>Live Demo</span>
@@ -75,13 +79,9 @@ export function ProjectCard({
     </div>
   );
 
-  return liveUrl ? (
-    <Link href={liveUrl} target="_blank" rel="noopener noreferrer" className="group">
+  return (
+    <Link href={`/projects/${slug}`} className="group block">
       <CardContent />
     </Link>
-  ) : (
-    <div className="group">
-      <CardContent />
-    </div>
   );
 }
