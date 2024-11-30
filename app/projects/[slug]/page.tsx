@@ -10,7 +10,39 @@ import { projectData as ecotrackData } from './ecotrack';
 import { projectData as smartbudgetData } from './smartbudget';
 import { projectData as devflowData } from './devflow';
 
-const allProjectData = {
+interface ProjectDetails {
+  duration: string;
+  role: string;
+  team: string;
+  stakeholders: string[];
+}
+
+interface TechnologyStack {
+  [key: string]: string[];
+}
+
+interface Project {
+  title: string;
+  description: string;
+  introduction: string;
+  background: string;
+  useCase: string;
+  inspiration: string;
+  projectDetails: ProjectDetails;
+  technologyStack: TechnologyStack;
+  developmentProcess: string[];
+  features: string[];
+  benefits: string[];
+  challenges: string[];
+  futurePlans: string[];
+  conclusion: string;
+}
+
+interface ProjectData {
+  [key: string]: Project;
+}
+
+const allProjectData: ProjectData = {
   ...medchatData,
   ...ecotrackData,
   ...smartbudgetData,
@@ -84,7 +116,7 @@ export default function ProjectPage() {
             {Object.entries(project.technologyStack).map(([category, technologies]) => (
               <div key={category} className="mb-4">
                 <h4 className="text-lg font-semibold capitalize mb-2">{category}:</h4>
-                <List items={technologies as string[]} />
+                <List items={technologies} />
               </div>
             ))}
           </Section>

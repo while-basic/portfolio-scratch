@@ -82,6 +82,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Add resume download
 - [ ] Add social media links
 
+## Features To Be Added
+- [ ] Image generation
+- [ ] 
 ## License
 
 MIT License

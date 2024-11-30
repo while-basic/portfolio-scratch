@@ -1,4 +1,36 @@
-export const projectData = {
+interface ProjectDetails {
+  duration: string;
+  role: string;
+  team: string;
+  stakeholders: string[];
+}
+
+interface TechnologyStack {
+  [key: string]: string[];
+}
+
+interface Project {
+  title: string;
+  description: string;
+  introduction: string;
+  background: string;
+  useCase: string;
+  inspiration: string;
+  projectDetails: ProjectDetails;
+  technologyStack: TechnologyStack;
+  developmentProcess: string[];
+  features: string[];
+  benefits: string[];
+  challenges: string[];
+  futurePlans: string[];
+  conclusion: string;
+}
+
+interface ProjectData {
+  [key: string]: Project;
+}
+
+export const projectData: ProjectData = {
   'medchat': {
     title: 'MedChat',
     description: 'An AI-powered medical consultation platform that revolutionizes healthcare communication.',
