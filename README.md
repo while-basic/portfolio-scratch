@@ -68,7 +68,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Project tiles should be clickable
 - [ ] Dark mode implementation
 - [ ] Light mode implementation
-- [ ] Chat functionality
 - [-] Add case studies
 - [ ] Visitor counter
 - [ ] Contact form
@@ -85,6 +84,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Admin dashboard
 - [-] Add SEO
 - [ ] Add blog
+- [ ] Deepgram API for speech to text
 
 ## License
 

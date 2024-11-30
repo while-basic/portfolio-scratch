@@ -1,19 +1,24 @@
 import { PageLayout } from "@/components/page-layout";
+import { Chat } from "@/components/chat";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Chat | Christopher Celaya",
+  description: "Chat with Chris's AI assistant about his projects, experience, and potential collaborations.",
+};
 
 export default function ChatPage() {
   return (
     <PageLayout>
-      <div className="mb-12">
-        <h1 className="text-6xl font-bold text-white mb-4">Chat</h1>
-        <p className="text-gray-400">
-          Connect with me in real-time. Ask questions or discuss potential collaborations.
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold mb-4">Chat with Chris's Assistant</h1>
+        <p className="text-muted-foreground">
+          Feel free to ask questions about my experience, projects, or potential collaborations.
         </p>
       </div>
 
-      <div className="bg-[#1C1C1C] rounded-lg p-6">
-        <p className="text-gray-400 text-center">
-          Chat functionality coming soon...
-        </p>
+      <div className="rounded-lg border bg-card">
+        <Chat />
       </div>
     </PageLayout>
   );
