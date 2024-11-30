@@ -75,7 +75,7 @@ export default function HomePage() {
       {/* Contact Section */}
       <section className="py-20 bg-[#111111]">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-8">Let's Talk About Your Project</h2>
+          <h2 className="text-3xl font-bold mb-8">Let&apos;s Talk About Your Project</h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
             Schedule a 30-minute call to discuss your ideas and how we can work together
           </p>
