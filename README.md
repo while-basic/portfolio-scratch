@@ -65,6 +65,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Experience section
 - [-] Gallery section
 - [-] Education section
+- [ ] Project tiles should be clickable
 - [ ] Blog section
 - [ ] Audio section
 - [ ] Dark mode implementation
@@ -72,8 +73,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Chat functionality
 - [ ] Dashboard
 - [ ] Contact form
-- [ ] Add breadcrumbs
-- [ ] Add animations
+- [-] Add breadcrumbs
+- [-] Add animations
 - [ ] Add SEO
 - [ ] Add unit tests
 - [ ] Add resume download

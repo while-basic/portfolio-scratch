@@ -7,8 +7,8 @@ import { FaUser, FaCode, FaLightbulb } from "react-icons/fa";
 export default function AboutPage() {
   const skills = [
     "Python", "JavaScript", "TypeScript", "React", "Next.js",
-    "Node.js", "MongoDB", "PostgreSQL", "Docker",
-    "Git", "AWS", "Google Cloud", "Azure", "Linux",
+    "Node.js", "Express", "MongoDB", "PostgreSQL", "Docker",
+    "Git", "AWS", "Google Cloud", "Azure", "CI/CD"
   ];
 
   return (
@@ -29,12 +29,12 @@ export default function AboutPage() {
           </div>
           <div className="bg-[#111111] rounded-lg p-8 border border-white/5 shadow-xl backdrop-blur-sm">
             <p className="text-gray-400 leading-relaxed mb-6">
-              I&apos;m Christopher Celaya, a software engineer with a strong foundation in electrical engineering and industrial automation. 
+              I'm Christopher Celaya, a software engineer with a strong foundation in electrical engineering and industrial automation. 
               My journey from industrial maintenance to software development has given me a unique perspective on problem-solving and 
               system optimization.
             </p>
             <p className="text-gray-400 leading-relaxed">
-              Currently, I&apos;m focused on building modern web applications using cutting-edge technologies while maintaining my interest 
+              Currently, I'm focused on building modern web applications using cutting-edge technologies while maintaining my interest 
               in hardware integration and automation. I believe in creating efficient, scalable solutions that make a real impact.
             </p>
           </div>
