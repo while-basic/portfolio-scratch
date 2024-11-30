@@ -30,13 +30,13 @@ export default function AboutPage() {
           <div className="bg-[#111111] rounded-lg p-8 border border-white/5 shadow-xl backdrop-blur-sm">
             <div className="space-y-4 text-lg text-muted-foreground">
               <p>
-                I&apos;m a Software Engineer with a passion for building beautiful,
+                I&#39;m a Software Engineer with a passion for building beautiful,
                 functional, and user-friendly applications. I specialize in full-stack
                 development using modern technologies like React, Next.js, Node.js, and
                 various cloud platforms.
               </p>
               <p>
-                When I&apos;m not coding, you&apos;ll find me exploring new technologies,
+                When I&#39;m not coding, you&#39;ll find me exploring new technologies,
                 contributing to open-source projects, or sharing my knowledge through
                 technical writing and mentoring.
               </p>
