@@ -1,4 +1,4 @@
-const projectData = {
+export const projectData = {
   'devflow': {
     title: 'DevFlow',
     description: 'A developer productivity suite that streamlines workflow automation and project management.',

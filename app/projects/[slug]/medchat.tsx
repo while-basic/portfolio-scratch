@@ -1,4 +1,4 @@
-const projectData = {
+export const projectData = {
   'medchat': {
     title: 'MedChat',
     description: 'An AI-powered medical consultation platform that revolutionizes healthcare communication.',

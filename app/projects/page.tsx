@@ -3,7 +3,6 @@
 import { PageLayout } from "@/components/page-layout";
 import { ProjectCard } from "@/components/project-card";
 import { motion } from "framer-motion";
-import { FaCode, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
 
 interface Project {

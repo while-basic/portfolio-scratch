@@ -1,4 +1,4 @@
-const projectData = {
+export const projectData = {
   'smartbudget': {
     title: 'SmartBudget',
     description: 'An intelligent personal finance management system with ML-powered insights and predictions.',

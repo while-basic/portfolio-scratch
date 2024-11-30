@@ -1,4 +1,4 @@
-const projectData = {
+export const projectData = {
   'ecotrack': {
     title: 'EcoTrack',
     description: 'A sustainability tracking application that helps users monitor and reduce their carbon footprint.',
