@@ -23,6 +23,7 @@ module.exports = {
     const priorities = {
       '/': 1.0,
       '/projects': 0.9,
+      '/case-studies': 0.9,
       '/about': 0.8,
       '/experience': 0.8,
       '/skills': 0.7,

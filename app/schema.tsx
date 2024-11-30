@@ -44,6 +44,30 @@ export const projectsSchema = {
   "@type": "ItemList",
   "itemListElement": [
     {
+      "@type": "Article",
+      "name": "MedChat Case Study",
+      "description": "A medical large language model for personalized patient diagnosis. This case study explores the development of an AI-powered diagnostic tool.",
+      "articleSection": "Case Study",
+      "articleBody": "Healthcare professionals needed a more efficient way to provide accurate initial patient diagnoses while reducing time and effort. We developed a specialized large language model that can analyze patient symptoms and medical history to provide preliminary diagnoses.",
+      "url": "https://chriscelaya.com/case-studies#medchat"
+    },
+    {
+      "@type": "Article",
+      "name": "ChatterSync Case Study",
+      "description": "Real-time AI chatbot interaction system enabling autonomous communication between multiple AI agents.",
+      "articleSection": "Case Study",
+      "articleBody": "Creating a system that allows multiple AI chatbots to engage in meaningful dialogue without human intervention. We implemented an artificial intelligence system that enables concurrent processing of chatbot interactions.",
+      "url": "https://chriscelaya.com/case-studies#chattersync"
+    },
+    {
+      "@type": "Article",
+      "name": "Gemini Pro Vision Case Study",
+      "description": "Integration of Google's Gemini Pro API for computer vision and text-to-speech capabilities.",
+      "articleSection": "Case Study",
+      "articleBody": "Integrating Google's Gemini Pro API for real-time vision and speech capabilities in a web interface. We built a web application that leverages machine learning for visual recognition and text generation.",
+      "url": "https://chriscelaya.com/case-studies#gemini-pro-vision"
+    },
+    {
       "@type": "SoftwareApplication",
       "name": "MedChat",
       "applicationCategory": "Healthcare Application",
