@@ -64,6 +64,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Skills section
 - [-] Experience section
 - [-] Gallery section
+- [-] Education section
 - [ ] Blog section
 - [ ] Audio section
 - [ ] Dark mode implementation
@@ -71,8 +72,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Chat functionality
 - [ ] Dashboard
 - [ ] Contact form
-
-- [ ] Education section
 - [ ] Add breadcrumbs
 - [ ] Add animations
 - [ ] Add SEO

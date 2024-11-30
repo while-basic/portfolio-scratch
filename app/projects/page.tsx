@@ -1,4 +1,5 @@
 import { ProjectCard } from "@/components/project-card";
+import { PageLayout } from "@/components/page-layout";
 
 export default function ProjectsPage() {
   const projects = [
@@ -41,25 +42,23 @@ export default function ProjectsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="container mx-auto px-4 py-24">
-        <h1 className="text-6xl font-bold mb-4 text-white text-center">My Projects</h1>
-        <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          A collection of my work in industrial automation, control systems, and infrastructure
-          projects. Each project showcases technical expertise and innovative solutions.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              title={project.title}
-              description={project.description}
-              imageAlt={project.imageAlt}
-              tags={project.tags}
-            />
-          ))}
-        </div>
+    <PageLayout>
+      <h1 className="text-6xl font-bold mb-4 text-white text-center">My Projects</h1>
+      <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+        A collection of my work in industrial automation, control systems, and infrastructure
+        projects. Each project showcases technical expertise and innovative solutions.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={index}
+            title={project.title}
+            description={project.description}
+            imageAlt={project.imageAlt}
+            tags={project.tags}
+          />
+        ))}
       </div>
-    </div>
+    </PageLayout>
   );
 }
