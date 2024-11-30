@@ -12,20 +12,90 @@ const projectData = {
   'medchat': {
     title: 'MedChat',
     description: 'An AI-powered medical consultation platform',
-    fullDescription: `MedChat is a sophisticated healthcare communication platform that leverages artificial intelligence to facilitate 
-    better interactions between healthcare providers and patients. The platform includes real-time chat capabilities, automated symptom 
-    analysis, and secure medical record integration.`,
+    introduction: `MedChat revolutionizes healthcare communication by providing an intelligent, 
+    AI-driven platform that connects patients with healthcare providers while ensuring data security 
+    and efficient information exchange.`,
+    
+    background: `The healthcare industry faces ongoing challenges with patient communication and 
+    information management. MedChat was developed to address the growing need for secure, 
+    efficient, and intelligent healthcare communication solutions that can handle increasing 
+    patient loads while maintaining high-quality care.`,
+    
+    useCase: `Healthcare providers use MedChat to streamline patient communications, automate routine 
+    inquiries, and provide 24/7 basic medical guidance. Patients can securely communicate with their 
+    healthcare providers, receive automated health insights, and manage their medical information 
+    all in one platform.`,
+    
+    inspiration: `The inspiration for MedChat came from observing the communication challenges in 
+    healthcare settings, particularly during the COVID-19 pandemic. The goal was to create a solution 
+    that could help healthcare providers maintain high-quality patient care while managing increased 
+    communication loads.`,
+    
+    projectDetails: {
+      description: `MedChat uses advanced natural language processing to understand and respond to 
+      patient inquiries. The system integrates with existing healthcare records systems while 
+      maintaining strict HIPAA compliance. Real-time chat functionality is enhanced with AI-powered 
+      response suggestions for healthcare providers.`,
+      architecture: [
+        'Microservices architecture for scalability',
+        'End-to-end encryption for all communications',
+        'AI-powered response system with medical knowledge base',
+        'Real-time notification system'
+      ]
+    },
+    
+    technologyStack: {
+      frontend: ['React', 'TypeScript', 'TailwindCSS'],
+      backend: ['Node.js', 'Express', 'WebSocket'],
+      database: ['MongoDB', 'Redis'],
+      ai: ['TensorFlow', 'Natural Language Processing'],
+      cloud: ['AWS', 'Docker', 'Kubernetes']
+    },
+    
+    developmentProcess: {
+      methodology: 'Agile Scrum',
+      phases: [
+        'Initial Research and Planning',
+        'Security Architecture Design',
+        'Frontend and Backend Development',
+        'AI Model Training and Integration',
+        'Testing and HIPAA Compliance Verification',
+        'Beta Testing with Selected Healthcare Providers'
+      ]
+    },
+    
+    features: [
+      'Secure real-time chat with end-to-end encryption',
+      'AI-powered automated responses for common inquiries',
+      'Integration with electronic health records',
+      'Automated symptom analysis and triage',
+      'Secure file sharing and medical image viewing',
+      'Appointment scheduling and reminders'
+    ],
+    
+    benefits: [
+      'Reduced response time for patient inquiries',
+      'Improved patient satisfaction scores',
+      'Decreased administrative workload',
+      'Enhanced data security and HIPAA compliance',
+      'Better resource allocation for healthcare providers'
+    ],
+    
     challenges: [
-      'Implementing HIPAA-compliant data storage and transmission',
-      'Building a reliable real-time chat system',
-      'Integrating machine learning models for symptom analysis'
+      'Ensuring HIPAA compliance while maintaining system performance',
+      'Building accurate medical language understanding models',
+      'Integrating with various healthcare record systems',
+      'Maintaining high availability for critical communications'
     ],
-    solutions: [
-      'Utilized end-to-end encryption for all communications',
-      'Implemented WebSocket technology with fallback options',
-      'Developed a custom ML pipeline for medical text analysis'
+    
+    futurePlans: [
+      'Integration with telemedicine platforms',
+      'Enhanced AI capabilities for medical image analysis',
+      'Mobile application development',
+      'International language support',
+      'Integration with wearable health devices'
     ],
-    technologies: ['React', 'Node.js', 'WebSocket', 'TensorFlow', 'MongoDB'],
+    
     imageUrl: '/images/gallery/medchat.jpg',
     githubUrl: 'https://github.com/username/medchat',
     liveUrl: 'https://medchat-demo.com'
@@ -51,6 +121,21 @@ export default function ProjectPage() {
     );
   }
 
+  const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <div className="mb-12">
+      <h2 className="text-2xl font-semibold text-white mb-4">{title}</h2>
+      {children}
+    </div>
+  );
+
+  const List = ({ items }: { items: string[] }) => (
+    <ul className="list-disc list-inside space-y-2">
+      {items.map((item, index) => (
+        <li key={index} className="text-gray-400">{item}</li>
+      ))}
+    </ul>
+  );
+
   return (
     <PageLayout>
       <div className="max-w-[1200px] mx-auto px-4 py-24">
@@ -73,13 +158,13 @@ export default function ProjectPage() {
             />
           </div>
 
-          <div className="space-y-8">
-            <div>
+          <div className="space-y-12">
+            <div className="mb-8">
               <h1 className="text-4xl font-bold text-white mb-4">{project.title}</h1>
               <p className="text-xl text-gray-400">{project.description}</p>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 mb-12">
               {project.githubUrl && (
                 <Link
                   href={project.githubUrl}
@@ -104,42 +189,60 @@ export default function ProjectPage() {
               )}
             </div>
 
-            <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">Overview</h2>
-              <p className="text-gray-400 leading-relaxed">{project.fullDescription}</p>
-            </div>
+            <Section title="Introduction">
+              <p className="text-gray-400 leading-relaxed">{project.introduction}</p>
+            </Section>
 
-            <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">Challenges</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {project.challenges.map((challenge, index) => (
-                  <li key={index} className="text-gray-400">{challenge}</li>
-                ))}
-              </ul>
-            </div>
+            <Section title="Background">
+              <p className="text-gray-400 leading-relaxed">{project.background}</p>
+            </Section>
 
-            <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">Solutions</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {project.solutions.map((solution, index) => (
-                  <li key={index} className="text-gray-400">{solution}</li>
-                ))}
-              </ul>
-            </div>
+            <Section title="Use Case">
+              <p className="text-gray-400 leading-relaxed">{project.useCase}</p>
+            </Section>
 
-            <div>
-              <h2 className="text-2xl font-semibold text-white mb-4">Technologies Used</h2>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm"
-                  >
-                    {tech}
-                  </span>
+            <Section title="Inspiration">
+              <p className="text-gray-400 leading-relaxed">{project.inspiration}</p>
+            </Section>
+
+            <Section title="Project Details">
+              <p className="text-gray-400 leading-relaxed mb-4">{project.projectDetails.description}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Architecture</h3>
+              <List items={project.projectDetails.architecture} />
+            </Section>
+
+            <Section title="Technology Stack">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Object.entries(project.technologyStack).map(([category, items]) => (
+                  <div key={category}>
+                    <h3 className="text-lg font-semibold text-white mb-2 capitalize">{category}</h3>
+                    <List items={items} />
+                  </div>
                 ))}
               </div>
-            </div>
+            </Section>
+
+            <Section title="Development Process">
+              <p className="text-gray-400 mb-4">Methodology: {project.developmentProcess.methodology}</p>
+              <h3 className="text-lg font-semibold text-white mb-2">Development Phases</h3>
+              <List items={project.developmentProcess.phases} />
+            </Section>
+
+            <Section title="Features">
+              <List items={project.features} />
+            </Section>
+
+            <Section title="Benefits">
+              <List items={project.benefits} />
+            </Section>
+
+            <Section title="Challenges">
+              <List items={project.challenges} />
+            </Section>
+
+            <Section title="Future Plans">
+              <List items={project.futurePlans} />
+            </Section>
           </div>
         </motion.div>
       </div>
