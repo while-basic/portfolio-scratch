@@ -11,7 +11,7 @@ export default function ChatPage() {
   return (
     <PageLayout>
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Chat with Chris's Assistant</h1>
+        <h1 className="text-4xl font-bold mb-4">Chat with Chris&apos;s Assistant</h1>
         <p className="text-muted-foreground">
           Feel free to ask questions about my experience, projects, or potential collaborations.
         </p>

@@ -1,5 +1,5 @@
 import { Anthropic } from '@anthropic-ai/sdk';
-import { AnthropicStream, StreamingTextResponse } from 'ai';
+import { Message } from 'ai';
 import { NextResponse } from 'next/server';
 
 // Create an Anthropic client
@@ -18,25 +18,21 @@ export async function POST(req: Request) {
 
     // Create the stream
     const response = await anthropic.messages.create({
-      messages: messages.map((message: any) => ({
-        role: message.role,
+      messages: messages.map((message: Message) => ({
+        role: message.role === 'user' ? 'user' : 'assistant',
         content: message.content,
       })),
       model: 'claude-3-opus-20240229',
-      stream: true,
       max_tokens: 1024,
     });
 
-    // Convert the response into a friendly stream
-    const stream = AnthropicStream(response);
-
-    // Return the stream with the correct headers
-    return new StreamingTextResponse(stream);
+    // Return the response
+    return new NextResponse(JSON.stringify({
+      role: 'assistant',
+      content: response.content[0].type === 'text' ? response.content[0].text : '',
+    }));
   } catch (error) {
-    console.error('Error in chat API:', error);
-    return new NextResponse(
-      JSON.stringify({ error: 'Error processing your request' }),
-      { status: 500 }
-    );
+    console.error('Error in chat route:', error);
+    return new NextResponse("Error in chat route", { status: 500 });
   }
 }

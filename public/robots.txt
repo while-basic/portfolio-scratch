@@ -1,5 +1,11 @@
+# *
 User-agent: *
 Allow: /
+Disallow: /api
+Disallow: /admin
 
-# Sitemap location
+# Host
+Host: https://chriscelaya.com
+
+# Sitemaps
 Sitemap: https://chriscelaya.com/sitemap.xml

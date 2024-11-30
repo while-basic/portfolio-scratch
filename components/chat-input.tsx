@@ -10,6 +10,7 @@ interface ChatInputProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
+  error?: Error;
 }
 
 export function ChatInput({
@@ -17,6 +18,7 @@ export function ChatInput({
   handleInputChange,
   handleSubmit,
   isLoading,
+  error,
 }: ChatInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -42,6 +44,11 @@ export function ChatInput({
         <SendIcon className="h-4 w-4" />
         <span className="sr-only">Send message</span>
       </Button>
+      {error && (
+        <div className="text-sm text-red-500 mt-2">
+          Error: {error.message}
+        </div>
+      )}
     </form>
   );
 }
