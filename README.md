@@ -72,7 +72,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Light mode implementation
 - [ ] Chat functionality
 - [ ] Admin dashboard
-- [ ] Add case studies for each project page
+- [-] Add case studies
 - [ ] Visitor counter
 - [ ] Contact form
 - [-] Add breadcrumbs
