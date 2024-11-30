@@ -44,6 +44,11 @@ const Navbar = () => {
       label: "Resume",
       active: pathname === "/resume",
     },
+    {
+      href: "/chat",
+      label: "Chat",
+      active: pathname === "/chat",
+    },
     // Audio recorder page is hidden
   ]
 
