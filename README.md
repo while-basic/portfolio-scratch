@@ -61,14 +61,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Navigation bar
 - [ ] Dark mode implementation
 - [ ] Light mode implementation
-- [ ] About section
-  - [ ] update to use shadcn/ui
-- [ ] Projects section
-  - [ ] update to use shadcn/ui
+- [-] About section
+- [-] Projects section
 - [ ] Skills section
-  - [ ] update to use shadcn/ui
 - [ ] Experience section
-  - [ ] update to use shadcn/ui
 - [ ] Gallery section
 - [ ] Chat functionality
 - [ ] Dashboard
