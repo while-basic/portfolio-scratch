@@ -1,5 +1,9 @@
+'use client';
+
 import { PageLayout } from "@/components/page-layout";
 import { ExperienceCard } from "@/components/experience-card";
+import { motion } from "framer-motion";
+import { FaBriefcase } from "react-icons/fa";
 
 export default function ExperiencePage() {
   const experiences = [
@@ -75,23 +79,47 @@ export default function ExperiencePage() {
 
   return (
     <PageLayout>
-      <div className="max-w-[1200px] mx-auto">
-        <section className="mb-12">
-          <h2 className="text-2xl text-white mb-6">Profile</h2>
-          <div className="bg-[#111111] rounded-lg p-8 mb-12">
-            <p className="text-gray-400">
+      <div className="max-w-[1200px] mx-auto px-4">
+        <motion.section 
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+              <FaBriefcase className="text-blue-500 text-xl" />
+            </div>
+            <h2 className="text-3xl font-semibold text-white">Profile</h2>
+          </div>
+          <div className="bg-[#111111] rounded-lg p-8 mb-12 border border-white/5 shadow-xl backdrop-blur-sm">
+            <p className="text-gray-400 leading-relaxed">
               Results-driven and innovative technician with extensive experience in computer science. Expertise in software development and project management, 
               complemented by a strong background in preventative maintenance and industrial manufacturing. Seeking a challenging position to apply technical 
               skills toward the growth and success of a forward-thinking organization.
             </p>
           </div>
-        </section>
+        </motion.section>
 
         <section>
-          <h2 className="text-2xl text-white mb-6">Work Experience</h2>
-          {experiences.map((experience, index) => (
-            <ExperienceCard key={index} {...experience} />
-          ))}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-10 w-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+              <FaBriefcase className="text-purple-500 text-xl" />
+            </div>
+            <h2 className="text-3xl font-semibold text-white">Work Experience</h2>
+          </div>
+          <div className="space-y-6">
+            {experiences.map((experience, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <ExperienceCard {...experience} />
+              </motion.div>
+            ))}
+          </div>
         </section>
       </div>
     </PageLayout>

@@ -1,59 +1,112 @@
+'use client';
+
 import { PageLayout } from "@/components/page-layout";
+import { motion } from "framer-motion";
+import { FaUser, FaCode, FaLightbulb } from "react-icons/fa";
 
 export default function AboutPage() {
+  const skills = [
+    "Python", "JavaScript", "TypeScript", "React", "Next.js",
+    "Node.js", "MongoDB", "PostgreSQL", "Docker",
+    "Git", "AWS", "Google Cloud", "Azure", "Linux",
+  ];
+
   return (
     <PageLayout>
-      <div className="max-w-[1200px] mx-auto">
-        <div className="mb-32">
-          <h1 className="text-[80px] leading-tight font-normal text-white mb-8">
-            Software Developer &<br />
-            Mechatronic Technician
-          </h1>
-          <p className="text-lg text-gray-400 max-w-[800px]">
-            Results-driven and innovative technician with extensive experience in computer science.
-            Expertise in software development and project management, complemented by a strong
-            background in preventative maintenance and industrial manufacturing.
-          </p>
-        </div>
+      <div className="max-w-[1200px] mx-auto px-4">
+        {/* Introduction Section */}
+        <motion.section 
+          className="mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+              <FaUser className="text-blue-500 text-xl" />
+            </div>
+            <h2 className="text-3xl font-semibold text-white">About Me</h2>
+          </div>
+          <div className="bg-[#111111] rounded-lg p-8 border border-white/5 shadow-xl backdrop-blur-sm">
+            <p className="text-gray-400 leading-relaxed mb-6">
+              I'm Christopher Celaya, a software engineer with a strong foundation in electrical engineering and industrial automation. 
+              My journey from industrial maintenance to software development has given me a unique perspective on problem-solving and 
+              system optimization.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              Currently, I'm focused on building modern web applications using cutting-edge technologies while maintaining my interest 
+              in hardware integration and automation. I believe in creating efficient, scalable solutions that make a real impact.
+            </p>
+          </div>
+        </motion.section>
 
-        <section className="mb-24">
-          <h2 className="text-4xl font-normal text-white mb-6">Introduction</h2>
-          <p className="text-lg text-gray-400 max-w-[800px]">
-            I am a mechatronic technologist and software developer, where I work on industrial manufacturing equipment,
-            software, and web development. Before my obsession with technology, I was primarily focused on music
-            production. During COVID-19, I distributed my first album on streaming services such as Apple Music and Spotify. In
-            my spare time, I enjoy investing in learning new things, building web apps, and further expanding my ideas. I am
-            particularly interested in complex projects with artificial intelligence, virtual reality, industrial manufacturing, data
-            centers, and blockchain technology. If you think I can be helpful to you or your cause and would like to meet,
-            please feel free to get in touch.
-          </p>
-        </section>
+        {/* Technical Background Section */}
+        <motion.section 
+          className="mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-10 w-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+              <FaCode className="text-purple-500 text-xl" />
+            </div>
+            <h2 className="text-3xl font-semibold text-white">Technical Background</h2>
+          </div>
+          <div className="bg-[#111111] rounded-lg p-8 border border-white/5 shadow-xl backdrop-blur-sm">
+            <p className="text-gray-400 leading-relaxed mb-6">
+              With a background spanning both hardware and software, I bring a comprehensive understanding of technology 
+              to every project. My experience includes:
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3 text-gray-400">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-purple-500 flex-shrink-0" />
+                <span>Full-stack web development using modern JavaScript frameworks</span>
+              </li>
+              <li className="flex items-start gap-3 text-gray-400">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-purple-500 flex-shrink-0" />
+                <span>Industrial automation and control systems</span>
+              </li>
+              <li className="flex items-start gap-3 text-gray-400">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-purple-500 flex-shrink-0" />
+                <span>Cloud infrastructure and DevOps practices</span>
+              </li>
+              <li className="flex items-start gap-3 text-gray-400">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-purple-500 flex-shrink-0" />
+                <span>Data center operations and maintenance</span>
+              </li>
+            </ul>
+          </div>
+        </motion.section>
 
-        <section className="mb-24">
-          <h2 className="text-4xl font-normal text-white mb-6">Executive Summary</h2>
-          <p className="text-lg text-gray-400 max-w-[800px]">
-            With over 11 years of experience troubleshooting complex electromechanical systems and developing software
-            solutions, I believe I have the skills and background to excel in this position. As outlined on my attached resume, I
-            have extensive hands-on experience maintaining and repairing industrial equipment and machinery. From
-            pneumatic and hydraulic systems to PLCs and HMIs, I have worked with a wide variety of components and
-            understand how to keep production lines running smoothly. I also have experience with programming languages C,
-            Python and JavaScript and have worked on projects involving robotics, computer vision, and embedded systems. In
-            addition to my technical expertise, I am an analytical and solutions-oriented professional. Whether troubleshooting
-            sudden breakdown or planning major upgrades, I can systematically evaluate problems, weigh alternatives, and
-            implement effective solutions.
-          </p>
-        </section>
-
-        <section className="mb-24">
-          <h2 className="text-4xl font-normal text-white mb-6">Objective</h2>
-          <p className="text-lg text-gray-400 max-w-[800px]">
-            To obtain an Industrial Mechanic role that leverages my 11+ years of experience troubleshooting complex industrial
-            equipment and developing robust software solutions for manufacturing systems, instrumentation, and robotics. I
-            offer my expertise in preventative maintenance, manufacturing processes, and programming languages to improve
-            production efficiency, uptime, quality, and innovation. My goal is to utilize my skill set in automation technologies to
-            reduce downtime and drive process improvements through systemic analysis and effective implementations.
-          </p>
-        </section>
+        {/* Skills Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center">
+              <FaLightbulb className="text-green-500 text-xl" />
+            </div>
+            <h2 className="text-3xl font-semibold text-white">Skills</h2>
+          </div>
+          <div className="bg-[#111111] rounded-lg p-8 border border-white/5 shadow-xl backdrop-blur-sm">
+            <div className="flex flex-wrap gap-3">
+              {skills.map((skill, index) => (
+                <motion.span
+                  key={skill}
+                  className="px-4 py-2 rounded-full bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.5 + index * 0.05 }}
+                >
+                  {skill}
+                </motion.span>
+              ))}
+            </div>
+          </div>
+        </motion.section>
       </div>
     </PageLayout>
   );
