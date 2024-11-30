@@ -15,13 +15,41 @@ export default function GalleryPage() {
   ];
 
   const galleryItems = [
-    { title: "Data Center Operations", category: "Industrial Automation" },
-    { title: "Industrial Manufacturing", category: "Industrial Automation" },
-    { title: "MedChat", category: "Software Development" },
-    { title: "ChatterSync", category: "Software Development" },
-    { title: "Gemini Pro Vision", category: "Software Development" },
-    { title: "MIDI Saber", category: "Personal Projects" },
-    { title: "SDXL Image Generation", category: "Software Development" },
+    { 
+      title: "Data Center Operations", 
+      category: "Industrial Automation",
+      imageSrc: "/images/gallery/data-center.jpg"
+    },
+    { 
+      title: "Industrial Manufacturing", 
+      category: "Industrial Automation",
+      imageSrc: "/images/gallery/manufacturing.jpg"
+    },
+    { 
+      title: "MedChat", 
+      category: "Software Development",
+      imageSrc: "/images/gallery/medchat.jpg"
+    },
+    { 
+      title: "ChatterSync", 
+      category: "Software Development",
+      imageSrc: "/images/gallery/chattersync.jpg"
+    },
+    { 
+      title: "Gemini Pro Vision", 
+      category: "Software Development",
+      imageSrc: "/images/gallery/gemini.jpg"
+    },
+    { 
+      title: "MIDI Saber", 
+      category: "Personal Projects",
+      imageSrc: "/images/gallery/midi-saber.jpg"
+    },
+    { 
+      title: "SDXL Image Generation", 
+      category: "Software Development",
+      imageSrc: "/images/gallery/sdxl.jpg"
+    }
   ];
 
   const [activeCategory, setActiveCategory] = useState("All");
@@ -52,6 +80,11 @@ export default function GalleryPage() {
               key={index}
               title={item.title}
               imageAlt={`Image of ${item.title}`}
+              imageSrc={item.imageSrc}
+              onClick={() => {
+                // Handle click event (e.g., open modal, navigate to detail page)
+                console.log(`Clicked on ${item.title}`);
+              }}
             />
           ))}
         </div>
