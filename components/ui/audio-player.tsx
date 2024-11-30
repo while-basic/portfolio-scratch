@@ -15,6 +15,8 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const progressBarRef = useRef<HTMLDivElement>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
@@ -50,9 +52,54 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
   }
 
   const handleTimeUpdate = () => {
-    if (audioRef.current) {
+    if (audioRef.current && !isDragging) {
       setCurrentTime(audioRef.current.currentTime)
     }
+  }
+
+  const calculateTime = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (progressBarRef.current) {
+      const progressBar = progressBarRef.current
+      const rect = progressBar.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const width = rect.width
+      const percentage = x / width
+      return percentage * duration
+    }
+    return 0
+  }
+
+  const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (audioRef.current) {
+      const newTime = calculateTime(e)
+      audioRef.current.currentTime = newTime
+      setCurrentTime(newTime)
+    }
+  }
+
+  const handleProgressBarMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true)
+    handleProgressBarClick(e)
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (audioRef.current && progressBarRef.current) {
+        const newTime = calculateTime(e as unknown as React.MouseEvent<HTMLDivElement>)
+        setCurrentTime(newTime)
+      }
+    }
+
+    const handleMouseUp = (e: MouseEvent) => {
+      setIsDragging(false)
+      if (audioRef.current) {
+        const newTime = calculateTime(e as unknown as React.MouseEvent<HTMLDivElement>)
+        audioRef.current.currentTime = newTime
+      }
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
   }
 
   return (
@@ -65,10 +112,19 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
           </div>
         </div>
         
-        <div className="relative w-full h-1 bg-secondary rounded-full overflow-hidden">
+        <div 
+          ref={progressBarRef}
+          className="relative w-full h-1.5 bg-secondary/50 rounded-full overflow-hidden cursor-pointer group"
+          onClick={handleProgressBarClick}
+          onMouseDown={handleProgressBarMouseDown}
+        >
           <div 
-            className="absolute h-full bg-primary transition-all duration-100"
+            className="absolute h-full bg-primary transition-all duration-100 group-hover:bg-primary/80"
             style={{ width: `${(currentTime / duration) * 100}%` }}
+          />
+          <div 
+            className="absolute h-3 w-3 bg-primary rounded-full -top-[3px] transition-all duration-100 opacity-0 group-hover:opacity-100"
+            style={{ left: `calc(${(currentTime / duration) * 100}% - 6px)` }}
           />
         </div>
 
