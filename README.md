@@ -59,18 +59,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Initial setup
 - [-] center navlinks
 - [-] Navigation bar
-- [ ] Dark mode implementation
-- [ ] Light mode implementation
 - [-] About section
 - [-] Projects section
-- [ ] Skills section
-- [ ] Experience section
-- [ ] Gallery section
+- [-] Skills section
+- [-] Experience section
+- [-] Gallery section
+- [ ] Blog section
+- [ ] Audio section
+- [ ] Dark mode implementation
+- [ ] Light mode implementation
 - [ ] Chat functionality
 - [ ] Dashboard
 - [ ] Contact form
-- [ ] Blog integration
-- [ ] Audio portfolio
+
 - [ ] Education section
 - [ ] Add breadcrumbs
 - [ ] Add animations

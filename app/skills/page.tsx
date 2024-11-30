@@ -72,8 +72,9 @@ export default function SkillsPage() {
       <div className="container mx-auto px-4 py-24">
         <div className="flex justify-between items-start mb-16">
           <h1 className="text-6xl font-bold text-white">My<br />Skills</h1>
-          <p className="text-gray-400 max-w-md text-right">
-            Here are some of my skills where I've turned knowledge into expertise, making things happen.
+          <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+            Here&apos;s a comprehensive overview of my technical skills and proficiency levels
+            across various domains and technologies.
           </p>
         </div>
 
