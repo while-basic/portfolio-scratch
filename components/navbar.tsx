@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
 import { NavDropdown } from "./nav-dropdown"
+import { AuthButton } from "@/components/auth/auth-button"
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -76,8 +77,11 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-4">
-          <NavDropdown />
-          <ModeToggle />
+          <div className="flex items-center gap-x-2">
+            <AuthButton />
+            <ModeToggle />
+            <NavDropdown />
+          </div>
         </div>
       </div>
     </header>

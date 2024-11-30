@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { personSchema, projectsSchema } from './schema';
 import { LoadingScreen } from "@/components/loading-screen";
+import { AuthProvider } from "@/lib/auth-context";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -84,21 +86,24 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={true}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-            <LoadingScreen />
-            <Navbar />
-            <main>
-              {children}
-            </main>
-          </div>
+          <AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <LoadingScreen />
+              <Navbar />
+              <main>
+                {children}
+              </main>
+              <Toaster />
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

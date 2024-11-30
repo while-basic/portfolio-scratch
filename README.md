@@ -109,13 +109,14 @@ The workflow checks:
 - [ ] Visitor counter
 - [ ] Contact form
 - [-] Add breadcrumbs
+- [ ] Add Supabase integration
 - [-] Add animations
 - [-] Add unit tests
 - [ ] Add resume download
 - [ ] Add social media links
 - [ ] Image generation
 - [ ] Audio section
-- [ ] Chatbot
+- [-] Chatbot
 - [ ] Admin dashboard
 - [-] Add SEO
 - [-] Add blog
