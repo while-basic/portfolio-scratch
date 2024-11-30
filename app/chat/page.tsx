@@ -1,10 +1,20 @@
+import { PageLayout } from "@/components/page-layout";
+
 export default function ChatPage() {
   return (
-    <div className="container mx-auto px-4 py-24">
-      <h1 className="text-4xl font-bold mb-8">Chat</h1>
-      <div className="max-w-2xl mx-auto">
-        {/* Add chat interface here */}
+    <PageLayout>
+      <div className="mb-12">
+        <h1 className="text-6xl font-bold text-white mb-4">Chat</h1>
+        <p className="text-gray-400">
+          Connect with me in real-time. Ask questions or discuss potential collaborations.
+        </p>
       </div>
-    </div>
-  )
+
+      <div className="bg-[#1C1C1C] rounded-lg p-6">
+        <p className="text-gray-400 text-center">
+          Chat functionality coming soon...
+        </p>
+      </div>
+    </PageLayout>
+  );
 }
