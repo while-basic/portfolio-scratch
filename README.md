@@ -57,14 +57,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Development Roadmap
 
 - [-] Initial setup
-- [ ] center navlinks
+- [-] center navlinks
 - [-] Navigation bar
-- [-] Dark mode implementation
-- [] Light mode implementation
+- [ ] Dark mode implementation
+- [ ] Light mode implementation
 - [ ] About section
+  - [ ] update to use shadcn/ui
 - [ ] Projects section
+  - [ ] update to use shadcn/ui
 - [ ] Skills section
+  - [ ] update to use shadcn/ui
 - [ ] Experience section
+  - [ ] update to use shadcn/ui
 - [ ] Gallery section
 - [ ] Chat functionality
 - [ ] Dashboard
