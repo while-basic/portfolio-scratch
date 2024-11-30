@@ -1,14 +1,25 @@
-import { Metadata } from "next"
+"use client"
+
+import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { ImageCarouselModal } from "@/components/ui/image-carousel-modal"
 import Image from "next/image"
 
-export const metadata: Metadata = {
-  title: "Gallery | Christopher Celaya",
-  description: "A visual showcase of Christopher Celaya's work in software development, mechatronics, and industrial automation",
+interface GalleryItem {
+  title: string
+  category: string
+  description: string
+  imageSrc: string
+  additionalImages?: string[]
 }
 
 export default function GalleryPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null)
+
   const categories = [
     { name: "All", count: 16 },
     { name: "Software Development", count: 4 },
@@ -17,50 +28,123 @@ export default function GalleryPage() {
     { name: "Personal Projects", count: 4 },
   ];
 
-  const galleryItems = [
+  const galleryItems: GalleryItem[] = [
     { 
       title: "Data Center Operations", 
       category: "Industrial Automation",
       description: "Managing and optimizing data center infrastructure and operations",
-      imageSrc: "/images/gallery/data-center.jpg"
+      imageSrc: "/images/gallery/data-center.jpg",
+      additionalImages: [
+        "/images/gallery/data-center/1.jpg",
+        "/images/gallery/data-center/2.jpg",
+        "/images/gallery/data-center/3.jpg",
+      ]
     },
     { 
       title: "Industrial Manufacturing", 
       category: "Industrial Automation",
       description: "Automated manufacturing systems and process control",
-      imageSrc: "/images/gallery/manufacturing.jpg"
+      imageSrc: "/images/gallery/manufacturing.jpg",
+      additionalImages: [
+        "/images/gallery/manufacturing/1.jpg",
+        "/images/gallery/manufacturing/2.jpg",
+        "/images/gallery/manufacturing/3.jpg",
+      ]
     },
     { 
       title: "EcoTrack", 
       description: "Environmental monitoring dashboard for real-time data analysis",
       category: "Software Development",
-      imageSrc: "/images/gallery/ecotrack.jpg"
+      imageSrc: "/images/gallery/ecotrack.jpg",
+      additionalImages: [
+        "/images/gallery/ecotrack/1.jpg",
+        "/images/gallery/ecotrack/2.jpg",
+        "/images/gallery/ecotrack/3.jpg",
+      ]
     },
     { 
       title: "SmartBudget", 
       description: "Personal finance management application with AI insights",
       category: "Software Development",
-      imageSrc: "/images/gallery/smartbudget.jpg"
+      imageSrc: "/images/gallery/smartbudget.jpg",
+      additionalImages: [
+        "/images/gallery/smartbudget/1.jpg",
+        "/images/gallery/smartbudget/2.jpg",
+        "/images/gallery/smartbudget/3.jpg",
+      ]
     },
     { 
       title: "Gemini Pro Vision", 
       category: "Software Development",
       description: "AI-powered image analysis and generation platform",
-      imageSrc: "/images/gallery/gemini.jpg"
+      imageSrc: "/images/gallery/gemini.jpg",
+      additionalImages: [
+        "/images/gallery/gemini/1.jpg",
+        "/images/gallery/gemini/2.jpg",
+        "/images/gallery/gemini/3.jpg",
+      ]
     },
     { 
       title: "MIDI Saber", 
       category: "Personal Projects",
       description: "Interactive musical instrument using motion sensors",
-      imageSrc: "/images/gallery/midi-saber.jpg"
+      imageSrc: "/images/gallery/midi-saber.jpg",
+      additionalImages: [
+        "/images/gallery/midi-saber/1.jpg",
+        "/images/gallery/midi-saber/2.jpg",
+        "/images/gallery/midi-saber/3.jpg",
+      ]
     },
     { 
       title: "SDXL Image Generation", 
       category: "Software Development",
       description: "Advanced AI image generation using Stable Diffusion XL",
-      imageSrc: "/images/gallery/sdxl.jpg"
+      imageSrc: "/images/gallery/sdxl.jpg",
+      additionalImages: [
+        "/images/gallery/sdxl/1.jpg",
+        "/images/gallery/sdxl/2.jpg",
+        "/images/gallery/sdxl/3.jpg",
+      ]
     }
   ];
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const handleImageClick = (item: GalleryItem) => {
+    setSelectedGalleryItem(item);
+    setSelectedImageIndex(0);
+    setIsModalOpen(true);
+  };
+
+  const filteredItems = galleryItems.filter(
+    item => selectedCategory === "All" || item.category === selectedCategory
+  );
+
+  const getCarouselImages = (item: GalleryItem) => {
+    const images = [
+      {
+        src: item.imageSrc,
+        alt: item.title,
+        title: item.title,
+        description: item.description,
+      },
+    ];
+
+    if (item.additionalImages) {
+      item.additionalImages.forEach((src, index) => {
+        images.push({
+          src,
+          alt: `${item.title} - Image ${index + 2}`,
+          title: item.title,
+          description: item.description,
+        });
+      });
+    }
+
+    return images;
+  };
 
   return (
     <div className="container mx-auto px-4 pt-24 pb-8">
@@ -72,8 +156,9 @@ export default function GalleryPage() {
           {categories.map((category) => (
             <Badge
               key={category.name}
-              variant="secondary"
+              variant={selectedCategory === category.name ? "default" : "secondary"}
               className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+              onClick={() => handleCategoryClick(category.name)}
             >
               {category.name} ({category.count})
             </Badge>
@@ -83,10 +168,11 @@ export default function GalleryPage() {
 
       {/* Gallery Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {galleryItems.map((item, index) => (
+        {filteredItems.map((item, index) => (
           <Card
             key={index}
             className="overflow-hidden group cursor-pointer hover:shadow-lg transition-all duration-300"
+            onClick={() => handleImageClick(item)}
           >
             <div className="relative h-48 w-full">
               <Image
@@ -104,6 +190,16 @@ export default function GalleryPage() {
           </Card>
         ))}
       </div>
+
+      {/* Image Carousel Modal */}
+      {selectedGalleryItem && (
+        <ImageCarouselModal
+          images={getCarouselImages(selectedGalleryItem)}
+          initialIndex={selectedImageIndex}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

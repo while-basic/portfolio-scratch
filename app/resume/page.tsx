@@ -1,14 +1,10 @@
-import { Metadata } from "next"
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Download, Mail, Github, Linkedin } from "lucide-react"
 import { AudioPlayer } from "@/components/ui/audio-player"
-
-export const metadata: Metadata = {
-  title: "Resume | Christopher Celaya",
-  description: "Professional resume and qualifications of Christopher Celaya - Software Developer & Mechatronic Technician",
-}
 
 export default function ResumePage() {
   return (
