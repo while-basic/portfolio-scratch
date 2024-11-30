@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { MoreVertical, Github, Linkedin, Twitter, FileText } from 'lucide-react';
+import { Github, Linkedin, Twitter, FileText } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,10 +21,14 @@ export function NavDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="p-2 rounded-full hover:bg-white/10 transition-colors"
-          aria-label="Additional links"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          aria-label="Menu"
         >
-          <MoreVertical className="w-5 h-5 text-gray-400" />
+          <span className="text-sm font-medium text-white">menu</span>
+          <div className="flex flex-col gap-1.5">
+            <div className="w-6 h-[1px] bg-white"></div>
+            <div className="w-6 h-[1px] bg-white"></div>
+          </div>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[180px] bg-[#111111] border-white/10">

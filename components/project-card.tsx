@@ -1,28 +1,34 @@
+import Image from 'next/image';
+
 interface ProjectCardProps {
   title: string;
   description: string;
+  imageUrl?: string;
   tags: string[];
-  imageAlt: string;
 }
 
-export function ProjectCard({ title, description, tags, imageAlt }: ProjectCardProps) {
+export function ProjectCard({ title, description, imageUrl, tags }: ProjectCardProps) {
   return (
-    <div className="bg-[#2C2C2C] rounded-lg overflow-hidden">
-      <div className="aspect-video relative">
-        <img
-          src="/placeholder.jpg"
-          alt={imageAlt}
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="bg-[#111111] rounded-lg overflow-hidden border border-white/5">
+      {imageUrl && (
+        <div className="relative h-48 w-full">
+          <Image
+            src={imageUrl}
+            alt={`${title} preview`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      )}
       <div className="p-6">
         <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
         <p className="text-gray-400 mb-4">{description}</p>
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <span
-              key={index}
-              className="px-3 py-1 bg-black text-white text-sm rounded-full"
+              key={tag}
+              className="px-3 py-1 bg-white/5 text-gray-300 rounded-full text-sm"
             >
               {tag}
             </span>
