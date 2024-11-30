@@ -35,32 +35,28 @@ export function Chat() {
   }, [messages]);
 
   return (
-    <div className="flex h-[600px] flex-col space-y-4">
+    <div className="flex h-[600px] flex-col">
       <ScrollArea
         ref={scrollAreaRef}
-        className="flex-1 pr-4"
+        className="flex-1 pb-4"
       >
-        {messages.map((message) => (
-          <ChatMessage
-            key={message.id}
-            message={message}
-            isLoading={isLoading}
-          />
-        ))}
-      </ScrollArea>
-
-      {error && (
-        <div className="text-red-500 text-sm">
-          Error: {error.message}
+        <div className="flex flex-col space-y-4 p-4">
+          {messages.map((message) => (
+            <ChatMessage
+              key={message.id}
+              message={message}
+              isLoading={isLoading}
+            />
+          ))}
         </div>
-      )}
-
-      <div className="p-4">
+      </ScrollArea>
+      <div className="border-t p-4">
         <ChatInput
           input={input}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           isLoading={isLoading}
+          error={error}
         />
       </div>
     </div>
