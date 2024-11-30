@@ -1,7 +1,5 @@
-import { ExperienceCard } from "@/components/experience-card";
-import { EducationCard } from "@/components/education-card";
-import { SkillsTagCloud } from "@/components/skills-tag-cloud";
 import { PageLayout } from "@/components/page-layout";
+import { ExperienceCard } from "@/components/experience-card";
 
 export default function ExperiencePage() {
   const experiences = [
@@ -75,86 +73,27 @@ export default function ExperiencePage() {
     }
   ];
 
-  const education = [
-    {
-      school: "University of Texas at El Paso",
-      program: "Electrical Engineering",
-      status: "Attended"
-    },
-    {
-      school: "El Paso Community College",
-      program: "Electrical Engineering & Computer Science",
-      status: "Attended"
-    }
-  ];
-
-  const skills = [
-    "Python, JavaScript, Java, C, C#",
-    "HTML, CSS, React, Node.js",
-    "SQL, MongoDB, PostgreSQL",
-    "Google Cloud, Azure",
-    "Docker",
-    "Git",
-    "Preventative Maintenance",
-    "Software Development",
-    "Industrial Manufacturing",
-    "Project Management",
-    "Product Design and Prototyping",
-    "Problem-Solving",
-    "Cross-Disciplinary Knowledge"
-  ];
-
-  const certifications = [
-    "NFPA 70E - Electrical Safety",
-    "OSHA 10 - Construction Safety"
-  ];
-
   return (
     <PageLayout>
-      <div className="mb-12">
-        <h1 className="text-6xl font-bold text-white mb-4">Experience</h1>
-        <p className="text-gray-400">
-          A comprehensive overview of my professional journey and achievements.
-        </p>
-      </div>
-      <div className="space-y-8">
-        {experiences.map((experience, index) => (
-          <ExperienceCard key={index} {...experience} />
-        ))}
-      </div>
-      <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-8">Education</h2>
-        <div className="bg-[#1C1C1C] rounded-lg p-6">
-          {education.map((edu, index) => (
-            <EducationCard
-              key={index}
-              school={edu.school}
-              program={edu.program}
-              status={edu.status}
-            />
+      <div className="max-w-[1200px] mx-auto">
+        <section className="mb-12">
+          <h2 className="text-2xl text-white mb-6">Profile</h2>
+          <div className="bg-[#111111] rounded-lg p-8 mb-12">
+            <p className="text-gray-400">
+              Results-driven and innovative technician with extensive experience in computer science. Expertise in software development and project management, 
+              complemented by a strong background in preventative maintenance and industrial manufacturing. Seeking a challenging position to apply technical 
+              skills toward the growth and success of a forward-thinking organization.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl text-white mb-6">Work Experience</h2>
+          {experiences.map((experience, index) => (
+            <ExperienceCard key={index} {...experience} />
           ))}
-        </div>
-      </section>
-
-      <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-8">Skills</h2>
-        <div className="bg-[#1C1C1C] rounded-lg p-6">
-          <SkillsTagCloud skills={skills} />
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-bold text-white mb-8">Certifications</h2>
-        <div className="bg-[#1C1C1C] rounded-lg p-6">
-          <ul className="space-y-2">
-            {certifications.map((cert, index) => (
-              <li key={index} className="text-gray-300">
-                • {cert}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+        </section>
+      </div>
     </PageLayout>
   );
 }
