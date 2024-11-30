@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Download, Mail, Github, Linkedin } from "lucide-react"
 
-export default function ResumePage() {
+export function ResumeContent() {
   return (
     <div className="container mx-auto px-4 pt-24 pb-8 max-w-5xl">
       {/* Header Section */}
