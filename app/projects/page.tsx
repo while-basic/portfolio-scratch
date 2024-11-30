@@ -22,36 +22,46 @@ export default function ProjectsPage() {
       title: "Portfolio Website",
       description: "A modern portfolio website built with Next.js and Tailwind CSS, featuring animations and a clean design.",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      githubUrl: "https://github.com/username/portfolio",
-      liveUrl: "https://portfolio.com",
+      githubUrl: "https://github.com/christophercelaya/portfolio",
+      liveUrl: "https://christophercelaya.com",
       imageUrl: "/images/projects/portfolio.jpg",
       slug: "portfolio-website"
     },
     {
-      title: "AI Chat Application",
-      description: "Real-time chat application with AI-powered responses and natural language processing capabilities.",
-      tags: ["React", "Node.js", "OpenAI API", "WebSocket"],
-      githubUrl: "https://github.com/username/ai-chat",
-      liveUrl: "https://ai-chat.com",
-      imageUrl: "/images/projects/ai-chat.jpg",
-      slug: "ai-chat-application"
+      title: "MedChat",
+      description: "An AI-powered medical consultation platform that revolutionizes healthcare communication.",
+      tags: ["React", "Node.js", "OpenAI", "MongoDB", "WebSocket"],
+      githubUrl: "https://github.com/christophercelaya/medchat",
+      liveUrl: "https://medchat-demo.com",
+      imageUrl: "/images/projects/medchat.jpg",
+      slug: "medchat"
     },
     {
-      title: "Industrial IoT Dashboard",
-      description: "Dashboard for monitoring and controlling industrial equipment with real-time data visualization.",
-      tags: ["Python", "React", "MQTT", "InfluxDB"],
-      githubUrl: "https://github.com/username/iot-dashboard",
-      imageUrl: "/images/projects/iot-dashboard.jpg",
-      slug: "industrial-iot-dashboard"
+      title: "EcoTrack",
+      description: "A sustainability tracking application that helps users monitor and reduce their carbon footprint.",
+      tags: ["Vue.js", "Python", "Flask", "PostgreSQL", "D3.js"],
+      githubUrl: "https://github.com/christophercelaya/ecotrack",
+      liveUrl: "https://ecotrack-demo.com",
+      imageUrl: "/images/projects/ecotrack.jpg",
+      slug: "ecotrack"
     },
     {
-      title: "Blockchain Explorer",
-      description: "Web application for exploring and analyzing blockchain transactions and smart contracts.",
-      tags: ["Vue.js", "Web3.js", "Express", "MongoDB"],
-      githubUrl: "https://github.com/username/blockchain-explorer",
-      liveUrl: "https://block-explorer.com",
-      imageUrl: "/images/projects/blockchain.jpg",
-      slug: "blockchain-explorer"
+      title: "SmartBudget",
+      description: "An intelligent personal finance management system with ML-powered insights and predictions.",
+      tags: ["React Native", "TensorFlow.js", "Express", "MySQL", "Plaid API"],
+      githubUrl: "https://github.com/christophercelaya/smartbudget",
+      liveUrl: "https://smartbudget-app.com",
+      imageUrl: "/images/projects/smartbudget.jpg",
+      slug: "smartbudget"
+    },
+    {
+      title: "DevFlow",
+      description: "A developer productivity suite that streamlines workflow automation and project management.",
+      tags: ["Angular", "NestJS", "GraphQL", "Redis", "Docker"],
+      githubUrl: "https://github.com/christophercelaya/devflow",
+      liveUrl: "https://devflow-suite.com",
+      imageUrl: "/images/projects/devflow.jpg",
+      slug: "devflow"
     }
   ];
 
