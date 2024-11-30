@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Download, Mail, Github, Linkedin } from "lucide-react"
 import { CodeIcon, GlobeIcon, Settings2Icon, BotIcon, WrenchIcon } from "@/components/icons"
+import { AudioPlayer } from "@/components/ui/audio-player"
 
 export default function ResumePage() {
   return (
@@ -36,6 +37,18 @@ export default function ResumePage() {
             <Download className="mr-2 h-4 w-4" />
             Download PDF
           </Button>
+        </div>
+        
+        {/* Audio Players */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <AudioPlayer
+            src="/audio/cover-letter.wav"
+            title="AI Podcast | Cover Letter"
+          />
+          <AudioPlayer
+            src="/audio/resume.wav"
+            title="AI Podcast | Resume"
+          />
         </div>
       </div>
 

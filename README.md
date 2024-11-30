@@ -110,7 +110,7 @@ The workflow checks:
 - [ ] Contact form
 - [-] Add breadcrumbs
 - [-] Add animations
-- [ ] Add unit tests
+- [-] Add unit tests
 - [ ] Add resume download
 - [ ] Add social media links
 - [ ] Image generation
@@ -118,12 +118,33 @@ The workflow checks:
 - [ ] Chatbot
 - [ ] Admin dashboard
 - [-] Add SEO
-- [ ] Add blog
-- [ ] Secret audio page
+- [-] Add blog
+- [-] Secret audio page
 - [ ] Deepgram API for speech to text
-- [-] responsive
-- [ ] loading screen
+- [-] Responsive
+- [-] Loading screen
 
+## Projects
+
+- [ ] Medchat
+- [ ] Midisaber
+- [ ] Law-GPT
+- [ ] Blockchain TLD Service
+- [ ] 3D Blender Animation
+- [ ] Unreal Engine 5 Game Environment
+- [ ] Unity Game Environment
+- [ ] Amica Medical Doctor
+- [ ] Chattersync
+- [ ] Gemini Pro Vision
+- [ ] Replicate SDXL Image Generator
+- [ ] SDXL Image Generator
+- [ ] Ensemble
+- [ ] Natural Language Translator
+- [ ] Lanchain Agents
+- [ ] AI Assistant
+- [ ] Gemini Chat
+- [ ] Custom GPT
+- [ ] Groq Chat
 ## License
 
 MIT License

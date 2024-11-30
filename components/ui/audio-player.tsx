@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Play, Pause, Volume2, VolumeX } from "lucide-react"
+import { Play, Pause, Volume2, VolumeX, Download } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
 interface AudioPlayerProps {
@@ -151,6 +151,16 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
                 <VolumeX className="h-4 w-4" /> : 
                 <Volume2 className="h-4 w-4" />
               }
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <a href={src} download aria-label="Download audio">
+                <Download className="h-4 w-4" />
+              </a>
             </Button>
           </div>
         </div>
