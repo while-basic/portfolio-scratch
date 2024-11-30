@@ -7,22 +7,22 @@ export const metadata: Metadata = {
 
 const caseStudies = [
   {
-    title: "MedChat",
-    description: "A medical large language model for personalized patient diagnosis",
-    challenge: "Healthcare professionals needed a more efficient way to provide accurate initial patient diagnoses while reducing time and effort.",
-    solution: "Developed a specialized large language model that can analyze patient symptoms and medical history to provide preliminary diagnoses.",
-    impact: "Streamlined the diagnostic process and improved initial assessment accuracy.",
-    technologies: ["Large Language Models", "Machine Learning", "Healthcare APIs", "Next.js"],
-    link: "/projects/medchat"
+    title: "EcoTrack",
+    description: "Environmental monitoring platform",
+    challenge: "Creating a scalable system for real-time environmental data tracking and visualization.",
+    solution: "Developed a robust platform using React and D3.js for data visualization, with Node.js backend for real-time data processing.",
+    impact: "Enabled organizations to monitor environmental metrics in real-time and make data-driven decisions.",
+    technologies: ["React", "D3.js", "Node.js"],
+    link: "/projects/ecotrack"
   },
   {
-    title: "ChatterSync",
-    description: "Real-time AI chatbot interaction system",
-    challenge: "Creating a system that allows multiple AI chatbots to engage in meaningful dialogue without human intervention.",
-    solution: "Implemented an artificial intelligence system that enables concurrent processing of chatbot interactions.",
-    impact: "Demonstrated the possibility of autonomous AI-to-AI communication with practical applications.",
-    technologies: ["AI/ML", "Real-time Processing", "WebSocket", "Natural Language Processing"],
-    link: "/projects/chattersync"
+    title: "SmartBudget",
+    description: "AI-powered personal finance app",
+    challenge: "Building an intelligent system for personal finance management and insights.",
+    solution: "Implemented AI algorithms for expense analysis and financial recommendations.",
+    impact: "Helped users make better financial decisions through personalized insights and recommendations.",
+    technologies: ["AI/ML", "Personal Finance APIs"],
+    link: "/projects/smartbudget"
   },
   {
     title: "Gemini Pro Vision",

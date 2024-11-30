@@ -5,7 +5,6 @@ import { PageLayout } from "@/components/page-layout";
 import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
-import { projectData as medchatData } from './medchat';
 import { projectData as ecotrackData } from './ecotrack';
 import { projectData as smartbudgetData } from './smartbudget';
 import { projectData as devflowData } from './devflow';
@@ -43,7 +42,6 @@ interface ProjectData {
 }
 
 const allProjectData: ProjectData = {
-  ...medchatData,
   ...ecotrackData,
   ...smartbudgetData,
   ...devflowData

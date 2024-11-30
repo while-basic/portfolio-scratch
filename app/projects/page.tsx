@@ -26,13 +26,13 @@ export default function ProjectsPage() {
       slug: "portfolio-website"
     },
     {
-      title: "MedChat",
-      description: "An AI-powered medical consultation platform that revolutionizes healthcare communication.",
-      tags: ["React", "Node.js", "OpenAI", "MongoDB", "WebSocket"],
-      githubUrl: "https://github.com/christophercelaya/medchat",
-      liveUrl: "https://medchat-demo.com",
-      imageUrl: "/images/projects/medchat.jpg",
-      slug: "medchat"
+      title: "EcoTrack",
+      description: "Environmental monitoring and data visualization platform",
+      tags: ["React", "Node.js", "MongoDB", "D3.js"],
+      githubUrl: "https://github.com/christophercelaya/ecotrack",
+      liveUrl: "https://ecotrack-demo.com",
+      imageUrl: "/images/projects/ecotrack.jpg",
+      slug: "ecotrack"
     },
     {
       title: "EcoTrack",

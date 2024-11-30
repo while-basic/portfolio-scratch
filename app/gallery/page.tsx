@@ -26,14 +26,16 @@ export default function GalleryPage() {
       imageSrc: "/images/gallery/manufacturing.jpg"
     },
     { 
-      title: "MedChat", 
+      title: "EcoTrack", 
+      description: "Environmental monitoring dashboard",
       category: "Software Development",
-      imageSrc: "/images/gallery/medchat.jpg"
+      imageSrc: "/images/gallery/ecotrack.jpg"
     },
     { 
-      title: "ChatterSync", 
+      title: "SmartBudget", 
+      description: "Personal finance management app",
       category: "Software Development",
-      imageSrc: "/images/gallery/chattersync.jpg"
+      imageSrc: "/images/gallery/smartbudget.jpg"
     },
     { 
       title: "Gemini Pro Vision", 

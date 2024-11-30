@@ -45,19 +45,19 @@ export const projectsSchema = {
   "itemListElement": [
     {
       "@type": "Article",
-      "name": "MedChat Case Study",
-      "description": "A medical large language model for personalized patient diagnosis. This case study explores the development of an AI-powered diagnostic tool.",
+      "name": "EcoTrack Case Study",
+      "description": "Environmental monitoring and data visualization platform",
       "articleSection": "Case Study",
-      "articleBody": "Healthcare professionals needed a more efficient way to provide accurate initial patient diagnoses while reducing time and effort. We developed a specialized large language model that can analyze patient symptoms and medical history to provide preliminary diagnoses.",
-      "url": "https://chriscelaya.com/case-studies#medchat"
+      "articleBody": "Developing a platform for monitoring and visualizing environmental data. We created a system that enables real-time tracking and analysis of environmental metrics.",
+      "url": "https://chriscelaya.com/case-studies#ecotrack"
     },
     {
       "@type": "Article",
-      "name": "ChatterSync Case Study",
-      "description": "Real-time AI chatbot interaction system enabling autonomous communication between multiple AI agents.",
+      "name": "SmartBudget Case Study",
+      "description": "Personal finance management application with AI-powered insights",
       "articleSection": "Case Study",
-      "articleBody": "Creating a system that allows multiple AI chatbots to engage in meaningful dialogue without human intervention. We implemented an artificial intelligence system that enables concurrent processing of chatbot interactions.",
-      "url": "https://chriscelaya.com/case-studies#chattersync"
+      "articleBody": "Creating a personal finance management application that leverages AI for providing insights and recommendations. We developed a system that enables users to track their expenses and receive personalized financial advice.",
+      "url": "https://chriscelaya.com/case-studies#smartbudget"
     },
     {
       "@type": "Article",
@@ -69,16 +69,16 @@ export const projectsSchema = {
     },
     {
       "@type": "SoftwareApplication",
-      "name": "MedChat",
-      "applicationCategory": "Healthcare Application",
-      "description": "Medical Large Language Model for accurate and personalized patient diagnosis",
+      "name": "EcoTrack",
+      "applicationCategory": "Environmental Monitoring",
+      "description": "Environmental monitoring and data visualization platform",
       "operatingSystem": "Web Browser"
     },
     {
       "@type": "SoftwareApplication",
-      "name": "ChatterSync",
-      "applicationCategory": "Communication Software",
-      "description": "AI-powered chatbot system enabling real-time dialogue between multiple chatbots",
+      "name": "SmartBudget",
+      "applicationCategory": "Personal Finance",
+      "description": "AI-powered personal finance management application",
       "operatingSystem": "Web Browser"
     },
     {

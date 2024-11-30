@@ -34,11 +34,6 @@ const Navbar = () => {
       label: "Gallery",
       active: pathname === "/gallery",
     },
-    {
-      href: "/chat",
-      label: "Chat",
-      active: pathname === "/chat",
-    },
   ]
 
   return (
