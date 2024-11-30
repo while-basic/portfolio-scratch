@@ -15,6 +15,11 @@ const Navbar = () => {
       active: pathname === "/about",
     },
     {
+      href: "/blog",
+      label: "Blog",
+      active: pathname === "/blog",
+    },
+    {
       href: "/projects",
       label: "Projects",
       active: pathname === "/projects",
@@ -39,11 +44,7 @@ const Navbar = () => {
       label: "Resume",
       active: pathname === "/resume",
     },
-    {
-      href: "/audio",
-      label: "Audio",
-      active: pathname === "/audio",
-    },
+    // Audio recorder page is hidden
   ]
 
   return (

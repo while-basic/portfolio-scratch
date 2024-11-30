@@ -119,7 +119,10 @@ The workflow checks:
 - [ ] Admin dashboard
 - [-] Add SEO
 - [ ] Add blog
+- [ ] Secret audio page
 - [ ] Deepgram API for speech to text
+- [-] responsive
+- [ ] loading screen
 
 ## License
 

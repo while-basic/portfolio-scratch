@@ -1,8 +1,9 @@
+"use client";
+
 import { PageLayout } from "@/components/page-layout";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FaCode, FaCogs, FaServer, FaTools, FaBrain } from "react-icons/fa";
-import { SkillsScene } from "@/components/three/SkillsScene"
 
 interface SkillCategory {
   title: string;
@@ -86,17 +87,7 @@ export default function SkillsPage() {
     <PageLayout>
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         {/* 3D Skills Visualization */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Skills Integration</h2>
-          <p className="text-muted-foreground mb-6">
-            Explore how my expertise in software development, mechatronics, and audio engineering intersect
-            and complement each other. Click and drag to rotate the visualization.
-          </p>
-          <div className="bg-background/50 backdrop-blur-sm rounded-lg p-4">
-            <SkillsScene />
-          </div>
-        </div>
-
+        
         {/* Original Skills Content */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-4">Technical Skills</h1>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { personSchema, projectsSchema } from './schema';
+import { LoadingScreen } from "@/components/loading-screen";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -89,8 +90,10 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem={true}
+          disableTransitionOnChange
         >
           <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+            <LoadingScreen />
             <Navbar />
             <main>
               {children}

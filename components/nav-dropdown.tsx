@@ -1,7 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Github, Linkedin, Twitter, FileText } from 'lucide-react';
+import Link from 'next/link';
+import { Github, Linkedin, Twitter, FileText, BookOpen } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +12,36 @@ import {
 
 export function NavDropdown() {
   const menuItems = [
-    { icon: <Github className="w-4 h-4" />, label: 'GitHub', href: 'https://github.com/christophercelaya' },
-    { icon: <Linkedin className="w-4 h-4" />, label: 'LinkedIn', href: 'https://linkedin.com/in/christophercelaya' },
-    { icon: <Twitter className="w-4 h-4" />, label: 'Twitter', href: 'https://twitter.com/christophercelaya' },
-    { icon: <FileText className="w-4 h-4" />, label: 'Resume', href: '/resume.pdf' },
+    { 
+      icon: <BookOpen className="w-4 h-4" />, 
+      label: 'Blog', 
+      href: '/blog',
+      internal: true 
+    },
+    { 
+      icon: <Github className="w-4 h-4" />, 
+      label: 'GitHub', 
+      href: 'https://github.com/christophercelaya',
+      internal: false 
+    },
+    { 
+      icon: <Linkedin className="w-4 h-4" />, 
+      label: 'LinkedIn', 
+      href: 'https://linkedin.com/in/christophercelaya',
+      internal: false 
+    },
+    { 
+      icon: <Twitter className="w-4 h-4" />, 
+      label: 'Twitter', 
+      href: 'https://twitter.com/christophercelaya',
+      internal: false 
+    },
+    { 
+      icon: <FileText className="w-4 h-4" />, 
+      label: 'Resume', 
+      href: '/resume.pdf',
+      internal: true 
+    },
   ];
 
   return (
@@ -34,15 +61,25 @@ export function NavDropdown() {
       <DropdownMenuContent align="end" className="w-[180px] bg-[#111111] border-white/10">
         {menuItems.map((item) => (
           <DropdownMenuItem key={item.label} asChild>
-            <a
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white cursor-pointer"
-            >
-              {item.icon}
-              {item.label}
-            </a>
+            {item.internal ? (
+              <Link
+                href={item.href}
+                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white cursor-pointer"
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white cursor-pointer"
+              >
+                {item.icon}
+                {item.label}
+              </a>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

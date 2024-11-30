@@ -56,7 +56,7 @@ export function AudioEffectsProcessor({
   }
 
   // Create convolution reverb buffer
-  const createReverbBuffer = async () => {
+  const createReverbBuffer = useCallback(async () => {
     if (!audioContext) return null
     
     const length = audioContext.sampleRate * 2 // 2 seconds
@@ -70,7 +70,42 @@ export function AudioEffectsProcessor({
     }
     
     return impulseBuffer
+  }, [audioContext])
+
+  // Create distortion curve
+  const createDistortionCurve = (amount: number) => {
+    const samples = 44100
+    const curve = new Float32Array(samples)
+    const deg = Math.PI / 180
+
+    for (let i = 0; i < samples; ++i) {
+      const x = (i * 2) / samples - 1
+      curve[i] = ((3 + amount) * x * 20 * deg) / (Math.PI + amount * Math.abs(x))
+    }
+
+    return curve
   }
+
+  // Connect all effects in the chain
+  const connectEffectsChain = useCallback(() => {
+    if (!audioContext || !sourceNode || effects.length === 0) return
+
+    let previousNode: AudioNode = sourceNode
+
+    effects.forEach((effect) => {
+      if (!effect.bypass) {
+        previousNode.connect(effect.node)
+        previousNode = effect.node
+      }
+    })
+
+    // Connect the last effect to the destination
+    if (onProcessedNode) {
+      onProcessedNode(previousNode)
+    } else {
+      previousNode.connect(audioContext.destination)
+    }
+  }, [audioContext, sourceNode, effects, onProcessedNode])
 
   // Initialize effects chain
   const initializeEffects = useCallback(async () => {
@@ -136,42 +171,7 @@ export function AudioEffectsProcessor({
 
     // Connect the effects chain
     connectEffectsChain()
-  }, [audioContext, sourceNode])
-
-  // Create distortion curve
-  const createDistortionCurve = (amount: number) => {
-    const samples = 44100
-    const curve = new Float32Array(samples)
-    const deg = Math.PI / 180
-
-    for (let i = 0; i < samples; ++i) {
-      const x = (i * 2) / samples - 1
-      curve[i] = ((3 + amount) * x * 20 * deg) / (Math.PI + amount * Math.abs(x))
-    }
-
-    return curve
-  }
-
-  // Connect all effects in the chain
-  const connectEffectsChain = () => {
-    if (!audioContext || !sourceNode || effects.length === 0) return
-
-    let previousNode: AudioNode = sourceNode
-
-    effects.forEach((effect) => {
-      if (!effect.bypass) {
-        previousNode.connect(effect.node)
-        previousNode = effect.node
-      }
-    })
-
-    // Connect the last effect to the destination
-    if (onProcessedNode) {
-      onProcessedNode(previousNode)
-    } else {
-      previousNode.connect(audioContext.destination)
-    }
-  }
+  }, [audioContext, sourceNode, createReverbBuffer, connectEffectsChain])
 
   // Update effect parameters
   const updateEffect = (effectType: string, paramName: string, value: number) => {

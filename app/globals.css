@@ -90,3 +90,28 @@ body {
     background-color: black;
   }
 }
+
+/* Blog styles */
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mb-4 mt-0;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mt-8 mb-4;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose pre {
+  @apply bg-card p-4 rounded-lg my-4;
+}
+
+.prose code {
+  @apply text-sm font-mono;
+}
