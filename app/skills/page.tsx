@@ -1,4 +1,5 @@
 import { SkillCard } from "@/components/skill-card";
+import { PageLayout } from "@/components/page-layout";
 
 export default function SkillsPage() {
   const skillCategories = [
@@ -68,7 +69,7 @@ export default function SkillsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <PageLayout>
       <div className="container mx-auto px-4 py-24">
         <div className="flex justify-between items-start mb-16">
           <h1 className="text-6xl font-bold text-white">My<br />Skills</h1>
@@ -95,6 +96,6 @@ export default function SkillsPage() {
           </div>
         ))}
       </div>
-    </div>
+    </PageLayout>
   );
 }

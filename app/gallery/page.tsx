@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { GalleryFilter } from "@/components/gallery-filter";
 import { GalleryItem } from "@/components/gallery-item";
+import { PageLayout } from "@/components/page-layout";
 
 export default function GalleryPage() {
   const categories = [
@@ -30,7 +31,7 @@ export default function GalleryPage() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <PageLayout>
       <div className="container mx-auto px-4 py-24">
         <div className="mb-12">
           <h1 className="text-6xl font-bold text-white mb-4">Photo Gallery</h1>
@@ -55,6 +56,6 @@ export default function GalleryPage() {
           ))}
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

@@ -1,6 +1,7 @@
 import { ExperienceCard } from "@/components/experience-card";
 import { EducationCard } from "@/components/education-card";
 import { SkillsTagCloud } from "@/components/skills-tag-cloud";
+import { PageLayout } from "@/components/page-layout";
 
 export default function ExperiencePage() {
   const experiences = [
@@ -109,67 +110,51 @@ export default function ExperiencePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="container mx-auto px-4 py-24">
-        <div className="mb-16">
-          <h1 className="text-4xl font-bold text-white mb-4">Profile</h1>
-          <p className="text-gray-400 max-w-3xl">
-            Results-driven and innovative technician with extensive experience in computer science. Expertise in software development and project management,
-            complemented by a strong background in preventative maintenance and industrial manufacturing. Seeking a challenging position to apply technical
-            skills toward the growth and success of a forward-thinking organization.
-          </p>
-        </div>
-
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-8">Work Experience</h2>
-          <div>
-            {experiences.map((experience, index) => (
-              <ExperienceCard
-                key={index}
-                title={experience.title}
-                company={experience.company}
-                location={experience.location}
-                period={experience.period}
-                responsibilities={experience.responsibilities}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-8">Education</h2>
-          <div className="bg-[#1C1C1C] rounded-lg p-6">
-            {education.map((edu, index) => (
-              <EducationCard
-                key={index}
-                school={edu.school}
-                program={edu.program}
-                status={edu.status}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-8">Skills</h2>
-          <div className="bg-[#1C1C1C] rounded-lg p-6">
-            <SkillsTagCloud skills={skills} />
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold text-white mb-8">Certifications</h2>
-          <div className="bg-[#1C1C1C] rounded-lg p-6">
-            <ul className="space-y-2">
-              {certifications.map((cert, index) => (
-                <li key={index} className="text-gray-300">
-                  • {cert}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+    <PageLayout>
+      <div className="mb-12">
+        <h1 className="text-6xl font-bold text-white mb-4">Experience</h1>
+        <p className="text-gray-400">
+          A comprehensive overview of my professional journey and achievements.
+        </p>
       </div>
-    </div>
+      <div className="space-y-8">
+        {experiences.map((experience, index) => (
+          <ExperienceCard key={index} {...experience} />
+        ))}
+      </div>
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold text-white mb-8">Education</h2>
+        <div className="bg-[#1C1C1C] rounded-lg p-6">
+          {education.map((edu, index) => (
+            <EducationCard
+              key={index}
+              school={edu.school}
+              program={edu.program}
+              status={edu.status}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold text-white mb-8">Skills</h2>
+        <div className="bg-[#1C1C1C] rounded-lg p-6">
+          <SkillsTagCloud skills={skills} />
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-bold text-white mb-8">Certifications</h2>
+        <div className="bg-[#1C1C1C] rounded-lg p-6">
+          <ul className="space-y-2">
+            {certifications.map((cert, index) => (
+              <li key={index} className="text-gray-300">
+                • {cert}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </PageLayout>
   );
 }
