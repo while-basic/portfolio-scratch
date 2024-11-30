@@ -54,7 +54,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 └── styles/             # Global styles
 ```
 
-## Development Roadmap
+## Todos
 
 - [-] Initial setup
 - [-] center navlinks
@@ -68,8 +68,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Project tiles should be clickable
 - [ ] Dark mode implementation
 - [ ] Add resume page
-  - [ ] add cover letter podcast clip
-  - [ ] add resume podcast clip
+  - [-] add cover letter podcast clip
+  - [-] add resume podcast clip
 - [ ] Light mode implementation
 - [-] Add case studies
 - [ ] Visitor counter
@@ -79,8 +79,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Add unit tests
 - [ ] Add resume download
 - [ ] Add social media links
-
-## Features To Be Added
 - [ ] Image generation
 - [ ] Audio section
 - [ ] Chatbot
@@ -99,3 +97,10 @@ Built using:
 - [v0.dev](https://v0.dev)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [shadcn/ui-docs](https://ui.shadcn.com/docs)
+
+## Pushing to Git
+
+git status
+git add .
+git commit -m "update"
+git push origin main
