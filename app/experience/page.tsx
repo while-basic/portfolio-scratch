@@ -3,7 +3,7 @@
 import { PageLayout } from "@/components/page-layout";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FaBriefcase, FaBuilding, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 
 interface Experience {
   title: string;

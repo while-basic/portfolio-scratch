@@ -1,0 +1,111 @@
+"use client"
+
+import { useState, useRef, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Play, Pause, Volume2, VolumeX } from "lucide-react"
+import { Card } from "@/components/ui/card"
+
+interface AudioPlayerProps {
+  src: string
+  title: string
+}
+
+export function AudioPlayer({ src, title }: AudioPlayerProps) {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [isMuted, setIsMuted] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        setDuration(audioRef.current?.duration || 0)
+      })
+    }
+  }, [])
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause()
+      } else {
+        audioRef.current.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
+    }
+  }
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60)
+    const seconds = Math.floor(time % 60)
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime)
+    }
+  }
+
+  return (
+    <Card className="p-4 bg-black/5 dark:bg-white/5 backdrop-blur-lg border-0 shadow-lg">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-medium text-lg">{title}</h3>
+          <div className="text-sm text-muted-foreground">
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </div>
+        </div>
+        
+        <div className="relative w-full h-1 bg-secondary rounded-full overflow-hidden">
+          <div 
+            className="absolute h-full bg-primary transition-all duration-100"
+            style={{ width: `${(currentTime / duration) * 100}%` }}
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={togglePlay}
+              className="h-10 w-10 rounded-full hover:scale-105 transition-transform"
+            >
+              {isPlaying ? 
+                <Pause className="h-5 w-5" /> : 
+                <Play className="h-5 w-5 ml-1" />
+              }
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMute}
+              className="h-8 w-8 rounded-full"
+            >
+              {isMuted ? 
+                <VolumeX className="h-4 w-4" /> : 
+                <Volume2 className="h-4 w-4" />
+              }
+            </Button>
+          </div>
+        </div>
+      </div>
+      <audio
+        ref={audioRef}
+        src={src}
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={() => setIsPlaying(false)}
+        className="hidden"
+      />
+    </Card>
+  )
+}

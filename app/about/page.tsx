@@ -1,97 +1,72 @@
-'use client';
+import { Metadata } from "next"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
-import { PageLayout } from "@/components/page-layout";
-import { motion } from "framer-motion";
-import { FaUser, FaCode, FaLightbulb } from "react-icons/fa";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+export const metadata: Metadata = {
+  title: "About | Christopher Celaya",
+  description: "Learn more about Christopher Celaya and his journey in software development and technology.",
+}
 
 export default function AboutPage() {
-  const skills = [
-    "Python", "JavaScript", "TypeScript", "React", "Next.js",
-    "Node.js", "Express", "MongoDB", "PostgreSQL", "Docker",
-    "Git", "AWS", "Google Cloud", "Azure", "CI/CD"
-  ];
-
   return (
-    <PageLayout>
-      <div className="container mx-auto px-4 py-8 max-w-5xl">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">About Me</h1>
-          <p className="text-xl text-muted-foreground">Software Engineer & Full Stack Developer</p>
+    <div className="container mx-auto px-4 pt-24 pb-8">
+      <h1 className="text-4xl font-bold mb-8">About Me</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Professional Journey</h2>
+            <p className="text-muted-foreground mb-4">
+              With a unique blend of software development and industrial automation expertise, I bring a diverse perspective to technical challenges. My journey began in industrial automation, where I developed a strong foundation in electrical systems and controls.
+            </p>
+            <p className="text-muted-foreground">
+              Today, I&apos;m focused on software development, combining my hardware knowledge with modern programming practices to create innovative solutions.
+            </p>
+          </Card>
+
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Technical Philosophy</h2>
+            <p className="text-muted-foreground mb-4">
+              I believe in creating software that isn&apos;t just functional, but also maintainable and scalable. My approach combines practical industrial experience with modern development practices.
+            </p>
+            <p className="text-muted-foreground">
+              I&apos;m particularly interested in the intersection of software and hardware, exploring ways to bridge these domains to create more efficient and reliable systems.
+            </p>
+          </Card>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Main Content - Left 2 Columns */}
-          <div className="md:col-span-2 space-y-6">
-            {/* Personal Introduction */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Background</h2>
-              <Card className="p-6">
-                <p className="text-muted-foreground mb-4">
-                  I'm a Software Engineer with a passion for building beautiful,
-                  functional, and user-friendly applications. I specialize in full-stack
-                  development using modern technologies like React, Next.js, Node.js, and
-                  various cloud platforms.
-                </p>
-                <p className="text-muted-foreground">
-                  When I'm not coding, you'll find me exploring new technologies,
-                  contributing to open-source projects, or sharing my knowledge through
-                  technical writing and mentoring.
-                </p>
-              </Card>
-            </section>
-
-            {/* Technical Background */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Technical Journey</h2>
-              <Card className="p-6">
-                <p className="text-muted-foreground mb-4">
-                  With several years of experience in software development, I've worked
-                  on a diverse range of projects from web applications to automation
-                  systems. My approach combines technical expertise with a strong focus
-                  on user experience and business value.
-                </p>
-                <ul className="list-disc ml-6 space-y-2 text-muted-foreground">
-                  <li>Full-stack web development with modern frameworks</li>
-                  <li>Cloud architecture and deployment</li>
-                  <li>Performance optimization and scalability</li>
-                  <li>Team leadership and technical mentoring</li>
-                </ul>
-              </Card>
-            </section>
-          </div>
-
-          {/* Sidebar - Right Column */}
-          <div className="space-y-6">
-            {/* Quick Skills */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Core Skills</h2>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <Badge key={skill} variant="secondary">
-                    {skill}
-                  </Badge>
-                ))}
+        <div className="space-y-6">
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Core Skills</h2>
+            <div className="space-y-4">
+              <div>
+                <h3 className="font-semibold mb-2">Software Development</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">Python</Badge>
+                  <Badge variant="secondary">JavaScript</Badge>
+                  <Badge variant="secondary">React</Badge>
+                  <Badge variant="secondary">Node.js</Badge>
+                </div>
               </div>
-            </section>
+              <div>
+                <h3 className="font-semibold mb-2">Industrial Automation</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">PLC Programming</Badge>
+                  <Badge variant="secondary">HMI Design</Badge>
+                  <Badge variant="secondary">Control Systems</Badge>
+                </div>
+              </div>
+            </div>
+          </Card>
 
-            {/* Interests */}
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Interests</h2>
-              <Card className="p-6">
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>Open Source Development</li>
-                  <li>Artificial Intelligence</li>
-                  <li>Cloud Architecture</li>
-                  <li>DevOps & Automation</li>
-                  <li>Technical Writing</li>
-                </ul>
-              </Card>
-            </section>
-          </div>
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Continuous Learning</h2>
+            <p className="text-muted-foreground">
+              I&apos;m constantly exploring new technologies and methodologies, believing that the best solutions come from a combination of proven practices and innovative approaches.
+            </p>
+          </Card>
         </div>
       </div>
-    </PageLayout>
-  );
+    </div>
+  )
 }

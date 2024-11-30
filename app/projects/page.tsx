@@ -1,7 +1,5 @@
-'use client';
-
+import { Metadata } from "next"
 import { PageLayout } from "@/components/page-layout";
-import { ProjectCard } from "@/components/project-card";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +14,11 @@ interface Project {
   liveUrl?: string;
   imageUrl?: string;
   slug: string;
+}
+
+export const metadata: Metadata = {
+  title: "Projects | Christopher Celaya",
+  description: "Featured projects and portfolio work by Christopher Celaya",
 }
 
 export default function ProjectsPage() {
