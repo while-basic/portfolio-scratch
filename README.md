@@ -72,6 +72,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Blog integration
 - [ ] Audio portfolio
 - [ ] Education section
+- [ ] Add breadcrumbs
+- [ ] Add animations
+- [ ] Add SEO
+- [ ] Add unit tests
+- [ ] Add resume download
+- [ ] Add social media links
 
 ## License
 
