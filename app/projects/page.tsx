@@ -1,4 +1,4 @@
-import { ProjectCard } from "@/components/project-card";
+Cimport { ProjectCard } from "@/components/project-card";
 
 export default function ProjectsPage() {
   const projects = [
