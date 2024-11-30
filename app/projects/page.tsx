@@ -1,4 +1,4 @@
-Cimport { ProjectCard } from "@/components/project-card";
+import { ProjectCard } from "@/components/project-card";
 
 export default function ProjectsPage() {
   const projects = [
@@ -54,8 +54,8 @@ export default function ProjectsPage() {
               key={index}
               title={project.title}
               description={project.description}
-              tags={project.tags}
               imageAlt={project.imageAlt}
+              tags={project.tags}
             />
           ))}
         </div>
