@@ -1,17 +1,27 @@
 'use client';
 
 import { PageLayout } from "@/components/page-layout";
-import { ExperienceCard } from "@/components/experience-card";
-import { motion } from "framer-motion";
-import { FaBriefcase } from "react-icons/fa";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { FaBriefcase, FaBuilding, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+
+interface Experience {
+  title: string;
+  company: string;
+  location: string;
+  period: string;
+  responsibilities: string[];
+  technologies?: string[];
+}
 
 export default function ExperiencePage() {
-  const experiences = [
+  const experiences: Experience[] = [
     {
       title: "Data Center Technician II",
       company: "T5 Data Centers",
       location: "San Antonio, Texas",
       period: "2021-2022",
+      technologies: ["CMMS", "Data Center Infrastructure", "Critical Systems", "Preventive Maintenance"],
       responsibilities: [
         "Maintain and operate both critical and non-critical data center infrastructure, equipment, and systems",
         "Collaborate with a team of Critical Facilities Technician (CFT) to ensure total availability (100% uptime) while minimizing risks",
@@ -26,6 +36,7 @@ export default function ExperiencePage() {
       company: "CN Wire",
       location: "Santa Teresa, New Mexico",
       period: "2018-2021",
+      technologies: ["PLC", "HMI", "Industrial IoT", "Electrical Systems", "Automation"],
       responsibilities: [
         "Troubleshoot, maintain, and perform repairs and installations on factory equipment",
         "Interpret diagrams, schematics, and electrical code specification",
@@ -41,12 +52,13 @@ export default function ExperiencePage() {
       company: "Schneider Electric",
       location: "El Paso, Texas",
       period: "2016-2017",
+      technologies: ["Quality Control", "Electrical Systems", "Technical Documentation"],
       responsibilities: [
         "Troubleshoot electrical and electromechanical operations",
         "Interpret point-to-point diagrams, bill of materials, and wiring schematics",
         "Collaborate with engineering and assembly teams to resolve problems",
-        "Use various tools and software for ground fault detection",
-        "Oversee testing and assembly of low voltage electronic products for clients"
+        "Ensure quality standards are met through thorough testing and documentation",
+        "Maintain detailed records of quality control processes and outcomes"
       ]
     },
     {
@@ -79,48 +91,93 @@ export default function ExperiencePage() {
 
   return (
     <PageLayout>
-      <div className="max-w-[1200px] mx-auto px-4">
-        <motion.section 
-          className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
-              <FaBriefcase className="text-blue-500 text-xl" />
-            </div>
-            <h2 className="text-3xl font-semibold text-white">Profile</h2>
-          </div>
-          <div className="bg-[#111111] rounded-lg p-8 mb-12 border border-white/5 shadow-xl backdrop-blur-sm">
-            <p className="text-gray-400 leading-relaxed">
-              Results-driven and innovative technician with extensive experience in computer science. Expertise in software development and project management, 
-              complemented by a strong background in preventative maintenance and industrial manufacturing. Seeking a challenging position to apply technical 
-              skills toward the growth and success of a forward-thinking organization.
-            </p>
-          </div>
-        </motion.section>
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-4">Professional Experience</h1>
+          <p className="text-xl text-muted-foreground">
+            My journey through industrial automation and software development
+          </p>
+        </div>
 
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-10 w-10 rounded-full bg-purple-500/10 flex items-center justify-center">
-              <FaBriefcase className="text-purple-500 text-xl" />
+        <div className="space-y-8">
+          {experiences.map((experience, index) => (
+            <Card key={index} className="p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                <div>
+                  <h2 className="text-2xl font-semibold mb-2">{experience.title}</h2>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-muted-foreground">
+                      <FaBuilding className="mr-2" />
+                      {experience.company}
+                    </div>
+                    <div className="flex items-center text-muted-foreground">
+                      <FaMapMarkerAlt className="mr-2" />
+                      {experience.location}
+                    </div>
+                    <div className="flex items-center text-muted-foreground">
+                      <FaCalendarAlt className="mr-2" />
+                      {experience.period}
+                    </div>
+                  </div>
+                </div>
+                
+                {experience.technologies && (
+                  <div className="mt-4 md:mt-0">
+                    <div className="flex flex-wrap gap-2">
+                      {experience.technologies.map((tech) => (
+                        <Badge key={tech} variant="secondary">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6">
+                <h3 className="text-lg font-semibold mb-3">Key Responsibilities</h3>
+                <ul className="space-y-2">
+                  {experience.responsibilities.map((responsibility, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="mr-2 mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                      <span className="text-muted-foreground">{responsibility}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Skills Gained Section */}
+        <div className="mt-12">
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Key Skills Developed</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-medium mb-3">Technical Skills</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">Industrial Automation</Badge>
+                  <Badge variant="secondary">PLC Programming</Badge>
+                  <Badge variant="secondary">SCADA Systems</Badge>
+                  <Badge variant="secondary">Electrical Systems</Badge>
+                  <Badge variant="secondary">Preventive Maintenance</Badge>
+                  <Badge variant="secondary">Technical Documentation</Badge>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium mb-3">Soft Skills</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">Project Management</Badge>
+                  <Badge variant="secondary">Team Collaboration</Badge>
+                  <Badge variant="secondary">Problem Solving</Badge>
+                  <Badge variant="secondary">Quality Assurance</Badge>
+                  <Badge variant="secondary">Safety Compliance</Badge>
+                </div>
+              </div>
             </div>
-            <h2 className="text-3xl font-semibold text-white">Work Experience</h2>
-          </div>
-          <div className="space-y-6">
-            {experiences.map((experience, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <ExperienceCard {...experience} />
-              </motion.div>
-            ))}
-          </div>
-        </section>
+          </Card>
+        </div>
       </div>
     </PageLayout>
   );

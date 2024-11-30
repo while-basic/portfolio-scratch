@@ -30,6 +30,11 @@ const Navbar = () => {
       active: pathname === "/experience",
     },
     {
+      href: "/resume",
+      label: "Resume",
+      active: pathname === "/resume",
+    },
+    {
       href: "/gallery",
       label: "Gallery",
       active: pathname === "/gallery",

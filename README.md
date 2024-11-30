@@ -67,6 +67,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Education section
 - [-] Project tiles should be clickable
 - [ ] Dark mode implementation
+- [ ] Add resume page
+  - [ ] add cover letter podcast clip
+  - [ ] add resume podcast clip
 - [ ] Light mode implementation
 - [-] Add case studies
 - [ ] Visitor counter
