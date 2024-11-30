@@ -28,15 +28,19 @@ export default function AboutPage() {
             <h2 className="text-3xl font-semibold text-white">About Me</h2>
           </div>
           <div className="bg-[#111111] rounded-lg p-8 border border-white/5 shadow-xl backdrop-blur-sm">
-            <p className="text-gray-400 leading-relaxed mb-6">
-              I'm Christopher Celaya, a software engineer with a strong foundation in electrical engineering and industrial automation. 
-              My journey from industrial maintenance to software development has given me a unique perspective on problem-solving and 
-              system optimization.
-            </p>
-            <p className="text-gray-400 leading-relaxed">
-              Currently, I'm focused on building modern web applications using cutting-edge technologies while maintaining my interest 
-              in hardware integration and automation. I believe in creating efficient, scalable solutions that make a real impact.
-            </p>
+            <div className="space-y-4 text-lg text-muted-foreground">
+              <p>
+                I&apos;m a Software Engineer with a passion for building beautiful,
+                functional, and user-friendly applications. I specialize in full-stack
+                development using modern technologies like React, Next.js, Node.js, and
+                various cloud platforms.
+              </p>
+              <p>
+                When I&apos;m not coding, you&apos;ll find me exploring new technologies,
+                contributing to open-source projects, or sharing my knowledge through
+                technical writing and mentoring.
+              </p>
+            </div>
           </div>
         </motion.section>
 

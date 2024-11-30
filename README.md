@@ -71,7 +71,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Dark mode implementation
 - [ ] Light mode implementation
 - [ ] Chat functionality
-- [ ] Dashboard
+- [ ] Admin dashboard
+- [ ] Visitor counter
 - [ ] Contact form
 - [-] Add breadcrumbs
 - [-] Add animations
