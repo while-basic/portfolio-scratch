@@ -65,26 +65,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [-] Experience section
 - [-] Gallery section
 - [-] Education section
-- [ ] Project tiles should be clickable
-- [ ] Blog section
-- [ ] Audio section
+- [-] Project tiles should be clickable
 - [ ] Dark mode implementation
 - [ ] Light mode implementation
 - [ ] Chat functionality
-- [ ] Admin dashboard
 - [-] Add case studies
 - [ ] Visitor counter
 - [ ] Contact form
 - [-] Add breadcrumbs
 - [-] Add animations
-- [ ] Add SEO
 - [ ] Add unit tests
 - [ ] Add resume download
 - [ ] Add social media links
 
 ## Features To Be Added
 - [ ] Image generation
-- [ ] 
+- [ ] Audio section
+- [ ] Chatbot
+- [ ] Admin dashboard
+- [-] Add SEO
+- [ ] Add blog
+
 ## License
 
 MIT License
