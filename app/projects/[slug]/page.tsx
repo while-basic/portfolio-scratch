@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { PageLayout } from "@/components/page-layout";
 import { motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import { projectData as medchatData } from './medchat';
 import { projectData as ecotrackData } from './ecotrack';

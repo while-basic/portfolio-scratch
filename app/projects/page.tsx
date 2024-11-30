@@ -3,7 +3,6 @@
 import { PageLayout } from "@/components/page-layout";
 import { ProjectCard } from "@/components/project-card";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 interface Project {
   title: string;
