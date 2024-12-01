@@ -42,15 +42,16 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             </AvatarFallback>
           </Avatar>
           <div 
+            style={{
+              backgroundColor: message.role === "assistant" ? "#1a1a1a" : "#ffffff",
+              color: message.role === "assistant" ? "#ffffff" : "#000000"
+            }}
             className={cn(
               "flex-1 overflow-hidden rounded-2xl px-4 py-2 transition-colors",
-              message.role === "assistant" 
-                ? "bg-muted text-muted-foreground" 
-                : "bg-primary text-primary-foreground",
               "shadow-sm hover:shadow-md transition-shadow duration-200"
             )}
           >
-            <div className="prose prose-sm dark:prose-invert break-words">
+            <div style={{ color: "inherit" }} className="prose prose-sm break-words">
               {message.content}
             </div>
           </div>

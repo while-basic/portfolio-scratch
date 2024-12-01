@@ -36,9 +36,9 @@ export default function GalleryPage() {
       description: "Managing and optimizing electrical panels",
       imageSrc: "/public/images/electrical/dist1.jpg",
       additionalImages: [
-        "/images/gallery/data-center/1.jpg",
-        "/images/gallery/data-center/2.jpg",
-        "/images/gallery/data-center/3.jpg",
+        "/images/gallery/electrical/dist1.jpg",
+        "/images/gallery/electrical/dist2.jpg",
+        "/images/gallery/electrical/dist3.jpg",
       ]
     },
     { 
