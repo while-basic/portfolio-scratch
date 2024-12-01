@@ -13,11 +13,12 @@ export function WorkCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const works: WorkItem[] = [
-    { title: "Featured work 1", image: "/work1.jpg", link: "#" },
-    { title: "Featured work 2", image: "/work2.jpg", link: "#" },
-    { title: "Featured work 3", image: "/work3.jpg", link: "#" },
-    { title: "Featured work 4", image: "/work4.jpg", link: "#" },
-    { title: "Featured work 5", image: "/work5.jpg", link: "#" },
+    { title: "Featured work 1", image: "/images/electrical/dist1.jpg", link: "#" },
+    { title: "Featured work 1", image: "/images/electrical/dist2.jpg", link: "#" },
+    { title: "Featured work 1", image: "/images/electrical/dist3.jpg", link: "#" },
+    { title: "Featured work 1", image: "/images/electrical/dist4.jpg", link: "#" },
+    { title: "Featured work 1", image: "/images/electrical/dist5.jpg", link: "#" },    
+    { title: "Featured work 1", image: "/images/electrical/dist6.jpg", link: "#" },
   ];
 
   const nextSlide = () => {

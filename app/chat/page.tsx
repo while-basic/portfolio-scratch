@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/chat/sidebar"
 import { useEffect, useState } from "react"
 import { getConversations, createConversation, updateConversation, Conversation } from "@/lib/chat"
 import { Message } from "@/components/chat/message-list"
+import { cn } from "@/lib/utils"
 
 export default function ChatPage() {
   const { user, loading } = useAuth()
@@ -19,6 +20,19 @@ export default function ChatPage() {
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null)
 
+  const loadConversations = async () => {
+    try {
+      if (!user?.id) return
+      const data = await getConversations(user.id)
+      setConversations(data)
+    } catch (error: unknown) {
+      console.error('Error loading conversations:', error)
+      if (error instanceof Error && error.message === 'Not authenticated') {
+        setShowAuthDialog(true)
+      }
+    }
+  }
+
   useEffect(() => {
     if (!loading && !user) {
       setShowAuthDialog(true)
@@ -26,20 +40,13 @@ export default function ChatPage() {
     if (user) {
       loadConversations()
     }
-  }, [user, loading])
-
-  const loadConversations = async () => {
-    try {
-      if (!user?.id) return
-      const data = await getConversations(user.id)
-      setConversations(data)
-    } catch (error) {
-      console.error('Error loading conversations:', error)
-    }
-  }
+  }, [user, loading, loadConversations])
 
   const handleNewMessage = async (messages: Message[]) => {
-    if (!user?.id) return
+    if (!user?.id) {
+      setShowAuthDialog(true)
+      return
+    }
 
     try {
       if (!currentConversation) {
@@ -56,9 +63,22 @@ export default function ChatPage() {
           prev.map(conv => conv.id === updatedConversation.id ? updatedConversation : conv)
         )
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error saving conversation:', error)
+      if (error instanceof Error && error.message === 'Not authenticated') {
+        setShowAuthDialog(true)
+      }
     }
+  }
+
+  const handleNewConversation = () => {
+    console.log('handleNewConversation called');
+    setCurrentConversation(null);
+    console.log('currentConversation set to null');
+    setConversations(prev => {
+      console.log('updating conversations');
+      return [...prev.filter(conv => conv.id !== undefined)];
+    });
   }
 
   return (
@@ -75,24 +95,29 @@ export default function ChatPage() {
         <Button 
           variant="outline"
           size="icon"
+          className="md:hidden"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           <Menu className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-1 overflow-hidden">
-        {showSidebar && (
-          <div className="flex-shrink-0">
-            <Sidebar 
-              conversations={conversations}
-              currentConversation={currentConversation}
-              onSelectConversation={setCurrentConversation}
-            />
-          </div>
-        )}
-        <main className="flex-1 overflow-auto">
-          <div className="container h-full py-4">
+        <div className={cn(
+          "md:w-64 border-r bg-background",
+          showSidebar ? "w-64" : "hidden",
+          "md:block"
+        )}>
+          <Sidebar 
+            conversations={conversations}
+            currentConversation={currentConversation}
+            onSelectConversation={setCurrentConversation}
+            onNewConversation={handleNewConversation}
+          />
+        </div>
+        <main className="flex-1 overflow-hidden">
+          <div className="container max-w-4xl mx-auto h-full p-4">
             <ChatInterface 
+              key={currentConversation ? currentConversation.id : 'new'}
               conversation={currentConversation}
               onNewMessage={handleNewMessage}
             />

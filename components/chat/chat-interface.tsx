@@ -4,6 +4,9 @@ import { Conversation } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { MessageSquare } from "lucide-react"
 
 interface ChatInterfaceProps {
   conversation: Conversation | null
@@ -16,12 +19,13 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
 
+  // Reset state when conversation changes
   useEffect(() => {
-    if (conversation) {
-      setMessages(conversation.messages || [])
-    } else {
-      setMessages([])
-    }
+    console.log('ChatInterface: conversation changed', { conversation });
+    setMessages(conversation?.messages || [])
+    setInputValue('')
+    setIsLoading(false)
+    console.log('ChatInterface: states reset');
   }, [conversation])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,11 +58,12 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         }),
       })
 
-      const data = await response.json()
-
       if (!response.ok) {
+        const data = await response.json()
         throw new Error(data.message || 'Failed to get response')
       }
+
+      const data = await response.json()
 
       // Add AI response to messages
       const assistantMessage: Message = {
@@ -82,17 +87,33 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-auto p-4">
-        <MessageList messages={messages} isLoading={isLoading} />
-      </div>
-      <form onSubmit={handleSubmit} className="p-4 border-t bg-background">
-        <div className="flex flex-col gap-2">
+    <Card className="flex flex-col h-[calc(100vh-8rem)] border rounded-xl shadow-lg">
+      <CardContent className="flex-1 p-0">
+        <ScrollArea className="h-full">
+          <div className="p-4">
+            {!conversation && messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-[calc(100vh-16rem)] text-center space-y-4">
+                <MessageSquare className="h-12 w-12 text-muted-foreground" />
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">Start a New Chat</h3>
+                  <p className="text-sm text-muted-foreground max-w-sm">
+                    Begin your conversation by typing a message below.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <MessageList messages={messages} isLoading={isLoading} />
+            )}
+          </div>
+        </ScrollArea>
+      </CardContent>
+      <CardFooter className="p-4 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <form onSubmit={handleSubmit} className="w-full space-y-2">
           <Textarea
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Type your message..."
-            className="min-h-[80px]"
+            placeholder={!conversation ? "Type your message to start a new chat..." : "Type your message..."}
+            className="min-h-[80px] max-h-[200px] resize-none focus-visible:ring-1"
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
@@ -100,15 +121,17 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
               }
             }}
           />
-          <Button 
-            type="submit" 
-            disabled={isLoading || !inputValue.trim()}
-            className="self-end"
-          >
-            {isLoading ? 'Sending...' : 'Send'}
-          </Button>
-        </div>
-      </form>
-    </div>
+          <div className="flex justify-end">
+            <Button 
+              type="submit" 
+              disabled={isLoading || !inputValue.trim()}
+              className="w-24"
+            >
+              {isLoading ? "Sending..." : "Send"}
+            </Button>
+          </div>
+        </form>
+      </CardFooter>
+    </Card>
   )
 }

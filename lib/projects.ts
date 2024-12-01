@@ -18,7 +18,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "An AI-powered chatbot designed to assist medical professionals with real-time diagnosis and medical literature recommendations.",
       tags: ["Next.js", "Node.js", "Supabase", "Llama2"],
       githubUrl: "https://github.com/while-basic/medchat",
-      liveUrl: "https://medchat.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/medchat.png",
       slug: "medchat"
     },
@@ -27,7 +27,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A unique music production tool leveraging motion-controlled MIDI interfaces.",
       tags: ["Novation Launchpad", "MIDI", "C++", "JavaScript, Node.js"],
       githubUrl: "https://github.com/while-basic/midisaber",
-      liveUrl: "https://midisaber.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/midi-saber.png",
       slug: "midisaber"
     },
@@ -36,7 +36,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A GPT-based legal assistant providing case law summaries, legal precedent analysis, and document drafting.",
       tags: ["OpenAI", "LangChain", "Next.js"],
       githubUrl: "https://github.com/christophercelaya/law-gpt",
-      liveUrl: "https://lawgpt.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/lawgpt.jpg",
       slug: "law-gpt"
     },
@@ -45,7 +45,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A blockchain-based platform for managing custom top-level domains (TLDs).",
       tags: ["Ethereum", "Solidity", "React"],
       githubUrl: "https://github.com/christophercelaya/blockchain-tld",
-      liveUrl: "https://blockchaintlds.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/top-level.png",
       slug: "blockchain-tld"
     },
@@ -126,7 +126,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "An AI-powered translator capable of understanding and translating natural language text with high accuracy.",
       tags: ["Transformers", "Hugging Face", "Next.js"],
       githubUrl: "https://github.com/christophercelaya/nl-translator",
-      liveUrl: "https://nl-translator.com",
+      liveUrl: "https://ai-code-translator-pied-zeta.vercel.app",
       imageUrl: "/images/projects/nl-translator.jpg",
       slug: "natural-language-translator"
     },
