@@ -120,7 +120,7 @@ The workflow checks:
 - [ ] Audio section
 - [-] Chatbot for users signed in
 - [ ] Admin dashboard
-  - [ ] Total visitors
+  - [-] Total visitors
   - [ ] Total messages
   - [ ] Total users
   - [ ] Chat history

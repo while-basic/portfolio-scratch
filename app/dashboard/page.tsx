@@ -4,6 +4,7 @@ import { WelcomeDialog } from "@/components/welcome-dialog"
 import { Card } from "@/components/ui/card"
 import { useAuth } from "@/lib/auth-context"
 import { ProtectedRoute } from "@/components/auth/protected-route"
+import { VisitorCounter } from "@/components/visitor-counter"
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -31,13 +32,8 @@ export default function DashboardPage() {
             </p>
           </Card>
 
-          {/* Quick Actions Card */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-2">Quick Actions</h2>
-            <p className="text-muted-foreground">
-              Access frequently used features and settings.
-            </p>
-          </Card>
+          {/* Visitor Counter */}
+          <VisitorCounter />
         </div>
 
         {/* Statistics Section */}

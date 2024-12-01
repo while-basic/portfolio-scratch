@@ -49,8 +49,9 @@ const allProjectData: ProjectData = {
 
 export default function ProjectPage() {
   const params = useParams();
-  const slug = typeof params.slug === 'string' ? params.slug : '';
-  const project = allProjectData[slug];
+  const slug = params?.slug;
+  const projectSlug = Array.isArray(slug) ? slug[0] : slug || '';
+  const project = allProjectData[projectSlug];
 
   if (!project) {
     return (

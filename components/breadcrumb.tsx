@@ -6,7 +6,7 @@ import { ChevronRight } from "lucide-react";
 
 export function Breadcrumb() {
   const pathname = usePathname();
-  const segments = pathname
+  const segments = (pathname || '')
     .split("/")
     .filter((segment) => segment !== "")
     .map((segment) => ({
