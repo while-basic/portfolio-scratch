@@ -29,7 +29,7 @@ export default function ProjectsPage() {
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
       githubUrl: "https://github.com/christophercelaya/portfolio",
       liveUrl: "https://christophercelaya.com",
-      imageUrl: "/images/projects/portfolio.jpg",
+      imageUrl: "/images/projects/portfolio.webp",
       slug: "portfolio-website"
     },
     {

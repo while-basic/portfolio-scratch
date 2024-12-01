@@ -1,18 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Bot } from "lucide-react"
 import Link from "next/link"
 import { MessageList, type Message } from "@/components/chat/message-list"
 import { ChatInput } from "@/components/chat/chat-input"
 import { motion, AnimatePresence } from "framer-motion"
+import { useAuth } from "@/lib/auth-context"
+import { AuthDialog } from "@/components/chat/auth-dialog"
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const { user, loading } = useAuth()
+  const [showAuthDialog, setShowAuthDialog] = useState(false)
+
+  useEffect(() => {
+    if (!loading && !user) {
+      setShowAuthDialog(true)
+    }
+  }, [user, loading])
 
   const handleSendMessage = async (content: string) => {
+    if (!user) {
+      setShowAuthDialog(true)
+      return
+    }
     const userMessage: Message = { role: "user", content }
     setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
@@ -49,6 +63,9 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-background to-muted/20">
+      {/* Auth Dialog */}
+      <AuthDialog open={showAuthDialog} onOpenChange={setShowAuthDialog} />
+
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
         <div className="flex items-center h-16 px-4 max-w-6xl mx-auto">

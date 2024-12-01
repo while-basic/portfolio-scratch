@@ -7,7 +7,7 @@ const openai = new OpenAI({
 export async function generateChatResponse(messages: { role: 'user' | 'assistant', content: string }[]) {
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",  // Latest GPT-4o model
+      model: "gpt-4o",  // Latest GPT-4 model
       messages: messages,
       temperature: 0.7,              // Balanced between creative and focused
       max_tokens: 250,             // Increased token limit for longer responses

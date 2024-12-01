@@ -30,10 +30,10 @@ export default function GalleryPage() {
 
   const galleryItems: GalleryItem[] = [
     { 
-      title: "Data Center Operations", 
-      category: "Industrial Automation",
-      description: "Managing and optimizing data center infrastructure and operations",
-      imageSrc: "/images/gallery/data-center.jpg",
+      title: "Electrical Panels", 
+      category: "Electrical Panels",
+      description: "Managing and optimizing electrical panels",
+      imageSrc: "/public/images/electrical/dist1.jpg",
       additionalImages: [
         "/images/gallery/data-center/1.jpg",
         "/images/gallery/data-center/2.jpg",
@@ -49,6 +49,31 @@ export default function GalleryPage() {
         "/images/gallery/manufacturing/1.jpg",
         "/images/gallery/manufacturing/2.jpg",
         "/images/gallery/manufacturing/3.jpg",
+      ]
+    },
+    {
+      title: "Electrical Wiring",
+      category: "Electrical Wiring",
+      description: "Wired electrical panels",
+      imageSrc: "/images/electrical/wiring-1.jpg",
+      additionalImages: [
+        "/images/electrical/wiring-2.jpg",
+        "/images/electrical/wiring-3.jpg",
+        "/images/electrical/wiring-4.jpg",
+        "/images/electrical/wiring-5.jpg",
+        "/images/electrical/wiring-6.jpg",
+        "/images/electrical/wiring-7.jpg",
+      ]
+    },
+    { 
+      title: "SDXL Image Generation", 
+      category: "Software Development",
+      description: "Advanced AI image generation using Stable Diffusion XL",
+      imageSrc: "/images/gallery/sdxl.jpg",
+      additionalImages: [
+        "/images/gallery/sdxl/1.jpg",
+        "/images/gallery/sdxl/2.jpg",
+        "/images/gallery/sdxl/3.jpg",
       ]
     },
     { 
@@ -88,9 +113,9 @@ export default function GalleryPage() {
       title: "MIDI Saber", 
       category: "Personal Projects",
       description: "Interactive musical instrument using motion sensors",
-      imageSrc: "/images/gallery/midi-saber.jpg",
+      imageSrc: "/public/images/projects/midi-saber.png",
       additionalImages: [
-        "/images/gallery/midi-saber/1.jpg",
+        "/public/images/projects/midi-saber.png",
         "/images/gallery/midi-saber/2.jpg",
         "/images/gallery/midi-saber/3.jpg",
       ]

@@ -88,7 +88,7 @@ The workflow checks:
 - ESLint linting
 - Next.js build process
 
-## Todos
+## Todos should be completed starting from the most easiest to implement. The Todo list should be updated periodically and in order from easiest to most difficult for the AI to implement.
 
 - [-] Initial setup
 - [-] center navlinks
@@ -100,15 +100,17 @@ The workflow checks:
 - [-] Gallery section
 - [-] Education section
 - [-] Project tiles should be clickable
-- [ ] Dark mode implementation
-- [ ] Add resume page
+- [ ] Fix light/dark modes
+- [-] Add resume page
   - [-] add cover letter podcast clip
   - [-] add resume podcast clip
 - [ ] Light mode implementation
 - [-] Add case studies
 - [ ] Visitor counter
 - [ ] Contact form
+  - [ ] Set up resend email
 - [-] Add breadcrumbs
+  - [x] Add breadcrumbs to chat page
 - [ ] Add Supabase integration
 - [-] Add animations
 - [-] Add unit tests
@@ -116,14 +118,26 @@ The workflow checks:
 - [ ] Add social media links
 - [ ] Image generation
 - [ ] Audio section
-- [-] Chatbot
+- [-] Chatbot for users signed in
 - [ ] Admin dashboard
+  - [ ] Total visitors
+  - [ ] Total messages
+  - [ ] Total users
+  - [ ] Chat history
 - [-] Add SEO
 - [-] Add blog
 - [-] Secret audio page
-- [ ] Deepgram API for speech to text
-- [-] Responsive
+- [ ] Responsive on mobile
 - [-] Loading screen
+- [ ] Update README.md
+  - [ ] Update all pages that have personal information that needs to be updated
+- [ ] Add footer
+- [ ] Add analytics
+- [ ] Add analytics to dashboard
+- [ ] Add settings page
+- [ ] Projects tiles need to navigate to a case study page
+- [ ] Blog heading needs to be styled correctly
+- [-] Chat should have a notice about it being used for signed in users only
 
 ## Projects
 
@@ -163,3 +177,55 @@ git status
 git add .
 git commit -m "update"
 git push origin main
+
+## Personalizing Your Fork
+
+After forking this repository, you'll need to update the following:
+
+### Required Updates
+1. **Personal Information**
+   - `/app/config/site.ts`: Update site metadata, name, and social links
+   - `/app/components/about.tsx`: Modify the about section content
+   - `/app/components/hero.tsx`: Update hero section with your name and title
+   - `/public/images/`: Replace profile and project images
+
+2. **Project Details**
+   - `/app/projects/page.tsx`: Update project cards with your own projects
+   - `/app/projects/[slug]/page.tsx`: Create case studies for your projects
+
+3. **Resume and Experience**
+   - `/app/resume/page.tsx`: Update with your experience and education
+   - `/public/resume.pdf`: Replace with your resume file
+
+4. **Environment Variables**
+   - Copy `.env.example` to `.env.local`
+   - Update the following variables:
+     ```
+     DATABASE_URL=your_database_url
+     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+     RESEND_API_KEY=your_resend_api_key
+     ```
+
+### Optional Updates
+- `/app/blog/`: Add your own blog posts
+- `/app/components/footer.tsx`: Update footer links and information
+- `/app/components/nav.tsx`: Modify navigation items
+- `/public/favicon.ico`: Replace with your own favicon
+- `/app/layout.tsx`: Update metadata and default SEO settings
+
+## Development Notes
+
+### Git Commands
+```bash
+git status
+git add .
+git commit -m "update"
+git push origin main
+```
+
+### Deployment
+This project can be deployed on Vercel or any other Next.js-compatible hosting platform. Make sure to:
+1. Configure environment variables in your hosting platform
+2. Set up the necessary database connections
+3. Update the deployment settings as needed
