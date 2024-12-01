@@ -13,12 +13,9 @@ export function WorkCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const works: WorkItem[] = [
-    { title: "Featured work 1", image: "/images/electrical/dist1.jpg", link: "#" },
-    { title: "Featured work 1", image: "/images/electrical/dist2.jpg", link: "#" },
-    { title: "Featured work 1", image: "/images/electrical/dist3.jpg", link: "#" },
-    { title: "Featured work 1", image: "/images/electrical/dist4.jpg", link: "#" },
-    { title: "Featured work 1", image: "/images/electrical/dist5.jpg", link: "#" },    
-    { title: "Featured work 1", image: "/images/electrical/dist6.jpg", link: "#" },
+    { title: "Electrical Panels", image: "/images/electrical/dist1.jpg", link: "#" },
+    { title: "Electrical Wiring", image: "/images/electrical/wiring-16.jpg", link: "#" },
+    { title: "Mechanical", image: "/images/mechanical/engine1.jpg", link: "#" },
   ];
 
   const nextSlide = () => {

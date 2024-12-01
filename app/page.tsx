@@ -11,9 +11,10 @@ export default function HomePage() {
       <section className="container mx-auto pt-32 pb-16 px-4 bg-black">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6 text-white">Christopher Celaya</h1>
-          <h2 className="text-2xl text-gray-300 mb-8">Full-Stack Developer & Automation Engineer</h2>
+          <h2 className="text-2xl text-gray-300 mb-8">Mechatronics Technician & Software Developer</h2>
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Building modern web applications and industrial automation systems with a focus on user experience and efficiency.
+          Designing innovative web applications and automation solutions, blending technical precision with seamless user experiences.
+
           </p>
           <div className="flex justify-center gap-6">
             <Link href="/projects">

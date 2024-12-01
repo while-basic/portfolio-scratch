@@ -261,7 +261,7 @@ Remember to:
 - [-] Blog heading needs to be styled correctly
 - [-] Chat should have a notice about it being used for signed in users only
 - [ ] Add avatar icons to chat
-- [ ] ChatGPT clone with supabase integration
+- [-] ChatGPT clone with supabase integration
 - [ ] Add chat history to dashboard
 - [-] Add estimated cost to chat
 - [ ] Add streaming support to chat

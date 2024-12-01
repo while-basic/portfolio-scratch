@@ -1,7 +1,36 @@
 const skills = [
-  { category: 'Mechatronics', items: ['PLC Programming', 'Robotics', 'Sensor Integration', 'CAD/CAM', 'Industrial Automation'] },
-  { category: 'Software Development', items: ['JavaScript', 'Python', 'React', 'Node.js', 'SQL', 'Git'] },
-  { category: 'Audio Engineering', items: ['Pro Tools', 'Ableton Live', 'Acoustic Design', 'Signal Processing', 'Mixing & Mastering'] }
+  { 
+    category: 'Software Development', 
+    items: [
+      'Python', 'Javascript', 'Java', 'C', 'C#',
+      'HTML', 'CSS', 'React', 'Node.js',
+      'SQL', 'MongoDB', 'PostgreSQL',
+      'Google Cloud', 'Azure',
+      'Docker', 'Git'
+    ] 
+  },
+  { 
+    category: 'Industrial & Mechatronics', 
+    items: [
+      'PLC Programming',
+      'Electrical Systems',
+      'Preventative Maintenance',
+      'Industrial Manufacturing',
+      'Project Management',
+      'Product Design and Prototyping',
+      'Problem-solving',
+      'Cross-Disciplinary Knowledge'
+    ] 
+  },
+  { 
+    category: 'Certifications & Languages', 
+    items: [
+      'NFPA 70E - Electrical Safety',
+      'OSHA 10 - Construction Safety',
+      'English (Native)',
+      'Spanish (Beginner)'
+    ] 
+  }
 ]
 
 export function SkillsSection() {
@@ -25,4 +54,3 @@ export function SkillsSection() {
     </section>
   )
 }
-
