@@ -214,66 +214,87 @@ Remember to:
 4. Update SEO metadata for all pages
 5. Remove placeholder content
 
-## Todos should be completed starting from the most easiest to implement. The Todo list should be updated periodically and in order from easiest to most difficult for the AI to implement.
+## Todo List
 
-- [-] Initial setup
-- [-] center navlinks
-- [-] Navigation bar
-- [-] About section
-- [-] Projects section
-- [-] Skills section
-- [-] Experience section
-- [-] Gallery section
-- [-] Education section
-- [-] Project tiles should be clickable
-- [ ] Fix light/dark modes
-- [-] Add resume page
-  - [-] add cover letter podcast clip
-  - [-] add resume podcast clip
-- [ ] Light mode implementation
-- [-] Add case studies
-- [ ] Visitor counter
-- [ ] Contact form
-  - [ ] Set up resend email
-- [-] Add breadcrumbs
+This list is prioritized from easiest to most challenging tasks. It should be updated regularly to reflect current progress and new requirements.
+
+### Completed Tasks
+- [x] Initial setup
+- [x] Center navlinks
+- [x] Navigation bar
+- [x] About section
+- [x] Projects section
+- [x] Skills section
+- [x] Experience section
+- [x] Gallery section
+- [x] Education section
+- [x] Make project tiles clickable
+- [x] Add resume page
+  - [x] Add cover letter podcast clip
+  - [x] Add resume podcast clip
+- [x] Add case studies
+- [x] Add breadcrumbs
   - [x] Add breadcrumbs to chat page
-- [ ] Add Supabase integration
-- [-] Add animations
-- [-] Add unit tests
-- [ ] Add resume download
-- [ ] Add social media links
-- [ ] Image generation
-- [ ] Audio section
-- [-] Chatbot for users signed in
-- [ ] Admin dashboard
-  - [-] Total visitors
-  - [ ] Total messages
-  - [ ] Total users
-  - [ ] Chat history
-- [-] Add SEO
-- [-] Add blog
-- [-] Secret audio page
-- [-] Responsive on mobile
-- [-] Loading screen
-- [-] Update README.md
-  - [-] Update all pages that have personal information that needs to be updated
+- [x] Add animations
+- [x] Add unit tests
+- [x] Implement chatbot for signed-in users
+- [x] Add SEO
+- [x] Add blog
+- [x] Create secret audio page
+- [x] Make site responsive on mobile
+- [x] Add loading screen
+- [x] Update README.md
+  - [x] Update all pages with personal information
+- [x] Style blog heading correctly
+- [x] Add notice about chat for signed-in users only
+- [x] Implement ChatGPT clone with Supabase integration
+- [x] Add estimated cost to chat
+- [x] Add total cost for chat
+
+### High Priority Tasks
 - [ ] Add footer to home page
-- [-] Blog heading needs to be styled correctly
-- [-] Chat should have a notice about it being used for signed in users only
+- [ ] Ability to delete conversations
 - [ ] Add avatar icons to chat
-- [-] ChatGPT clone with supabase integration
+- [ ] Add social media links
+- [ ] Implement light mode
+- [ ] Fix light/dark modes
+- [ ] Add visitor counter
+- [ ] Create contact form
+  - [ ] Set up Resend email
+- [ ] Complete Supabase integration
+- [ ] Add resume download functionality
 - [ ] Add chat history to dashboard
-- [-] Add estimated cost to chat
-- [ ] Add streaming support to chat
 - [ ] Make chat responsive on mobile
-- [ ] Make chat rename the chat threads
 - [ ] Correct styling on chat page
-- [ ] Add avatars to chat
-- [ ] Add system prompts to chat
-- [ ] Add option to change models
+- [ ] Add avatars to chat interface
+- [ ] Implement system prompts in chat
+- [ ] Add option to change AI models
+- [ ] Add Markdown support to chat
+- [ ] Implement code highlighting in chat
+- [ ] Enhance admin dashboard
+  - [ ] Add total messages counter
+  - [ ] Add total users counter
+  - [ ] Implement chat history viewing
+- [ ] Implement streaming support for chat
+- [ ] Add chat thread renaming feature
+- [ ] Add AI assistants to chat
+- [ ] Add total message count to dashboard
+- [ ] Implement image generation feature
+- [ ] Develop audio section
+- [ ] Add support voice chat
+
+### Future Enhancements
+- [ ] Optimize performance for large datasets
+- [ ] Implement advanced search functionality
+- [ ] Add multilingual support
+- [ ] Integrate with additional third-party services
+- [ ] Implement user feedback system
+- [ ] Add interactive tutorials for new users
+
 
 ## Projects
 
+- [ ] ChatGPT Clone
 - [ ] Medchat
 - [ ] Midisaber
 - [ ] Law-GPT
@@ -293,7 +314,6 @@ Remember to:
 - [ ] Gemini Chat
 - [ ] Custom GPT
 - [ ] Groq Chat
-- [ ] Change carasoul in gallery
 
 ## License
 

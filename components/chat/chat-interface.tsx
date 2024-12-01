@@ -5,11 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { MessageSquare, User, Send } from "lucide-react"
+import { Send } from "lucide-react"
 import { TokenDisplay } from './token-display'
-import ReactMarkdown from 'react-markdown'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { cn } from '@/lib/utils'
 
 interface ChatInterfaceProps {
@@ -113,7 +110,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
                   key={index}
                   onClick={() => {
                     setInputValue(prompt);
-                    handleSubmit(new Event('submit') as any);
+                    handleSubmit({ preventDefault: () => {} } as React.FormEvent);
                   }}
                   className="p-4 rounded-lg border border-gray-800 bg-black hover:bg-gray-900 transition-colors text-white text-left"
                 >
@@ -153,6 +150,14 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             placeholder="Ask AI..."
             className="flex-1 bg-black border-gray-800 text-white resize-none"
             rows={1}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (inputValue.trim()) {
+                  handleSubmit(e);
+                }
+              }
+            }}
           />
           <Button 
             type="submit" 

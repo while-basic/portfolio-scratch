@@ -3,6 +3,7 @@ import { Brain, UserCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import Image from "next/image"
 
 export type Message = {
   role: "user" | "assistant"
@@ -39,9 +40,11 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                     : "bg-emerald-600 text-white border-emerald-400"
                 )}>
                   {message.avatar ? (
-                    <img 
+                    <Image 
                       src={message.avatar} 
                       alt={`${message.role} avatar`}
+                      width={48}
+                      height={48}
                       className="h-full w-full object-cover rounded-full"
                     />
                   ) : (

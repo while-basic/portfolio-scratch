@@ -75,11 +75,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       const updated = await renameConversation(id, editTitle.trim())
       setEditingId(null)
-      
-      // Update the conversation in the list
-      const updatedConversations = conversations.map(conv => 
-        conv.id === updated.id ? updated : conv
-      )
       onSelectConversation(updated)
       
       toast({
@@ -104,11 +99,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       }
 
       const updated = await renameConversation(conversation.id, summary)
-      
-      // Update the conversation in the list
-      const updatedConversations = conversations.map(conv => 
-        conv.id === updated.id ? updated : conv
-      )
       onSelectConversation(updated)
       
       toast({
