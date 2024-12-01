@@ -34,7 +34,7 @@ export default function GalleryPage() {
       title: "Electrical Panels", 
       category: "Electrical Panels",
       description: "Managing and optimizing electrical panels",
-      imageSrc: "/public/images/electrical/dist1.jpg",
+      imageSrc: "/images/electrical/dist1.jpg",
       additionalImages: [
         "/images/gallery/electrical/dist1.jpg",
         "/images/gallery/electrical/dist2.jpg",
@@ -114,9 +114,9 @@ export default function GalleryPage() {
       title: "MIDI Saber", 
       category: "Personal Projects",
       description: "Interactive musical instrument using motion sensors",
-      imageSrc: "/public/images/projects/midi-saber.png",
+      imageSrc: "/images/projects/midi-saber.png",
       additionalImages: [
-        "/public/images/projects/midi-saber.png",
+        "/images/projects/midi-saber.png",
         "/images/gallery/midi-saber/2.jpg",
         "/images/gallery/midi-saber/3.jpg",
       ]
@@ -206,6 +206,7 @@ export default function GalleryPage() {
                 src={item.imageSrc}
                 alt={item.title}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>

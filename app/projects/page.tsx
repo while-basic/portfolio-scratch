@@ -39,7 +39,7 @@ async function ProjectsPage() {
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover"
-                    loading="lazy"
+                    priority={project.slug === 'medchat'}
                     quality={75}
                   />
                 </div>
