@@ -6,10 +6,12 @@ import { Badge } from "@/components/ui/badge"
 import { Download, Mail, Github, Linkedin } from "lucide-react"
 import { CodeIcon, GlobeIcon, Settings2Icon, BotIcon, WrenchIcon } from "@/components/icons"
 import { AudioPlayer } from "@/components/ui/audio-player"
+import { Breadcrumb } from "@/components/breadcrumb"
 
 export default function ResumePage() {
   return (
     <div className="container mx-auto px-4 pt-24 pb-8 max-w-5xl">
+      <Breadcrumb />
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">Christopher Celaya</h1>

@@ -9,6 +9,7 @@ import { ChatInput } from "@/components/chat/chat-input"
 import { motion, AnimatePresence } from "framer-motion"
 import { useAuth } from "@/lib/auth-context"
 import { AuthDialog } from "@/components/chat/auth-dialog"
+import { Breadcrumb } from "@/components/breadcrumb"
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -78,6 +79,11 @@ export default function ChatPage() {
             Chat with AI Assistant
           </h1>
         </div>
+      </div>
+
+      {/* Breadcrumb */}
+      <div className="container mx-auto px-4 pt-24 pb-8">
+        <Breadcrumb />
       </div>
 
       {/* Chat Container */}

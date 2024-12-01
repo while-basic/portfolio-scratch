@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Breadcrumb } from "@/components/breadcrumb"
 
 export const metadata: Metadata = {
   title: "About | Christopher Celaya",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 pt-24 pb-8">
+      <Breadcrumb />
       <h1 className="text-4xl font-bold mb-8">About Me</h1>
       
       <div className="grid grid-cols-1 gap-8">

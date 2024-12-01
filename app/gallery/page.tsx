@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ImageCarouselModal } from "@/components/ui/image-carousel-modal"
 import Image from "next/image"
+import { Breadcrumb } from "@/components/breadcrumb"
 
 interface GalleryItem {
   title: string
@@ -173,6 +174,7 @@ export default function GalleryPage() {
 
   return (
     <div className="container mx-auto px-4 pt-24 pb-8">
+      <Breadcrumb />
       <h1 className="text-4xl font-bold mb-8">Gallery</h1>
       
       {/* Categories */}
