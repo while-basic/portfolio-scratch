@@ -263,6 +263,8 @@ Remember to:
 - [ ] Add avatar icons to chat
 - [ ] ChatGPT clone with supabase integration
 - [ ] Add chat history to dashboard
+- [-] Add estimated cost to chat
+- [ ] Add streaming support to chat
 
 ## Projects
 
@@ -304,7 +306,8 @@ Built using:
 ```bash
 git status
 git add .
-git commit -m "update"
+git commit -m "update message"
+git push
 git push origin main
 ```
 

@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { MessageSquare } from "lucide-react"
+import { TokenDisplay } from './token-display'
 
 interface ChatInterfaceProps {
   conversation: Conversation | null
@@ -17,6 +18,12 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [tokenUsage, setTokenUsage] = useState<{
+    total_tokens: number
+    prompt_tokens: number
+    completion_tokens: number
+    estimated_cost: number
+  } | null>(null)
   const { toast } = useToast()
 
   // Reset state when conversation changes
@@ -71,6 +78,9 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         content: data.content
       }
 
+      // Update token usage
+      setTokenUsage(data.usage)
+
       const newMessages = [...updatedMessages, assistantMessage]
       setMessages(newMessages)
       onNewMessage(newMessages)
@@ -88,9 +98,9 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
 
   return (
     <Card className="flex flex-col h-[calc(100vh-8rem)] border rounded-xl shadow-lg">
-      <CardContent className="flex-1 p-0">
+      <CardContent className="flex-1 p-0 overflow-hidden">
         <ScrollArea className="h-full">
-          <div className="p-4">
+          <div className="flex flex-col gap-4 p-4">
             {!conversation && messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-[calc(100vh-16rem)] text-center space-y-4">
                 <MessageSquare className="h-12 w-12 text-muted-foreground" />
@@ -102,12 +112,15 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
                 </div>
               </div>
             ) : (
-              <MessageList messages={messages} isLoading={isLoading} />
+              <div className="flex-1 space-y-4">
+                <MessageList messages={messages} isLoading={isLoading} />
+              </div>
             )}
           </div>
         </ScrollArea>
       </CardContent>
-      <CardFooter className="p-4 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <CardFooter className="flex flex-col gap-2 p-4 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <TokenDisplay usage={tokenUsage} />
         <form onSubmit={handleSubmit} className="w-full space-y-2">
           <Textarea
             value={inputValue}

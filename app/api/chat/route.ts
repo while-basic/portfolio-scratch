@@ -30,7 +30,15 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json(
-      { content: completion.choices[0].message.content },
+      { 
+        content: completion.choices[0].message.content,
+        usage: {
+          total_tokens: completion.usage?.total_tokens || 0,
+          prompt_tokens: completion.usage?.prompt_tokens || 0,
+          completion_tokens: completion.usage?.completion_tokens || 0,
+          estimated_cost: (completion.usage?.total_tokens || 0) * 0.000015 // Approximate cost per token
+        }
+      },
       { headers: corsHeaders }
     )
 

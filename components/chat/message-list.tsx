@@ -48,10 +48,11 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             }}
             className={cn(
               "flex-1 overflow-hidden rounded-2xl px-4 py-2 transition-colors",
-              "shadow-sm hover:shadow-md transition-shadow duration-200"
+              "shadow-sm hover:shadow-md transition-shadow duration-200",
+              "break-words whitespace-pre-wrap max-w-full"
             )}
           >
-            <div style={{ color: "inherit" }} className="prose prose-sm break-words">
+            <div className="prose prose-sm dark:prose-invert max-w-none">
               {message.content}
             </div>
           </div>
