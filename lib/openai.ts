@@ -1,5 +1,13 @@
 import OpenAI from 'openai';
-import { type LLMSettings } from '@/components/chat/llm-controls';
+
+export interface LLMSettings {
+  temperature?: number;
+  topP?: number;
+  frequencyPenalty?: number;
+  presencePenalty?: number;
+  maxTokens?: number;
+  model?: string;
+}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -43,6 +51,7 @@ export async function generateChatResponse(
     frequencyPenalty: 0,
     presencePenalty: 0,
     maxTokens: 1000,
+    model: 'GPT 4o mini'
   };
 
   const finalSettings = { ...defaultSettings, ...settings };
@@ -54,30 +63,23 @@ export async function generateChatResponse(
   };
 
   try {
-    const modelName = modelMap[settings?.model || 'GPT 4o mini'] || 'gpt-3.5-turbo';
+    const modelName = modelMap[finalSettings.model || 'GPT 4o mini'] || 'gpt-3.5-turbo';
     
     const completion = await withRetry(() => 
       openai.chat.completions.create({
         model: modelName,
-        messages: messages,
+        messages,
         temperature: finalSettings.temperature,
-        max_tokens: finalSettings.maxTokens,
         top_p: finalSettings.topP,
         frequency_penalty: finalSettings.frequencyPenalty,
         presence_penalty: finalSettings.presencePenalty,
+        max_tokens: finalSettings.maxTokens,
       })
     );
 
-    return {
-      content: completion.choices[0].message.content,
-      role: 'assistant' as const
-    };
+    return completion.choices[0].message.content;
   } catch (error) {
-    console.error('Error calling OpenAI:', error);
-    const openAIError = error as OpenAIError;
-    if (openAIError.code === 'rate_limit_exceeded') {
-      throw new Error('Rate limit exceeded. Please try again in a few minutes.');
-    }
+    console.error('Error generating chat response:', error);
     throw error;
   }
 }

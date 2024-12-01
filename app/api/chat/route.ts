@@ -12,7 +12,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 }
 
-export async function OPTIONS(request: Request) {
+export async function OPTIONS() {
   return NextResponse.json({}, {
     headers: corsHeaders,
   })
@@ -34,10 +34,10 @@ export async function POST(request: Request) {
       { headers: corsHeaders }
     )
 
-  } catch (error: any) {
+  } catch (error) {
     console.error("[CHAT_ERROR]", error)
     
-    if (error?.code === 'rate_limit_exceeded') {
+    if (error instanceof OpenAI.APIError && error.code === 'rate_limit_exceeded') {
       return NextResponse.json(
         { message: 'Rate limit exceeded. Please try again later.' },
         { status: 429, headers: corsHeaders }
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: error.message || 'An error occurred' },
+      { message: error instanceof Error ? error.message : 'An error occurred' },
       { status: 500, headers: corsHeaders }
     )
   }
