@@ -1,3 +1,5 @@
+import { Coins } from 'lucide-react'
+
 interface TokenUsage {
   total_tokens: number
   prompt_tokens: number
@@ -13,10 +15,16 @@ export function TokenDisplay({ usage }: TokenDisplayProps) {
   if (!usage) return null
 
   return (
-    <div className="flex items-center justify-end gap-2 text-sm text-muted-foreground p-2">
-      <span>
-        Tokens: {usage.total_tokens} (${usage.estimated_cost.toFixed(6)})
-      </span>
+    <div className="flex items-center gap-4 text-sm text-gray-400">
+      <div className="flex items-center gap-1.5">
+        <Coins className="h-4 w-4" />
+        <span>
+          ${usage.estimated_cost.toFixed(4)}
+        </span>
+      </div>
+      <div>
+        {usage.total_tokens.toLocaleString()} tokens
+      </div>
     </div>
   )
 }

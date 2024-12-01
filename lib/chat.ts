@@ -3,9 +3,10 @@ import { Message } from '@/components/chat/message-list'
 
 export interface Conversation {
   id: string
+  user_id: string
   title: string
   messages: Message[]
-  user_id: string
+  summary?: string
   created_at: string
   updated_at: string
 }
@@ -54,6 +55,27 @@ export async function updateConversation(id: string, messages: Message[]) {
   return data
 }
 
+export async function renameConversation(conversationId: string, newTitle: string): Promise<Conversation> {
+  const supabase = createClientComponentClient()
+
+  const { data, error } = await supabase
+    .from('conversations')
+    .update({
+      title: newTitle,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', conversationId)
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error renaming conversation:', error)
+    throw error
+  }
+
+  return data
+}
+
 export async function getConversations(userId: string) {
   const supabase = createClientComponentClient()
 
@@ -80,6 +102,37 @@ export async function deleteConversation(id: string) {
 
   if (error) {
     console.error('Error deleting conversation:', error)
+    throw error
+  }
+}
+
+export async function summarizeConversation(messages: Message[]): Promise<string> {
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages: [
+          {
+            role: 'system',
+            content: 'Please provide a brief summary (1 sentence or less)) of the following conversation. Focus on the main topics and key points discussed.'
+          },
+          ...messages
+        ],
+        model: 'gpt-4o'
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to generate summary')
+    }
+
+    const data = await response.json()
+    return data.content
+  } catch (error) {
+    console.error('Error generating summary:', error)
     throw error
   }
 }

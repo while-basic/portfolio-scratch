@@ -6,11 +6,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [dimensions, setDimensions] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
-    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+    width: 0,
+    height: 0,
   });
 
   useEffect(() => {
+    // Set dimensions after component mounts
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+
     const handleResize = () => {
       setDimensions({
         width: window.innerWidth,

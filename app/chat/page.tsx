@@ -72,13 +72,7 @@ export default function ChatPage() {
   }
 
   const handleNewConversation = () => {
-    console.log('handleNewConversation called');
-    setCurrentConversation(null);
-    console.log('currentConversation set to null');
-    setConversations(prev => {
-      console.log('updating conversations');
-      return [...prev.filter(conv => conv.id !== undefined)];
-    });
+    setCurrentConversation(null)
   }
 
   const handleDeleteConversation = (id: string) => {
@@ -89,30 +83,29 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex items-center justify-between px-4 py-4 border-b">
+    <div className="flex flex-col min-h-[100dvh] bg-black">
+      <div className="flex items-center justify-between h-14 px-4 bg-black border-b border-gray-800">
         <div className="flex items-center gap-2">
           <Link href="/">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-gray-800">
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
-          <Breadcrumb items={[{ label: "Chat", href: "/chat" }]} />
+          <span className="text-white">Christopher Celaya</span>
         </div>
         <Button 
-          variant="outline"
+          variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="md:hidden text-white hover:bg-gray-800"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           <Menu className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-1 overflow-hidden">
-        <div className={cn(
-          "md:w-64 border-r bg-background",
-          showSidebar ? "w-64" : "hidden",
-          "md:block"
+        <aside className={cn(
+          "fixed inset-y-14 left-0 z-30 w-72 -translate-x-full bg-black border-r border-gray-800 transition-transform duration-300 md:translate-x-0 md:relative md:inset-y-0",
+          showSidebar && "translate-x-0"
         )}>
           <Sidebar 
             conversations={conversations}
@@ -121,9 +114,9 @@ export default function ChatPage() {
             onNewConversation={handleNewConversation}
             onDeleteConversation={handleDeleteConversation}
           />
-        </div>
-        <main className="flex-1 overflow-hidden">
-          <div className="container max-w-4xl mx-auto h-full p-4">
+        </aside>
+        <main className="flex-1 overflow-hidden bg-black">
+          <div className="h-full">
             <ChatInterface 
               key={currentConversation ? currentConversation.id : 'new'}
               conversation={currentConversation}

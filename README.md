@@ -265,6 +265,12 @@ Remember to:
 - [ ] Add chat history to dashboard
 - [-] Add estimated cost to chat
 - [ ] Add streaming support to chat
+- [ ] Make chat responsive on mobile
+- [ ] Make chat rename the chat threads
+- [ ] Correct styling on chat page
+- [ ] Add avatars to chat
+- [ ] Add system prompts to chat
+- [ ] Add option to change models
 
 ## Projects
 
