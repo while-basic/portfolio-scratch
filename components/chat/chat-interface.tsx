@@ -20,7 +20,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [selectedModel, setSelectedModel] = useState('gpt-4o')
-  const models = ['gpt-4o', 'gpt-3.5-turbo', 'gpt-4', 'gpt-4o mini']
+  const models = ['gpt-4o', 'gpt-3.5-turbo', 'gpt-4']
   const [tokenUsage, setTokenUsage] = useState<{
     total_tokens: number
     prompt_tokens: number
@@ -146,45 +146,54 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
       </ScrollArea>
 
       <div className="border-t border-gray-800 p-4">
-        <form onSubmit={handleSubmit} className="flex gap-2">
-          <Textarea
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Ask AI..."
-            className="flex-1 bg-black border-gray-800 text-white resize-none"
-            rows={1}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                if (inputValue.trim()) {
-                  handleSubmit(e);
-                }
-              }
-            }}
-          />
-          <select 
-            value={selectedModel} 
-            onChange={(e) => setSelectedModel(e.target.value)}
-            className="px-2 py-1 bg-black border border-gray-800 rounded-md text-white text-sm hover:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700"
-          >
-            {models.map((model) => (
-              <option key={model} value={model}>{model}</option>
-            ))}
-          </select>
-          <Button 
-            type="submit" 
-            disabled={isLoading || !inputValue.trim()}
-            className="bg-white text-black hover:bg-gray-200"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
-        </form>
-        {tokenUsage && (
-          <div className="flex items-center justify-between mt-2 text-xs text-gray-400">
-            <TokenDisplay usage={tokenUsage} />
-            <ModelDisplay model={selectedModel} />
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <div className="flex-1 relative">
+              <Textarea
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask AI..."
+                className="flex-1 bg-black border-gray-800 text-white resize-none pr-24"
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (inputValue.trim()) {
+                      handleSubmit(e);
+                    }
+                  }
+                }}
+              />
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                <select 
+                  value={selectedModel} 
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                  className="bg-transparent text-gray-400 text-xs border-none focus:outline-none focus:ring-0 cursor-pointer hover:text-white transition-colors"
+                >
+                  {models.map((model) => (
+                    <option key={model} value={model} className="bg-black text-white">
+                      {model}
+                    </option>
+                  ))}
+                </select>
+                <Button 
+                  type="submit" 
+                  disabled={isLoading || !inputValue.trim()}
+                  className="bg-white text-black hover:bg-gray-200"
+                  size="sm"
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
           </div>
-        )}
+          {tokenUsage && (
+            <div className="flex items-center justify-between text-xs text-gray-400">
+              <TokenDisplay usage={tokenUsage} />
+              <ModelDisplay model={selectedModel} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

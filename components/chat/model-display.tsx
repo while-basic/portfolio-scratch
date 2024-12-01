@@ -1,4 +1,4 @@
-import { Brain } from "lucide-react"
+import { Cpu } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface ModelDisplayProps {
@@ -8,9 +8,9 @@ interface ModelDisplayProps {
 
 export function ModelDisplay({ model, className }: ModelDisplayProps) {
   return (
-    <div className={cn("flex items-center gap-1.5 text-xs text-gray-400", className)}>
-      <Brain className="h-3 w-3" />
-      <span>Model: {model}</span>
+    <div className={cn("flex items-center gap-1 text-gray-400", className)}>
+      <Cpu className="h-3 w-3" />
+      <span>{model}</span>
     </div>
   )
 }

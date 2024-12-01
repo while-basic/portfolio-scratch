@@ -265,13 +265,12 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Correct styling on chat page
 - [-] Add avatars to chat interface
 - [ ] Implement system prompts in chat
-- [ ] Add option to change AI models
+- [-] Add option to change AI models
 - [ ] Add Markdown support to chat
 - [ ] Implement code highlighting in chat
 - [ ] Enhance admin dashboard
   - [ ] Add total messages sent/recieved counter
   - [ ] Add total users registered counter
-  - [ ] Implement chat history viewing
 - [ ] Implement streaming support for chat
 - [ ] Add AI assistants to chat
 - [ ] Add total message count to dashboard
