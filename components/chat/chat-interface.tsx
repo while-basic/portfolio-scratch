@@ -62,7 +62,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             role: msg.role,
             content: msg.content
           })),
-          model: 'gpt-4'
+          model: 'gpt-4o'
         }),
       })
 
@@ -99,95 +99,70 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
 
   return (
     <div className="flex flex-col h-[calc(100vh-3.5rem)]">
-      <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full px-4">
-          <div className="max-w-3xl mx-auto py-8 space-y-8">
+      <ScrollArea className="flex-1 p-4">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <h2 className="text-3xl font-bold text-white mb-8">Try these prompts ✨</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
+              {[
+                "Generate a tasty vegan lasagna recipe for 3 people.",
+                "Generate a list of 5 questions for a job interview for a software engineer.",
+                "Who won the 2022 FIFA World Cup?"
+              ].map((prompt, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setInputValue(prompt);
+                    handleSubmit(new Event('submit') as any);
+                  }}
+                  className="p-4 rounded-lg border border-gray-800 bg-black hover:bg-gray-900 transition-colors text-white text-left"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-6">
             {messages.map((message, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "flex items-start gap-4 rounded-lg p-4",
-                  message.role === "assistant" ? "bg-gray-900" : "bg-transparent"
-                )}
-              >
-                <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 select-none border border-gray-800">
-                  {message.role === "assistant" ? (
-                    <MessageSquare className="h-5 w-5 text-blue-400" />
-                  ) : (
-                    <User className="h-5 w-5 text-gray-400" />
-                  )}
-                </div>
-                <div className="flex-1 space-y-2">
-                  <div className="text-sm font-medium text-gray-400">
-                    {message.role === "assistant" ? "AI Assistant" : "You"}
-                  </div>
-                  <div className="prose prose-invert max-w-none">
-                    <ReactMarkdown
-                      components={{
-                        code({ node, inline, className, children, ...props }) {
-                          const match = /language-(\w+)/.exec(className || '')
-                          return !inline && match ? (
-                            <SyntaxHighlighter
-                              style={oneDark}
-                              language={match[1]}
-                              PreTag="div"
-                              {...props}
-                            >
-                              {String(children).replace(/\n$/, '')}
-                            </SyntaxHighlighter>
-                          ) : (
-                            <code className={className} {...props}>
-                              {children}
-                            </code>
-                          )
-                        }
-                      }}
-                    >
-                      {message.content}
-                    </ReactMarkdown>
-                  </div>
-                </div>
+              <div key={index} className={cn(
+                "flex gap-4",
+                message.role === "assistant" ? "flex-row" : "flex-row-reverse"
+              )}>
+                <MessageList messages={[message]} />
               </div>
             ))}
             {isLoading && (
-              <div className="flex items-center justify-center py-4">
-                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-blue-500"></div>
+              <div className="flex gap-4 animate-pulse">
+                <div className="h-8 w-8 rounded-full bg-violet-600" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-gray-800 rounded w-3/4" />
+                  <div className="h-4 bg-gray-800 rounded w-1/2" />
+                </div>
               </div>
             )}
           </div>
-        </ScrollArea>
-      </div>
+        )}
+      </ScrollArea>
 
-      <div className="border-t border-gray-800 bg-black p-4">
-        <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSubmit} className="flex gap-4">
-            <Textarea
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-1 min-h-[60px] max-h-36 bg-gray-900 border-gray-800 text-white resize-none"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  handleSubmit(e)
-                }
-              }}
-            />
-            <Button 
-              type="submit" 
-              size="icon" 
-              disabled={isLoading || !inputValue.trim()}
-              className="h-[60px] w-[60px] bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <Send className="h-5 w-5" />
-            </Button>
-          </form>
-          {tokenUsage && (
-            <div className="mt-2 flex justify-end">
-              <TokenDisplay usage={tokenUsage} />
-            </div>
-          )}
-        </div>
+      <div className="border-t border-gray-800 p-4">
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <Textarea
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Ask AI..."
+            className="flex-1 bg-black border-gray-800 text-white resize-none"
+            rows={1}
+          />
+          <Button 
+            type="submit" 
+            disabled={isLoading || !inputValue.trim()}
+            className="bg-white text-black hover:bg-gray-200"
+          >
+            <Send className="h-4 w-4" />
+          </Button>
+        </form>
+        {tokenUsage && <TokenDisplay usage={tokenUsage} />}
       </div>
     </div>
   )

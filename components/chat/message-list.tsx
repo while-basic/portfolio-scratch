@@ -1,11 +1,13 @@
 import { motion } from "framer-motion"
-import { Bot, User } from "lucide-react"
+import { Brain, UserCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export type Message = {
   role: "user" | "assistant"
   content: string
+  avatar?: string  // Optional custom avatar URL
 }
 
 interface MessageListProps {
@@ -27,20 +29,37 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             message.role === "assistant" ? "flex-row" : "flex-row-reverse"
           )}
         >
-          <Avatar className={cn(
-            "h-8 w-8 border shadow-sm",
-            message.role === "assistant" 
-              ? "bg-primary text-primary-foreground" 
-              : "bg-muted"
-          )}>
-            <AvatarFallback>
-              {message.role === "assistant" ? (
-                <Bot className="h-4 w-4" />
-              ) : (
-                <User className="h-4 w-4" />
-              )}
-            </AvatarFallback>
-          </Avatar>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Avatar className={cn(
+                  "h-12 w-12 border-2 transition-all duration-200 hover:scale-110",
+                  message.role === "assistant" 
+                    ? "bg-violet-600 text-white border-violet-400" 
+                    : "bg-emerald-600 text-white border-emerald-400"
+                )}>
+                  {message.avatar ? (
+                    <img 
+                      src={message.avatar} 
+                      alt={`${message.role} avatar`}
+                      className="h-full w-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <AvatarFallback>
+                      {message.role === "assistant" ? (
+                        <Brain className="h-6 w-6" />
+                      ) : (
+                        <UserCircle2 className="h-6 w-6" />
+                      )}
+                    </AvatarFallback>
+                  )}
+                </Avatar>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{message.role === "assistant" ? "AI Assistant" : "You"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div 
             className={cn(
               "flex-1 overflow-hidden rounded-2xl px-4 py-2 transition-colors",
@@ -63,9 +82,9 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           animate={{ opacity: 1, y: 0 }}
           className="flex gap-3"
         >
-          <Avatar className="h-8 w-8 border bg-primary text-primary-foreground shadow-sm">
+          <Avatar className="h-12 w-12 border-2 bg-violet-600 text-white border-violet-400">
             <AvatarFallback>
-              <Bot className="h-4 w-4" />
+              <Brain className="h-6 w-6" />
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 space-y-2 rounded-2xl bg-muted p-4">
