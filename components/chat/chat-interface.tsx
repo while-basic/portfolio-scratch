@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Send } from "lucide-react"
 import { TokenDisplay } from './token-display'
+import { ModelDisplay } from './model-display'
 import { cn } from '@/lib/utils'
 
 interface ChatInterfaceProps {
@@ -18,6 +19,8 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedModel, setSelectedModel] = useState('gpt-4o')
+  const models = ['gpt-4o', 'gpt-3.5-turbo', 'gpt-4', 'gpt-4o mini']
   const [tokenUsage, setTokenUsage] = useState<{
     total_tokens: number
     prompt_tokens: number
@@ -59,7 +62,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             role: msg.role,
             content: msg.content
           })),
-          model: 'gpt-4o'
+          model: selectedModel
         }),
       })
 
@@ -76,7 +79,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         content: data.content
       }
 
-      // Update token usage
+      // Update token usage and model info
       setTokenUsage(data.usage)
 
       const newMessages = [...updatedMessages, assistantMessage]
@@ -159,6 +162,15 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
               }
             }}
           />
+          <select 
+            value={selectedModel} 
+            onChange={(e) => setSelectedModel(e.target.value)}
+            className="px-2 py-1 bg-black border border-gray-800 rounded-md text-white text-sm hover:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700"
+          >
+            {models.map((model) => (
+              <option key={model} value={model}>{model}</option>
+            ))}
+          </select>
           <Button 
             type="submit" 
             disabled={isLoading || !inputValue.trim()}
@@ -167,7 +179,12 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             <Send className="h-4 w-4" />
           </Button>
         </form>
-        {tokenUsage && <TokenDisplay usage={tokenUsage} />}
+        {tokenUsage && (
+          <div className="flex items-center justify-between mt-2 text-xs text-gray-400">
+            <TokenDisplay usage={tokenUsage} />
+            <ModelDisplay model={selectedModel} />
+          </div>
+        )}
       </div>
     </div>
   )

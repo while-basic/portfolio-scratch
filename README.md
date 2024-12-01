@@ -254,34 +254,31 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 ### High Priority Tasks
 - [ ] Add footer to home page
 - [ ] Ability to delete conversations
-- [ ] Add avatar icons to chat
 - [ ] Add social media links
-- [ ] Implement light mode
 - [ ] Fix light/dark modes
 - [ ] Add visitor counter
 - [ ] Create contact form
   - [ ] Set up Resend email
-- [ ] Complete Supabase integration
+- [-] Complete Supabase integration
 - [ ] Add resume download functionality
-- [ ] Add chat history to dashboard
 - [ ] Make chat responsive on mobile
 - [ ] Correct styling on chat page
-- [ ] Add avatars to chat interface
+- [-] Add avatars to chat interface
 - [ ] Implement system prompts in chat
 - [ ] Add option to change AI models
 - [ ] Add Markdown support to chat
 - [ ] Implement code highlighting in chat
 - [ ] Enhance admin dashboard
-  - [ ] Add total messages counter
-  - [ ] Add total users counter
+  - [ ] Add total messages sent/recieved counter
+  - [ ] Add total users registered counter
   - [ ] Implement chat history viewing
 - [ ] Implement streaming support for chat
-- [ ] Add chat thread renaming feature
 - [ ] Add AI assistants to chat
 - [ ] Add total message count to dashboard
 - [ ] Implement image generation feature
 - [ ] Develop audio section
 - [ ] Add support voice chat
+- [ ] Add options to change model
 
 ### Future Enhancements
 - [ ] Optimize performance for large datasets

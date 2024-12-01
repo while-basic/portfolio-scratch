@@ -59,7 +59,7 @@ export async function generateChatResponse(
   // Map model names to OpenAI model IDs
   const modelMap: { [key: string]: string } = {
     'GPT 4o mini': 'gpt-3.5-turbo',
-    'GPT-4': 'gpt-4',
+    'gpt-4o': 'gpt-4o',
   };
 
   try {

@@ -20,7 +20,7 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
   try {
-    const { messages, model = 'gpt-4', summarize = false } = await request.json()
+    const { messages, model = 'gpt-4o', summarize = false } = await request.json()
 
     if (summarize) {
       const completion = await openai.chat.completions.create({
@@ -49,6 +49,10 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         content: completion.choices[0].message.content,
+        model: {
+          id: completion.model,
+          name: completion.model,
+        },
         usage: {
           total_tokens: completion.usage?.total_tokens || 0,
           prompt_tokens: completion.usage?.prompt_tokens || 0,
