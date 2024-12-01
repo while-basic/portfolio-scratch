@@ -85,9 +85,17 @@ export default function HomePage() {
               <li>• Project scope and requirements discussion</li>
               <li>• Technical feasibility assessment</li>
               <li>• Timeline and budget planning</li>
-              <li>• Next steps and recommendations</li>
+              <li>• Next steps and collaboration approach</li>
             </ul>
-            <Button className="w-full bg-white text-black hover:bg-gray-200">Schedule a Call</Button>
+            <Link 
+              href="https://cal.com/chriscelaya/30min" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button className="w-full bg-white text-black hover:bg-gray-200">
+                Schedule a Call
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
