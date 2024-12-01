@@ -20,8 +20,8 @@ export default function HomePage() {
             <Link href="/projects">
               <Button className="bg-white text-black hover:bg-gray-200">View Projects</Button>
             </Link>
-            <Link href="https://github.com/while-basic" target="_blank">
-              <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">GitHub</Button>
+            <Link href="/resume.pdf" target="_blank" download="resume.pdf">
+              <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">Download Resume</Button>
             </Link>
           </div>
         </div>

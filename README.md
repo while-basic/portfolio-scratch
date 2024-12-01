@@ -278,6 +278,13 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Develop audio section
 - [ ] Add support voice chat
 - [ ] Add options to change model
+- [ ] Scroll to latest message in chat
+- [ ] Add different chatbots
+  - [ ] ChatGPT
+  - [ ] Claude
+  - [ ] Llama
+  - [ ] Gemini
+
 
 ### Future Enhancements
 - [ ] Optimize performance for large datasets
