@@ -47,10 +47,18 @@ export async function generateChatResponse(
 
   const finalSettings = { ...defaultSettings, ...settings };
 
+  // Map model names to OpenAI model IDs
+  const modelMap: { [key: string]: string } = {
+    'GPT 4o mini': 'gpt-3.5-turbo',
+    'GPT-4': 'gpt-4',
+  };
+
   try {
+    const modelName = modelMap[settings?.model || 'GPT 4o mini'] || 'gpt-3.5-turbo';
+    
     const completion = await withRetry(() => 
       openai.chat.completions.create({
-        model: "gpt-4o",  // Using GPT-4
+        model: modelName,
         messages: messages,
         temperature: finalSettings.temperature,
         max_tokens: finalSettings.maxTokens,
@@ -60,7 +68,10 @@ export async function generateChatResponse(
       })
     );
 
-    return completion.choices[0].message;
+    return {
+      content: completion.choices[0].message.content,
+      role: 'assistant' as const
+    };
   } catch (error) {
     console.error('Error calling OpenAI:', error);
     const openAIError = error as OpenAIError;

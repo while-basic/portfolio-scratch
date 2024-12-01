@@ -29,9 +29,9 @@
     "@radix-ui/react-toast": "^1.2.2",
     "@react-three/drei": "^9.118.0",
     "@react-three/fiber": "^8.17.10",
-    "@shadcn/ui": "^0.0.4",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.46.2",
+    "ai": "^4.0.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
@@ -52,6 +52,7 @@
     "three": "^0.171.0"
   },
   "devDependencies": {
+    "@shadcn/ui": "^0.0.4",
     "@types/node": "^20",
     "@types/react": "18.3.12",
     "@types/react-dom": "^18",
