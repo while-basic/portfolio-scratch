@@ -162,6 +162,8 @@ The workflow checks:
 - [ ] Gemini Chat
 - [ ] Custom GPT
 - [ ] Groq Chat
+- [ ] Change carasoul in gallery
+
 ## License
 
 MIT License
@@ -172,13 +174,6 @@ Built using:
 - [v0.dev](https://v0.dev)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [shadcn/ui-docs](https://ui.shadcn.com/docs)
-
-## Pushing to Git
-
-git status
-git add .
-git commit -m "update"
-git push origin main
 
 ## Personalizing Your Fork
 
@@ -227,10 +222,21 @@ git push origin main
 ```
 
 ### Deployment
+
 This project can be deployed on Vercel or any other Next.js-compatible hosting platform. Make sure to:
 1. Configure environment variables in your hosting platform
 2. Set up the necessary database connections
 3. Update the deployment settings as needed
+
+## Dashboard 
+
+The dashboard will be a tool for monitoring and managing the website. It will include:
+- Visitor count
+- Message count
+- User count
+- Chat history
+
+The dashboard will be accessible only to users with admin privileges.
 
 
 ## AI TODO

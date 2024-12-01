@@ -15,7 +15,7 @@ export default function ResumePage() {
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">Christopher Celaya</h1>
-        <p className="text-xl mb-6 text-muted-foreground">Software Developer | Mechatronic Technician | Audio Engineer</p>
+        <p className="text-xl mb-6 text-muted-foreground">Mechatronic Technician | Software Developer | Audio Engineer</p>
         <div className="flex flex-wrap gap-4">
           <Button variant="outline" size="sm" asChild>
             <a href="tel:915-279-0197">
