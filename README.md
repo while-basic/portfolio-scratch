@@ -127,7 +127,7 @@ The workflow checks:
 - [-] Add SEO
 - [-] Add blog
 - [-] Secret audio page
-- [ ] Responsive on mobile
+- [-] Responsive on mobile
 - [-] Loading screen
 - [-] Update README.md
   - [-] Update all pages that have personal information that needs to be updated
@@ -136,7 +136,7 @@ The workflow checks:
 - [ ] Add analytics to dashboard
 - [ ] Add settings page
 - [ ] Projects tiles need to navigate to a case study page
-- [ ] Blog heading needs to be styled correctly
+- [-] Blog heading needs to be styled correctly
 - [-] Chat should have a notice about it being used for signed in users only
 - [ ] Add avatar icons to chat
 - [ ] Add admin dashboard
