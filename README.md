@@ -139,7 +139,7 @@ The workflow checks:
 - [ ] Blog heading needs to be styled correctly
 - [-] Chat should have a notice about it being used for signed in users only
 - [ ] Add avatar icons to chat
-- [ ] 
+- [ ] Add admin dashboard
 
 ## Projects
 
@@ -231,3 +231,58 @@ This project can be deployed on Vercel or any other Next.js-compatible hosting p
 1. Configure environment variables in your hosting platform
 2. Set up the necessary database connections
 3. Update the deployment settings as needed
+
+
+## AI TODO
+
+JavaScript Optimization
+
+	6.	Code Splitting:
+	•	Identify large JavaScript bundles and suggest splitting them into smaller chunks.
+	•	Remove unused imports and third-party libraries.
+	7.	Tree Shaking:
+	•	Highlight modules that aren’t tree-shakable and suggest alternatives.
+	•	Eliminate dead code and report overly large components.
+
+API and Backend Optimization
+
+	8.	Supabase Optimizations:
+	•	Inspect API calls for inefficiencies and batch requests where possible.
+	•	Verify Supabase tables have proper indexes for faster queries.
+	•	Recommend caching strategies for frequently-accessed data.
+	•	Propose Supabase Edge Functions for performance-critical API calls.
+	9.	Data Fetching:
+	•	Flag API requests in components and check if they can use getServerSideProps or getStaticProps for better performance.
+	•	Enable caching using Next.js revalidate where appropriate.
+
+Build and Deployment
+
+	10.	Compression and Minification:
+	•	Ensure JavaScript and CSS minification is enabled in next.config.js.
+	•	Verify Brotli or gzip compression is active for Vercel deployment.
+	11.	CDN:
+	•	Confirm all static files in the public/ directory are served via the Vercel CDN.
+
+Lazy Loading and Prefetching
+
+	12.	Lazy Load Components:
+	•	Identify and refactor non-critical components and assets to load lazily.
+	•	Ensure images, scripts, and iframes use lazy loading.
+	13.	Link Prefetching:
+	•	Add or verify prefetch for Next.js Link components to pre-load page data when links are hovered.
+
+Monitoring and Analytics
+
+	14.	Lighthouse:
+	•	Schedule automated performance audits and highlight areas needing improvement.
+	•	Monitor metrics such as Largest Contentful Paint (LCP) and Time to Interactive (TTI).
+	15.	Vercel Analytics:
+	•	Inspect real-time performance logs and suggest actionable improvements.
+	16.	Supabase Metrics:
+	•	Review API and database query performance regularly. Report slow queries for optimization.
+
+Execution Workflow
+
+	•	Continuously run the above optimizations during development and build processes.
+	•	Provide warnings for detected inefficiencies and suggest automated fixes where applicable.
+	•	Flag code that introduces performance regressions after new commits.

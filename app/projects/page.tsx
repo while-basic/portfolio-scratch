@@ -5,52 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Github, Globe } from "lucide-react";
 import Image from "next/image";
-
-interface Project {
-  title: string;
-  description: string;
-  tags: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  imageUrl?: string;
-  slug: string;
-}
+import { getProjects } from "@/lib/projects";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { Project } from "@/lib/projects"; 
 
 export const metadata: Metadata = {
   title: "Projects | Christopher Celaya",
   description: "Featured projects and portfolio work by Christopher Celaya",
 }
 
-export default function ProjectsPage() {
-  const projects: Project[] = [
-    {
-      title: "Portfolio Website",
-      description: "A modern portfolio website built with Next.js and Tailwind CSS, featuring animations and a clean design.",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      githubUrl: "https://github.com/christophercelaya/portfolio",
-      liveUrl: "https://christophercelaya.com",
-      imageUrl: "/images/projects/portfolio.webp",
-      slug: "portfolio-website"
-    },
-    {
-      title: "EcoTrack",
-      description: "Environmental monitoring and data visualization platform",
-      tags: ["React", "Node.js", "MongoDB", "D3.js"],
-      githubUrl: "https://github.com/christophercelaya/ecotrack",
-      liveUrl: "https://ecotrack-demo.com",
-      imageUrl: "/images/projects/ecotrack.jpg",
-      slug: "ecotrack"
-    },
-    {
-      title: "SmartBudget",
-      description: "An intelligent personal finance management system with ML-powered insights and predictions.",
-      tags: ["React Native", "TensorFlow.js", "Express", "MySQL", "Plaid API"],
-      githubUrl: "https://github.com/christophercelaya/smartbudget",
-      liveUrl: "https://smartbudget-app.com",
-      imageUrl: "/images/projects/smartbudget.jpg",
-      slug: "smartbudget"
-    }
-  ];
+// This ensures the page is statically generated at build time
+export const revalidate = 3600; // Revalidate every hour
+
+async function ProjectsPage() {
+  const projects = await getProjects();
 
   return (
     <PageLayout>
@@ -69,7 +37,10 @@ export default function ProjectsPage() {
                     src={project.imageUrl}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover"
+                    loading="lazy"
+                    quality={75}
                   />
                 </div>
               )}
@@ -130,3 +101,5 @@ export default function ProjectsPage() {
     </PageLayout>
   );
 }
+
+export default ProjectsPage;
