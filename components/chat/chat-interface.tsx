@@ -54,7 +54,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             role: msg.role,
             content: msg.content
           })),
-          model: 'gpt-3.5-turbo'
+          model: 'gpt-4o'
         }),
       })
 

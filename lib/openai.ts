@@ -50,7 +50,7 @@ export async function generateChatResponse(
     topP: 1,
     frequencyPenalty: 0,
     presencePenalty: 0,
-    maxTokens: 1000,
+    maxTokens: 500,
     model: 'GPT 4o mini'
   };
 

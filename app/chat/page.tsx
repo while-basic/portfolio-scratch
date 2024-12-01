@@ -81,6 +81,13 @@ export default function ChatPage() {
     });
   }
 
+  const handleDeleteConversation = (id: string) => {
+    setConversations(prev => prev.filter(conv => conv.id !== id))
+    if (currentConversation?.id === id) {
+      setCurrentConversation(null)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex items-center justify-between px-4 py-4 border-b">
@@ -112,6 +119,7 @@ export default function ChatPage() {
             currentConversation={currentConversation}
             onSelectConversation={setCurrentConversation}
             onNewConversation={handleNewConversation}
+            onDeleteConversation={handleDeleteConversation}
           />
         </div>
         <main className="flex-1 overflow-hidden">

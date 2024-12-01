@@ -54,7 +54,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "An animated short created using Blender, showcasing advanced rendering and storytelling techniques.",
       tags: ["Blender", "3D Animation", "Rendering"],
       githubUrl: "https://github.com/christophercelaya/3d-blender-animation",
-      liveUrl: "https://3d-blender-animation.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/blender.png",
       slug: "3d-blender-animation"
     },
@@ -63,7 +63,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A photorealistic game environment created with Unreal Engine 5, featuring Lumen and Nanite.",
       tags: ["Unreal Engine 5", "Blueprints", "Game Design"],
       githubUrl: "https://github.com/christophercelaya/ue5-environment",
-      liveUrl: "https://ue5-environment.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/unreal.png",
       slug: "ue5-game-environment"
     },
@@ -72,7 +72,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "An immersive 3D environment for Unity games, optimized for performance and interactivity.",
       tags: ["Unity", "C#", "Game Design"],
       githubUrl: "https://github.com/christophercelaya/unity-environment",
-      liveUrl: "https://unity-environment.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/unity.png",
       slug: "unity-game-environment"
     },
@@ -81,7 +81,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A comprehensive AI platform designed to assist medical practitioners with diagnostic and administrative tasks.",
       tags: ["Next.js", "AI", "OpenAI API"],
       githubUrl: "https://github.com/christophercelaya/amica-doctor",
-      liveUrl: "https://amica-doctor.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/amica.png",
       slug: "amica-medical-doctor"
     },
@@ -90,7 +90,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A multi-channel real-time chat application for teams, with AI-powered suggestions and insights.",
       tags: ["WebSocket", "React", "Node.js"],
       githubUrl: "https://github.com/christophercelaya/chattersync",
-      liveUrl: "https://chattersync.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/chattersync.jpg",
       slug: "chattersync"
     },
@@ -99,7 +99,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A next-generation image processing tool with AI enhancements for photographers and videographers.",
       tags: ["Python", "OpenCV", "PyTorch"],
       githubUrl: "https://github.com/christophercelaya/gemini-pro-vision",
-      liveUrl: "https://gemini-pro-vision.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/gemini-pro.jpg",
       slug: "gemini-pro-vision"
     },
@@ -108,7 +108,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A Stable Diffusion XL-powered platform for generating custom images and artwork.",
       tags: ["Stable Diffusion", "Replicate API", "Next.js"],
       githubUrl: "https://github.com/christophercelaya/replicate-sdxl",
-      liveUrl: "https://replicate-sdxl.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/replicate-sdxl.jpg",
       slug: "replicate-sdxl"
     },
@@ -117,7 +117,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "A collaborative platform for musicians to create and share compositions.",
       tags: ["React", "Node.js", "Socket.IO"],
       githubUrl: "https://github.com/christophercelaya/ensemble",
-      liveUrl: "https://ensemble.com",
+      liveUrl: "https://",
       imageUrl: "/images/projects/ensemble.jpg",
       slug: "ensemble"
     },
@@ -135,7 +135,7 @@ export async function getProjects(): Promise<Project[]> {
       description: "Custom AI agents for advanced natural language understanding and task automation.",
       tags: ["LangChain", "Python", "OpenAI"],
       githubUrl: "https://github.com/christophercelaya/langchain-agents",
-      liveUrl: "https://langchain-agents.com",
+      liveUrl: "",
       imageUrl: "/images/projects/langchain.jpg",
       slug: "langchain-agents"
     },
