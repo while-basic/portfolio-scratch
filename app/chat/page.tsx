@@ -10,12 +10,20 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useAuth } from "@/lib/auth-context"
 import { AuthDialog } from "@/components/chat/auth-dialog"
 import { Breadcrumb } from "@/components/breadcrumb"
+import { LLMControls } from "@/components/chat/llm-controls"
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const { user, loading } = useAuth()
   const [showAuthDialog, setShowAuthDialog] = useState(false)
+  const [llmSettings, setLLMSettings] = useState({
+    temperature: 0.7,
+    topP: 1,
+    frequencyPenalty: 0,
+    presencePenalty: 0,
+    maxTokens: 1000,
+  })
 
   useEffect(() => {
     if (!loading && !user) {
@@ -39,7 +47,10 @@ export default function ChatPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ messages: updatedMessages }),
+        body: JSON.stringify({ 
+          messages: updatedMessages,
+          settings: llmSettings
+        }),
       })
 
       if (!response.ok) {
@@ -76,7 +87,7 @@ export default function ChatPage() {
             </Button>
           </Link>
           <h1 className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
-            Chat with AI Assistant
+            AI Chat Dashboard
           </h1>
         </div>
       </div>
@@ -86,68 +97,30 @@ export default function ChatPage() {
         <Breadcrumb />
       </div>
 
-      {/* Chat Container */}
-      <main className="flex-1 overflow-y-auto pt-16 pb-24">
-        <div className="max-w-3xl mx-auto p-4 space-y-4">
-          <AnimatePresence mode="popLayout">
-            {messages.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="text-center py-20 space-y-6"
-              >
-                <div className="flex justify-center">
-                  <Bot className="h-12 w-12 text-muted-foreground" />
-                </div>
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-semibold text-foreground/80">
-                    Welcome to the Chat!
-                  </h2>
-                  <p className="text-muted-foreground max-w-sm mx-auto">
-                    Start a conversation with the AI assistant. Ask questions, get help, or just chat!
-                  </p>
-                </div>
-              </motion.div>
-            ) : (
-              <MessageList messages={messages} />
-            )}
-          </AnimatePresence>
-        </div>
-      </main>
-
-      {/* Input Container */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-transparent py-4">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="relative">
-            <ChatInput 
-              onSend={handleSendMessage} 
-              disabled={isLoading} 
-            />
-            {isLoading && (
-              <div className="absolute right-14 top-1/2 -translate-y-1/2">
-                <div className="flex gap-1">
-                  <motion.div
-                    className="h-2 w-2 rounded-full bg-foreground/20"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1, repeat: Infinity, delay: 0 }}
-                  />
-                  <motion.div
-                    className="h-2 w-2 rounded-full bg-foreground/20"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
-                  />
-                  <motion.div
-                    className="h-2 w-2 rounded-full bg-foreground/20"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
-                  />
-                </div>
+      {/* Dashboard Layout */}
+      <main className="flex-1 overflow-y-auto pt-4 pb-24">
+        <div className="max-w-7xl mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Chat Section */}
+          <div className="md:col-span-2 space-y-4">
+            <div className="bg-background rounded-lg shadow-sm border min-h-[600px] flex flex-col">
+              <div className="flex-1 overflow-y-auto p-4">
+                <MessageList messages={messages} isLoading={isLoading} />
               </div>
-            )}
+              <div className="p-4 border-t">
+                <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
+              </div>
+            </div>
+          </div>
+
+          {/* Controls Section */}
+          <div className="space-y-4">
+            <LLMControls
+              settings={llmSettings}
+              onSettingsChange={setLLMSettings}
+            />
           </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

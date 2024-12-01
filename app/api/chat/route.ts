@@ -3,8 +3,8 @@ import { generateChatResponse } from "@/lib/openai"
 
 export async function POST(request: Request) {
   try {
-    const { messages } = await request.json()
-    const response = await generateChatResponse(messages)
+    const { messages, settings } = await request.json()
+    const response = await generateChatResponse(messages, settings)
     return NextResponse.json(response)
   } catch (error) {
     console.error("[CHAT_ERROR]", error)

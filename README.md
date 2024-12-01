@@ -131,7 +131,7 @@ The workflow checks:
 - [-] Loading screen
 - [-] Update README.md
   - [-] Update all pages that have personal information that needs to be updated
-- [ ] Add footer
+- [ ] Add footer to home page
 - [ ] Add analytics
 - [ ] Add analytics to dashboard
 - [ ] Add settings page
