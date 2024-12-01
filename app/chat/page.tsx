@@ -8,7 +8,7 @@ import { AuthDialog } from "@/components/chat/auth-dialog"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { ChatInterface } from "@/components/chat/chat-interface"
 import { Sidebar } from "@/components/chat/sidebar"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { getConversations, createConversation, updateConversation, Conversation } from "@/lib/chat"
 import { Message } from "@/components/chat/message-list"
 import { cn } from "@/lib/utils"
@@ -20,7 +20,7 @@ export default function ChatPage() {
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null)
 
-  const loadConversations = async () => {
+  const loadConversations = useCallback(async () => {
     try {
       if (!user?.id) return
       const data = await getConversations(user.id)
@@ -31,7 +31,7 @@ export default function ChatPage() {
         setShowAuthDialog(true)
       }
     }
-  }
+  }, [user?.id])
 
   useEffect(() => {
     if (!loading && !user) {

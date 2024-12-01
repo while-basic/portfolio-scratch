@@ -1,5 +1,3 @@
-import { Card } from "@/components/ui/card"
-
 interface TokenUsage {
   total_tokens: number
   prompt_tokens: number
