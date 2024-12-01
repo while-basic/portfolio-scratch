@@ -88,6 +88,132 @@ The workflow checks:
 - ESLint linting
 - Next.js build process
 
+## Personalizing Your Portfolio
+
+After forking this repository, you'll need to update various files with your personal information. Here's a comprehensive guide based on the actual project structure:
+
+### 1. Core Components
+- **Navbar** (`/components/navbar.tsx`)
+  - Update navigation links
+  - Modify logo and branding
+  - Customize menu items
+
+- **Hero Section** (`/components/hero.tsx`)
+  - Update main headline
+  - Modify tagline and description
+  - Change call-to-action buttons
+
+- **Layout** (`/app/layout.tsx`)
+  - Update metadata and SEO settings
+  - Modify default page structure
+  - Customize loading screen
+
+### 2. Main Pages
+- **Home Page** (`/app/page.tsx`)
+  - Update hero content
+  - Modify featured projects
+  - Customize welcome message
+
+- **About Page** (`/app/about/page.tsx`)
+  - Update biography
+  - Modify personal story
+  - Add professional background
+
+- **Projects** (`/app/projects/page.tsx`)
+  - Update project cards (`/components/project-card.tsx`)
+  - Add your own projects
+  - Customize project descriptions
+
+- **Experience** (`/app/experience/page.tsx`)
+  - Update work history (`/components/experience-card.tsx`)
+  - Add education details (`/components/education-card.tsx`)
+  - Modify role descriptions
+
+### 3. Skills and Expertise
+- **Skills Page** (`/app/skills/page.tsx`)
+  - Update skill sections (`/components/skills-section.tsx`)
+  - Modify skill cards (`/components/skill-card.tsx`)
+  - Customize tag cloud (`/components/skills-tag-cloud.tsx`)
+
+### 4. Interactive Features
+- **Gallery** (`/app/gallery/page.tsx`)
+  - Update gallery items (`/components/gallery-item.tsx`)
+  - Modify filters (`/components/gallery-filter.tsx`)
+  - Add your own images
+
+- **Chat** (`/app/chat/page.tsx`)
+  - Customize chat interface
+  - Update AI settings
+  - Modify authentication requirements
+
+- **Audio** (`/app/audio/page.tsx`)
+  - Add your audio content
+  - Update audio player settings
+  - Customize audio descriptions
+
+### 5. Professional Content
+- **Resume** (`/app/resume/page.tsx`)
+  - Update resume content
+  - Add professional experience
+  - Upload new resume PDF
+
+- **Case Studies** (`/app/case-studies/page.tsx`)
+  - Add detailed project analyses
+  - Include project outcomes
+  - Update metrics and results
+
+### 6. Blog
+- **Blog Posts** (`/app/blog/`)
+  - Add your own posts
+  - Update blog layout
+  - Customize categories
+
+### 7. Environment Variables
+Create a `.env.local` file with these variables:
+```bash
+# Authentication
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key
+
+# OpenAI (for Chat Feature)
+OPENAI_API_KEY=your-openai-key
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-key
+
+# Email (for Contact Form)
+RESEND_API_KEY=your-resend-key
+```
+
+### 8. Assets and Media
+- **Public Directory** (`/public/`)
+  - Replace profile images
+  - Update project screenshots
+  - Add custom icons and media
+  - Update resume PDF
+  - Modify audio files
+
+### 9. UI Components
+- **Custom Components** (`/components/ui/`)
+  - Customize button styles
+  - Update card designs
+  - Modify form elements
+  - Adjust animations
+
+### 10. Additional Features
+- **Dashboard** (`/app/dashboard/page.tsx`)
+  - Configure visitor counter
+  - Set up analytics
+  - Customize admin features
+
+Remember to:
+1. Test all changes locally using `npm run dev`
+2. Verify responsive design on multiple devices
+3. Check all links and media work correctly
+4. Update SEO metadata for all pages
+5. Remove placeholder content
+
 ## Todos should be completed starting from the most easiest to implement. The Todo list should be updated periodically and in order from easiest to most difficult for the AI to implement.
 
 - [-] Initial setup
@@ -174,42 +300,6 @@ Built using:
 - [v0.dev](https://v0.dev)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [shadcn/ui-docs](https://ui.shadcn.com/docs)
-
-## Personalizing Your Fork
-
-After forking this repository, you'll need to update the following:
-
-### Required Updates
-1. **Personal Information**
-   - `/app/config/site.ts`: Update site metadata, name, and social links
-   - `/app/components/about.tsx`: Modify the about section content
-   - `/app/components/hero.tsx`: Update hero section with your name and title
-   - `/public/images/`: Replace profile and project images
-
-2. **Project Details**
-   - `/app/projects/page.tsx`: Update project cards with your own projects
-   - `/app/projects/[slug]/page.tsx`: Create case studies for your projects
-
-3. **Resume and Experience**
-   - `/app/resume/page.tsx`: Update with your experience and education
-   - `/public/resume.pdf`: Replace with your resume file
-
-4. **Environment Variables**
-   - Copy `.env.example` to `.env.local`
-   - Update the following variables:
-     ```
-     DATABASE_URL=your_database_url
-     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
-     RESEND_API_KEY=your_resend_api_key
-     ```
-
-### Optional Updates
-- `/app/blog/`: Add your own blog posts
-- `/app/components/footer.tsx`: Update footer links and information
-- `/app/components/nav.tsx`: Modify navigation items
-- `/public/favicon.ico`: Replace with your own favicon
-- `/app/layout.tsx`: Update metadata and default SEO settings
 
 ## Development Notes
 

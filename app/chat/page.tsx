@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Bot } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { MessageList, type Message } from "@/components/chat/message-list"
 import { ChatInput } from "@/components/chat/chat-input"
-import { motion, AnimatePresence } from "framer-motion"
 import { useAuth } from "@/lib/auth-context"
 import { AuthDialog } from "@/components/chat/auth-dialog"
 import { Breadcrumb } from "@/components/breadcrumb"

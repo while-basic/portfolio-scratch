@@ -7,15 +7,15 @@ import { SendHorizontal } from "lucide-react"
 
 interface ChatInputProps {
   onSend: (message: string) => void
-  disabled?: boolean
+  isLoading?: boolean
 }
 
-export function ChatInput({ onSend, disabled }: ChatInputProps) {
+export function ChatInput({ onSend, isLoading }: ChatInputProps) {
   const [input, setInput] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (input.trim()) {
+    if (input.trim() && !isLoading) {
       onSend(input)
       setInput("")
     }
@@ -34,17 +34,17 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Type a message..."
-        className="min-h-[60px] w-full resize-none rounded-lg border bg-background pr-16 shadow-sm focus:ring-2 focus:ring-primary/20"
-        disabled={disabled}
+        placeholder="Type your message..."
+        className="min-h-[80px] resize-none pr-14"
+        disabled={isLoading}
       />
       <Button
         type="submit"
         size="icon"
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90"
-        disabled={disabled || !input.trim()}
+        className="absolute bottom-2 right-2"
+        disabled={!input.trim() || isLoading}
       >
-        <SendHorizontal className="h-4 w-4" />
+        <SendHorizontal className="h-5 w-5" />
       </Button>
     </form>
   )

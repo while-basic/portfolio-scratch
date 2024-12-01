@@ -5,6 +5,10 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+interface OpenAIError extends Error {
+  code?: string;
+}
+
 // Implement exponential backoff for rate limiting
 async function withRetry<T>(
   fn: () => Promise<T>,
@@ -15,8 +19,9 @@ async function withRetry<T>(
   while (true) {
     try {
       return await fn();
-    } catch (error: any) {
-      if (error?.code === 'rate_limit_exceeded' && retries < maxRetries) {
+    } catch (error) {
+      const openAIError = error as OpenAIError;
+      if (openAIError.code === 'rate_limit_exceeded' && retries < maxRetries) {
         retries++;
         const delay = initialDelay * Math.pow(2, retries - 1);
         console.log(`Rate limit exceeded. Retrying in ${delay}ms...`);
@@ -45,7 +50,7 @@ export async function generateChatResponse(
   try {
     const completion = await withRetry(() => 
       openai.chat.completions.create({
-        model: "gpt-4",  // Using GPT-4
+        model: "gpt-4o",  // Using GPT-4
         messages: messages,
         temperature: finalSettings.temperature,
         max_tokens: finalSettings.maxTokens,
@@ -58,7 +63,8 @@ export async function generateChatResponse(
     return completion.choices[0].message;
   } catch (error) {
     console.error('Error calling OpenAI:', error);
-    if (error?.code === 'rate_limit_exceeded') {
+    const openAIError = error as OpenAIError;
+    if (openAIError.code === 'rate_limit_exceeded') {
       throw new Error('Rate limit exceeded. Please try again in a few minutes.');
     }
     throw error;
