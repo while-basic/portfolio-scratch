@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Message, MessageList } from './message-list'
-import { Conversation } from '@/lib/chat'
+import { MessageList } from './message-list'
+import { Message, Conversation } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"

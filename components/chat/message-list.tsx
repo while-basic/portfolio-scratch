@@ -7,7 +7,7 @@ import Image from "next/image"
 import { MarkdownMessage } from "./markdown-message"
 
 export type Message = {
-  role: "user" | "assistant"
+  role: "system" | "user" | "assistant"
   content: string
   avatar?: string  // Optional custom avatar URL
 }
@@ -28,7 +28,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           transition={{ duration: 0.3 }}
           className={cn(
             "group flex gap-3 relative",
-            message.role === "assistant" ? "flex-row" : "flex-row-reverse"
+            message.role === "assistant" ? "flex-row" : message.role === "system" ? "flex-row" : "flex-row-reverse"
           )}
         >
           <TooltipProvider>
@@ -38,6 +38,8 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                   "h-12 w-12 border-2 transition-all duration-200 hover:scale-110",
                   message.role === "assistant" 
                     ? "bg-violet-600 text-white border-violet-400" 
+                    : message.role === "system" 
+                    ? "bg-zinc-600 text-white border-zinc-400"
                     : "bg-emerald-600 text-white border-emerald-400"
                 )}>
                   {message.avatar ? (
@@ -52,6 +54,8 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                     <AvatarFallback>
                       {message.role === "assistant" ? (
                         <Brain className="h-6 w-6" />
+                      ) : message.role === "system" ? (
+                        <UserCircle2 className="h-6 w-6" />
                       ) : (
                         <UserCircle2 className="h-6 w-6" />
                       )}
@@ -60,7 +64,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                 </Avatar>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{message.role === "assistant" ? "AI Assistant" : "You"}</p>
+                <p>{message.role === "assistant" ? "AI Assistant" : message.role === "system" ? "System" : "You"}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -71,6 +75,8 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
               "break-words whitespace-pre-wrap max-w-full",
               message.role === "assistant" 
                 ? "bg-zinc-800 text-zinc-100" 
+                : message.role === "system" 
+                ? "bg-zinc-700 text-zinc-100"
                 : "bg-zinc-700 text-zinc-100"
             )}
           >

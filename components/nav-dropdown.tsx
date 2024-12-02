@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Twitter, FileText, BookOpen } from 'lucide-react';
+import { Github, Linkedin, FileText, BookOpen } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,7 @@ export function NavDropdown() {
     { 
       icon: <Github className="w-4 h-4" />, 
       label: 'GitHub', 
-      href: 'https://github.com/christophercelaya',
+      href: 'https://github.com/while-basic',
       internal: false 
     },
     { 

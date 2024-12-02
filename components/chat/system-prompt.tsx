@@ -33,6 +33,12 @@ export function SystemPrompt({ value, onChange }: SystemPromptProps) {
   }, [])
 
   useEffect(() => {
+    if (value) {
+      onChange(value)
+    }
+  }, [value, onChange])
+
+  useEffect(() => {
     // Update local value when prop value changes
     setLocalValue(value)
   }, [value])
@@ -68,8 +74,11 @@ export function SystemPrompt({ value, onChange }: SystemPromptProps) {
             placeholder="You are a helpful AI assistant..."
             className="h-[300px] bg-black border-gray-800 text-white resize-none"
           />
+          <p className="text-sm text-muted-foreground">
+            Don&apos;t know what to write? Here&apos;s a good default:
+          </p>
           <div className="mt-2 text-xs text-gray-400">
-            The system prompt helps define the AI's behavior, knowledge, and tone.
+            The system prompt helps define the AI&apos;s behavior, knowledge, and tone.
           </div>
         </div>
         <SheetFooter className="mt-4">

@@ -16,9 +16,9 @@ const links = [
     url: "https://ai-chat-one-omega.vercel.app",
   },
   {
-    title: "Project Beta",
-    description: "Cutting-edge machine learning solutions",
-    url: "https://example.com/project-beta",
+    title: "Portfolio Website",
+    description: "My personal portfolio website",
+    url: "https://chriscelaya.com",
   },
   // Add more links as needed
 ];
