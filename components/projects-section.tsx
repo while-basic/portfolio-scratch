@@ -6,18 +6,6 @@ const projects = [
     description: 'Designed and implemented a fully automated manufacturing system using PLCs and custom software.',
     image: '/placeholder.svg?height=200&width=300',
     tags: ['Mechatronics', 'Software']
-  },
-  {
-    title: 'Audio Visualization App',
-    description: 'Developed a real-time audio visualization application using React and Web Audio API.',
-    image: '/placeholder.svg?height=200&width=300',
-    tags: ['Software', 'Audio']
-  },
-  {
-    title: 'Smart Home Audio System',
-    description: 'Created a distributed audio system for smart homes with custom hardware and mobile app control.',
-    image: '/placeholder.svg?height=200&width=300',
-    tags: ['Mechatronics', 'Software', 'Audio']
   }
 ]
 
