@@ -8,11 +8,10 @@ import { Message, Conversation, TokenUsage } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { TokenDisplay } from './token-display'
 import { ModelDisplay } from './model-display'
 import { SystemPrompt } from './system-prompt'
-import { ChevronLeft, ChevronRight, Settings2, Sliders } from "lucide-react"
+import { ChevronLeft, ChevronRight, Settings2, Sliders, Plus } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -51,32 +50,32 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         body: JSON.stringify({ 
           messages: updatedMessages,
           temperature,
-          max_tokens: maxTokens,
-          top_p: topP,
-          frequency_penalty: frequencyPenalty,
-          presence_penalty: presencePenalty
+          maxTokens,
+          topP,
+          frequencyPenalty,
+          presencePenalty
         })
       })
 
       if (!response.ok) {
-        const errorData = await response.json()
-        if (response.status === 429) {
-          const retryAfter = parseInt(response.headers.get('Retry-After') || '3600')
-          const minutes = Math.ceil(retryAfter / 60)
-          throw new Error(`Rate limit exceeded. Please try again in ${minutes} minutes.`)
-        }
-        throw new Error(errorData.error || 'Failed to send message')
+        throw new Error('Failed to send message')
       }
-      
+
       const data = await response.json()
-      const assistantMessage = { role: 'assistant' as const, content: data.content }
-      onNewMessage([...updatedMessages, assistantMessage])
+      
+      // Update token usage from response
+      if (data.usage) {
+        setTokenUsage(data.usage)
+      }
+
+      const newAssistantMessage = { role: 'assistant' as const, content: data.message }
+      const finalMessages = [...updatedMessages, newAssistantMessage]
+      onNewMessage(finalMessages)
       setInputMessage('')
-      setTokenUsage(data.usage)
     } catch (err) {
       toast({
         title: "Error",
-        description: err instanceof Error ? err.message : "Failed to send message. Please try again.",
+        description: "Failed to send message. Please try again.",
         variant: "destructive"
       })
       console.error('Chat error:', err)
@@ -93,21 +92,31 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   }
   
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[100vh]">
       {/* Left Sidebar Toggle */}
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-2 top-2 z-10"
+        className="absolute left-2 top-2 z-10 shrink-0"
         onClick={() => setShowLeftSidebar(!showLeftSidebar)}
       >
         {showLeftSidebar ? <ChevronLeft /> : <ChevronRight />}
       </Button>
 
       {/* Left Sidebar */}
-      <div className={`${showLeftSidebar ? 'w-64' : 'w-0'} bg-background border-r transition-all duration-300 overflow-hidden`}>
+      <div className={`${showLeftSidebar ? 'w-64' : 'w-0'} bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-r border-border/40 transition-all duration-300 overflow-hidden`}>
         <div className="p-4">
           <div className="space-y-2">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start"
+              onClick={() => {
+                onNewMessage([])
+              }}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              New Chat
+            </Button>
             <Button 
               variant="ghost" 
               className="w-full justify-start"
@@ -146,16 +155,22 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-h-0">
         {/* Top Bar */}
-        <div className="border-b p-4 flex justify-between items-center">
-          <h2 className="text-lg font-semibold">
-            {isRealtimeMode ? 'Realtime Chat' : isImageMode ? 'Image Generation' : 'Chat'}
-          </h2>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm">Clear</Button>
-            <Button variant="outline" size="sm">Code</Button>            
-            <Button variant="outline" size="sm">History</Button>
+        <div className="shrink-0 border-b border-border/40 p-3 flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center gap-3">
+            <h2 className="text-sm font-medium">
+              {isRealtimeMode ? 'Realtime Chat' : isImageMode ? 'Image Generation' : 'Chat'}
+            </h2>
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              <ModelDisplay model="GPT-3.5" />
+              <TokenDisplay usage={tokenUsage} />
+            </div>
+          </div>
+          <div className="flex gap-1.5">
+            <Button variant="ghost" size="sm">Clear</Button>
+            <Button variant="ghost" size="sm">Code</Button>            
+            <Button variant="ghost" size="sm">History</Button>
           </div>
         </div>
 
@@ -164,29 +179,40 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         ) : isImageMode ? (
           <ImageGeneration />
         ) : (
-          <>
-            <ScrollArea className="flex-1 p-4">
-              <MessageList messages={conversation?.messages || []} isLoading={isLoading} />
-            </ScrollArea>
-            <div className="border-t p-4">
-              <div className="flex gap-2">
-                <Textarea
-                  placeholder="Enter user message..."
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  className="min-h-[44px] max-h-[200px]"
-                />
-                <Button 
-                  onClick={handleSubmit}
-                  disabled={isLoading || !inputMessage.trim()}
-                  className="px-8"
-                >
-                  {isLoading ? 'Sending...' : 'Send'}
-                </Button>
+          <div className="flex flex-col min-h-0 flex-1">
+            <div className="flex-1 overflow-auto">
+              <div className="max-w-3xl mx-auto p-4">
+                <MessageList messages={conversation?.messages || []} isLoading={isLoading} />
               </div>
             </div>
-          </>
+            <div className="shrink-0 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="max-w-3xl mx-auto p-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2">
+                    <Textarea
+                      placeholder="Enter user message..."
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      className="min-h-[44px] max-h-[200px] resize-none"
+                    />
+                    <Button 
+                      onClick={handleSubmit}
+                      disabled={isLoading || !inputMessage.trim()}
+                      className="px-8 shrink-0"
+                    >
+                      {isLoading ? 'Sending...' : 'Send'}
+                    </Button>
+                  </div>
+                  {tokenUsage && (
+                    <div className="flex justify-end">
+                      <TokenDisplay usage={tokenUsage} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
 
@@ -194,15 +220,15 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-2 top-2 z-10"
+        className="absolute right-2 top-2 z-10 shrink-0"
         onClick={() => setShowRightSidebar(!showRightSidebar)}
       >
         {showRightSidebar ? <ChevronRight /> : <ChevronLeft />}
       </Button>
 
       {/* Right Configuration Panel */}
-      <div className={`${showRightSidebar ? 'w-80' : 'w-0'} border-l bg-background transition-all duration-300 overflow-hidden`}>
-        <ScrollArea className="h-full">
+      <div className={`${showRightSidebar ? 'w-80' : 'w-0'} border-l border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 overflow-hidden`}>
+        <div className="h-full overflow-auto">
           <div className="p-4 space-y-6">
             <Card>
               <CardHeader className="pb-3">
@@ -306,7 +332,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
               </CardContent>
             </Card>
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   )

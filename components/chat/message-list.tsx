@@ -27,7 +27,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
           className={cn(
-            "group flex gap-3 relative",
+            "group flex gap-2 relative",
             message.role === "assistant" ? "flex-row" : message.role === "system" ? "flex-row" : "flex-row-reverse"
           )}
         >
@@ -35,29 +35,29 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             <Tooltip>
               <TooltipTrigger>
                 <Avatar className={cn(
-                  "h-12 w-12 border-2 transition-all duration-200 hover:scale-110",
+                  "h-8 w-8 border transition-all duration-200 hover:scale-105",
                   message.role === "assistant" 
-                    ? "bg-violet-600 text-white border-violet-400" 
+                    ? "bg-violet-600/90 text-white border-violet-400/20" 
                     : message.role === "system" 
-                    ? "bg-zinc-600 text-white border-zinc-400"
-                    : "bg-emerald-600 text-white border-emerald-400"
+                    ? "bg-zinc-600/90 text-white border-zinc-400/20"
+                    : "bg-emerald-600/90 text-white border-emerald-400/20"
                 )}>
                   {message.avatar ? (
                     <Image 
                       src={message.avatar} 
                       alt={`${message.role} avatar`}
-                      width={48}
-                      height={48}
+                      width={32}
+                      height={32}
                       className="h-full w-full object-cover rounded-full"
                     />
                   ) : (
                     <AvatarFallback>
                       {message.role === "assistant" ? (
-                        <Brain className="h-6 w-6" />
+                        <Brain className="h-4 w-4" />
                       ) : message.role === "system" ? (
-                        <UserCircle2 className="h-6 w-6" />
+                        <UserCircle2 className="h-4 w-4" />
                       ) : (
-                        <UserCircle2 className="h-6 w-6" />
+                        <UserCircle2 className="h-4 w-4" />
                       )}
                     </AvatarFallback>
                   )}
@@ -70,17 +70,19 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           </TooltipProvider>
           <div 
             className={cn(
-              "flex-1 overflow-hidden rounded-2xl px-4 py-2 transition-colors",
+              "flex-1 overflow-hidden rounded-lg px-3 py-2 transition-colors",
               "shadow-sm hover:shadow-md transition-shadow duration-200",
-              "break-words whitespace-pre-wrap max-w-full",
+              "break-words whitespace-pre-wrap max-w-[85%]",
               message.role === "assistant" 
-                ? "bg-zinc-800 text-zinc-100" 
+                ? "bg-zinc-800/90 text-zinc-100 border border-zinc-700/50" 
                 : message.role === "system" 
-                ? "bg-zinc-700 text-zinc-100"
-                : "bg-zinc-700 text-zinc-100"
+                ? "bg-zinc-700/90 text-zinc-100 border border-zinc-600/50"
+                : "bg-violet-600/90 text-white border border-violet-500/50"
             )}
           >
-            <MarkdownMessage content={message.content} />
+            <div className="prose prose-invert max-w-none">
+              <MarkdownMessage content={message.content} />
+            </div>
           </div>
         </motion.div>
       ))}
@@ -90,12 +92,12 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           animate={{ opacity: 1, y: 0 }}
           className="flex gap-3"
         >
-          <Avatar className="h-12 w-12 border-2 bg-violet-600 text-white border-violet-400">
+          <Avatar className="h-8 w-8 border bg-violet-600/90 text-white border-violet-400/20">
             <AvatarFallback>
-              <Brain className="h-6 w-6" />
+              <Brain className="h-4 w-4" />
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1 space-y-2 rounded-2xl bg-muted p-4">
+          <div className="flex-1 space-y-2 rounded-lg bg-muted p-3">
             <div className="flex space-x-2">
               <div className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground/40 [animation-delay:-0.3s]"></div>
               <div className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground/40 [animation-delay:-0.15s]"></div>
