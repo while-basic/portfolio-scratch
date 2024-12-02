@@ -250,9 +250,9 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [x] Implement ChatGPT clone with Supabase integration
 - [x] Add estimated cost to chat
 - [x] Add total cost for chat
+- [x] Add footer to home page
 
 ### High Priority Tasks
-- [ ] Add footer to home page
 - [ ] Ability to delete conversations
 - [ ] Add social media links
 - [ ] Fix light/dark modes
