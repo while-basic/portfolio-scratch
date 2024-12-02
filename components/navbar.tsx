@@ -48,11 +48,11 @@ const Navbar = () => {
       label: "Resume",
       active: pathname === "/resume",
     },
-    {
-      href: "/chat",
-      label: "Chat",
-      active: pathname === "/chat" || pathname === "/chat/image",
-    },
+    // {
+    //   href: "/chat",
+    //   label: "Chat",
+    //   active: pathname === "/chat" || pathname === "/chat/image",
+    // },
   ]
 
   return (
