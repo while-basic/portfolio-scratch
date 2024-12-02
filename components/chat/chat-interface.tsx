@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { MessageList } from './message-list'
-import { Message, Conversation } from '@/lib/chat'
+import { Message, Conversation, TokenUsage } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
@@ -19,184 +19,138 @@ interface ChatInterfaceProps {
 }
 
 export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps) {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [inputValue, setInputValue] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [selectedModel, setSelectedModel] = useState('gpt-4o')
-  const [systemPrompt, setSystemPrompt] = useState('')
-  const models = ['gpt-4o', 'gpt-3.5-turbo', 'gpt-4']
-  const [tokenUsage, setTokenUsage] = useState<{
-    total_tokens: number
-    prompt_tokens: number
-    completion_tokens: number
-    estimated_cost: number
-  } | null>(null)
+  const [inputMessage, setInputMessage] = useState('')
   const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+  const [tokenUsage, setTokenUsage] = useState<TokenUsage | null>(null)
 
-  // Reset state when conversation changes
-  useEffect(() => {
-    setMessages(conversation?.messages || [])
-    setInputValue('')
-    setIsLoading(false)
-  }, [conversation])
+  const handleSubmit = async () => {
+    if (!inputMessage.trim() || isLoading) return
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!inputValue.trim() || isLoading) return
-
-    const newMessage: Message = {
-      role: 'user',
-      content: inputValue.trim()
-    }
-
-    // Update UI immediately with user message
-    const updatedMessages = [...messages, newMessage]
-    setMessages(updatedMessages)
-    setInputValue('')
     setIsLoading(true)
-
+    const newMessage = { role: 'user' as const, content: inputMessage }
+    const updatedMessages = [...(conversation?.messages || []), newMessage]
+    
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: systemPrompt
-            ? [{ role: 'system', content: systemPrompt }, ...updatedMessages]
-            : updatedMessages,
-          model: selectedModel
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: updatedMessages })
       })
 
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.message || 'Failed to get response')
-      }
-
+      if (!response.ok) throw new Error('Failed to send message')
+      
       const data = await response.json()
-
-      // Add AI response to messages
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: data.content
-      }
-
-      // Update token usage and model info
+      const assistantMessage = { role: 'assistant' as const, content: data.content }
+      onNewMessage([...updatedMessages, assistantMessage])
+      setInputMessage('')
       setTokenUsage(data.usage)
-
-      const newMessages = [...updatedMessages, assistantMessage]
-      setMessages(newMessages)
-      onNewMessage(newMessages)
     } catch (error) {
-      console.error('Error processing message:', error)
       toast({
-        variant: "destructive",
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get response from AI. Please try again.",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive"
       })
     } finally {
       setIsLoading(false)
     }
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit()
+    }
+  }
+  
   return (
-    <div className="flex flex-col h-[calc(100vh-3.5rem)]">
-      <ScrollArea className="flex-1 p-4">
-        {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full">
-            <h2 className="text-3xl font-bold text-white mb-8">Try these prompts ✨</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
-              {[
-                "Generate a tasty vegan lasagna recipe for 3 people.",
-                "Generate a list of 5 questions for a job interview for a software engineer.",
-                "Who won the 2022 FIFA World Cup?"
-              ].map((prompt, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setInputValue(prompt);
-                    handleSubmit({ preventDefault: () => {} } as React.FormEvent);
-                  }}
-                  className="p-4 rounded-lg border border-gray-800 bg-black hover:bg-gray-900 transition-colors text-white text-left"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
+    <div className="flex h-screen">
+      {/* Left Sidebar */}
+      <div className="w-64 bg-background border-r">
+        <div className="p-4">
+          <div className="space-y-2">
+            <Button variant="ghost" className="w-full justify-start">
+              <span className="mr-2">💬</span>
+              Chat
+            </Button>
           </div>
-        ) : (
-          <div className="space-y-6">
-            {messages.map((message, index) => (
-              <div key={index} className={cn(
-                "flex gap-4",
-                message.role === "assistant" ? "flex-row" : "flex-row-reverse"
-              )}>
-                <MessageList messages={[message]} />
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex gap-4 animate-pulse">
-                <div className="h-8 w-8 rounded-full bg-violet-600" />
-                <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-gray-800 rounded w-3/4" />
-                  <div className="h-4 bg-gray-800 rounded w-1/2" />
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </ScrollArea>
+        </div>
+      </div>
 
-      <div className="border-t border-gray-800 p-4">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <div className="flex-1 relative">
-              <Textarea
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask AI..."
-                className="flex-1 bg-black border-gray-800 text-white resize-none pr-24"
-                rows={1}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    if (inputValue.trim()) {
-                      handleSubmit(e);
-                    }
-                  }
-                }}
-              />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                <SystemPrompt value={systemPrompt} onChange={setSystemPrompt} />
-                <select 
-                  value={selectedModel} 
-                  onChange={(e) => setSelectedModel(e.target.value)}
-                  className="bg-transparent text-gray-400 text-xs border-none focus:outline-none focus:ring-0 cursor-pointer hover:text-white transition-colors"
-                >
-                  {models.map((model) => (
-                    <option key={model} value={model} className="bg-black text-white">
-                      {model}
-                    </option>
-                  ))}
-                </select>
-                <Button 
-                  type="submit" 
-                  disabled={isLoading || !inputValue.trim()}
-                  className="bg-white text-black hover:bg-gray-200"
-                  size="sm"
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Bar */}
+        <div className="border-b p-4 flex justify-between items-center">
+          <h1 className="text-xl font-semibold">Chat</h1>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm">Clear</Button>
+            <Button variant="outline" size="sm">Code</Button>            
+            <Button variant="outline" size="sm">History</Button>
           </div>
-          {tokenUsage && (
-            <div className="flex items-center justify-between text-xs text-gray-400">
-              <TokenDisplay usage={tokenUsage} />
-              <ModelDisplay model={selectedModel} />
-            </div>
-          )}
+        </div>
+
+        {/* Messages Area */}
+        <ScrollArea className="flex-1 p-4">
+          <MessageList messages={conversation?.messages || []} isLoading={isLoading} />
+        </ScrollArea>
+
+        {/* Input Area */}
+        <div className="border-t p-4">
+          <div className="flex gap-2">
+            <Button variant="outline" size="icon">User</Button>
+            <Textarea
+              placeholder="Enter user message..."
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
+              className="min-h-[44px] max-h-[200px]"
+            />
+            <Button variant="outline" size="icon">🎤</Button>
+            <Button 
+              onClick={handleSubmit}
+              disabled={isLoading || !inputMessage.trim()}
+            >
+              {isLoading ? 'Sending...' : 'Send'}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Configuration Panel */}
+      <div className="w-80 border-l bg-background">
+        <div className="p-4 space-y-6">
+          <ModelDisplay model="GPT-3.5" />
+          <SystemPrompt />
+          <TokenDisplay usage={tokenUsage} />
+          
+          <div>
+            <h3 className="mb-2">Temperature</h3>
+            <input type="range" className="w-full" defaultValue={1.0} min={0} max={2.0} step={0.1} />
+          </div>
+
+          <div>
+            <h3 className="mb-2">Max tokens</h3>
+            <input type="range" className="w-full" defaultValue={2048} min={1} max={4096} step={1} />
+          </div>
+
+          <div>
+            <h3 className="mb-2">Top P</h3>
+            <input type="range" className="w-full" defaultValue={1.0} min={0} max={1.0} step={0.1} />
+          </div>
+
+          <div>
+            <h3 className="mb-2">Frequency penalty</h3>
+            <input type="range" className="w-full" defaultValue={0} min={0} max={2.0} step={0.1} />
+          </div>
+
+          <div>
+            <h3 className="mb-2">Presence penalty</h3>
+            <input type="range" className="w-full" defaultValue={0} min={0} max={2.0} step={0.1} />
+          </div>
+
+          <Button className="w-full" variant="outline">
+            Save as preset
+          </Button>
         </div>
       </div>
     </div>

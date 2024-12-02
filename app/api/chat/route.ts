@@ -20,7 +20,7 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
   try {
-    const { messages, model = 'gpt-4o', summarize = false } = await request.json()
+    const { messages, model = 'gpt-3.5-turbo', summarize = false } = await request.json()
 
     if (summarize) {
       const completion = await openai.chat.completions.create({

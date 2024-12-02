@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/sheet"
 
 interface SystemPromptProps {
-  value: string
-  onChange: (value: string) => void
+  value?: string
+  onChange?: (value: string) => void
 }
 
-export function SystemPrompt({ value, onChange }: SystemPromptProps) {
+export function SystemPrompt({ value = '', onChange }: SystemPromptProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [localValue, setLocalValue] = useState(value)
 
@@ -28,13 +28,13 @@ export function SystemPrompt({ value, onChange }: SystemPromptProps) {
     const savedPrompt = localStorage.getItem('systemPrompt')
     if (savedPrompt) {
       setLocalValue(savedPrompt)
-      onChange(savedPrompt)
+      onChange?.(savedPrompt)
     }
-  }, [])
+  }, [onChange])
 
   useEffect(() => {
     if (value) {
-      onChange(value)
+      onChange?.(value)
     }
   }, [value, onChange])
 
@@ -44,7 +44,7 @@ export function SystemPrompt({ value, onChange }: SystemPromptProps) {
   }, [value])
 
   const handleSave = () => {
-    onChange(localValue)
+    onChange?.(localValue)
     localStorage.setItem('systemPrompt', localValue)
     setIsOpen(false)
   }

@@ -5,6 +5,13 @@ export interface Message {
   content: string
 }
 
+export interface TokenUsage {
+  total_tokens: number
+  prompt_tokens: number
+  completion_tokens: number
+  estimated_cost: number
+}
+
 export interface Conversation {
   id: string
   user_id: string
