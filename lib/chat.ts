@@ -151,7 +151,7 @@ export async function summarizeConversation(messages: Message[]): Promise<string
           },
           ...messages
         ],
-        model: 'gpt-4oo'
+        model: 'gpt-4o'
       }),
     })
 

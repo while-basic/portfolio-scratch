@@ -54,7 +54,15 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         })
       })
 
-      if (!response.ok) throw new Error('Failed to send message')
+      if (!response.ok) {
+        const errorData = await response.json()
+        if (response.status === 429) {
+          const retryAfter = parseInt(response.headers.get('Retry-After') || '3600')
+          const minutes = Math.ceil(retryAfter / 60)
+          throw new Error(`Rate limit exceeded. Please try again in ${minutes} minutes.`)
+        }
+        throw new Error(errorData.error || 'Failed to send message')
+      }
       
       const data = await response.json()
       const assistantMessage = { role: 'assistant' as const, content: data.content }
@@ -64,7 +72,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
     } catch (err) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: err instanceof Error ? err.message : "Failed to send message. Please try again.",
         variant: "destructive"
       })
       console.error('Chat error:', err)

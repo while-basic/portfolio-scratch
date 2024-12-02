@@ -262,12 +262,12 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [-] Complete Supabase integration
 - [-] Add resume download functionality
 - [ ] Make chat responsive on mobile
-- [ ] Correct styling on chat page
+- [-] Correct styling on chat page
 - [-] Add avatars to chat interface
 - [ ] Implement system prompts in chat
 - [-] Add option to change AI models
-- [ ] Add Markdown support in chat
-- [ ] Implement code highlighting in chat
+- [-] Add Markdown support in chat
+- [-] Implement code highlighting in chat
 - [ ] Enhance admin dashboard
   - [ ] Add total messages sent/recieved counter
   - [ ] Add total users registered counter
@@ -275,10 +275,11 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Add AI assistants to chat
 - [ ] Add total message count to dashboard
 - [ ] Implement image generation feature
-- [ ] Develop audio section
+- [ ] Develop audio page
 - [ ] Add support voice chat
 - [ ] Add options to change model
 - [ ] Scroll to latest message in chat
+- [ ] Add dropdown to select model
 - [ ] Add different chatbots
   - [ ] ChatGPT
   - [ ] Claude
