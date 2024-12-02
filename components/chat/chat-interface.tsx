@@ -27,7 +27,6 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [isLoading, setIsLoading] = useState(false)
   const [tokenUsage, setTokenUsage] = useState<TokenUsage | null>(null)
   const [showLeftSidebar, setShowLeftSidebar] = useState(true)
-  const [showRightSidebar, setShowRightSidebar] = useState(true)
   const [temperature, setTemperature] = useState(1.0)
   const [maxTokens, setMaxTokens] = useState(2048)
   const [topP, setTopP] = useState(1.0)
@@ -214,125 +213,6 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             </div>
           </div>
         )}
-      </div>
-
-      {/* Right Configuration Panel Toggle */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-2 top-2 z-10 shrink-0"
-        onClick={() => setShowRightSidebar(!showRightSidebar)}
-      >
-        {showRightSidebar ? <ChevronRight /> : <ChevronLeft />}
-      </Button>
-
-      {/* Right Configuration Panel */}
-      <div className={`${showRightSidebar ? 'w-80' : 'w-0'} border-l border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 overflow-hidden`}>
-        <div className="h-full overflow-auto">
-          <div className="p-4 space-y-6">
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium flex items-center gap-2">
-                  <Settings2 className="h-4 w-4" />
-                  Model Settings
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <ModelDisplay model="GPT-3.5" />
-                <Separator />
-                <SystemPrompt />
-                <Separator />
-                <TokenDisplay usage={tokenUsage} />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium flex items-center gap-2">
-                  <Sliders className="h-4 w-4" />
-                  Generation Settings
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <label className="text-sm font-medium">Temperature</label>
-                      <span className="text-sm text-muted-foreground">{temperature}</span>
-                    </div>
-                    <Slider
-                      value={[temperature]}
-                      onValueChange={([value]) => setTemperature(value)}
-                      min={0}
-                      max={2}
-                      step={0.1}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <label className="text-sm font-medium">Max tokens</label>
-                      <span className="text-sm text-muted-foreground">{maxTokens}</span>
-                    </div>
-                    <Slider
-                      value={[maxTokens]}
-                      onValueChange={([value]) => setMaxTokens(value)}
-                      min={1}
-                      max={4096}
-                      step={1}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <label className="text-sm font-medium">Top P</label>
-                      <span className="text-sm text-muted-foreground">{topP}</span>
-                    </div>
-                    <Slider
-                      value={[topP]}
-                      onValueChange={([value]) => setTopP(value)}
-                      min={0}
-                      max={1}
-                      step={0.1}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <label className="text-sm font-medium">Frequency penalty</label>
-                      <span className="text-sm text-muted-foreground">{frequencyPenalty}</span>
-                    </div>
-                    <Slider
-                      value={[frequencyPenalty]}
-                      onValueChange={([value]) => setFrequencyPenalty(value)}
-                      min={0}
-                      max={2}
-                      step={0.1}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <label className="text-sm font-medium">Presence penalty</label>
-                      <span className="text-sm text-muted-foreground">{presencePenalty}</span>
-                    </div>
-                    <Slider
-                      value={[presencePenalty]}
-                      onValueChange={([value]) => setPresencePenalty(value)}
-                      min={0}
-                      max={2}
-                      step={0.1}
-                    />
-                  </div>
-                </div>
-
-                <Button className="w-full" variant="outline">
-                  Save as preset
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </div>
     </div>
   )
