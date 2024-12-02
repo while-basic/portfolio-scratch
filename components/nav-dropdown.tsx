@@ -31,17 +31,17 @@ export function NavDropdown() {
       internal: false 
     },
     { 
-      icon: <Twitter className="w-4 h-4" />, 
-      label: 'Twitter', 
-      href: 'https://twitter.com/christophercelaya',
-      internal: false 
-    },
-    { 
       icon: <FileText className="w-4 h-4" />, 
       label: 'Resume', 
       href: '/resume.pdf',
       internal: true 
     },
+    {
+      icon: <BookOpen className="w-4 h-4" />,
+      label: 'Featured Links',
+      href: '/links',
+      internal: true
+    }
   ];
 
   return (

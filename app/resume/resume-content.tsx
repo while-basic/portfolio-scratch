@@ -20,7 +20,7 @@ export function ResumeContent() {
             </a>
           </Button>
           <Button variant="outline" size="sm" asChild>
-            <a href="https://github.com/christophercelaya" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/while-basic" target="_blank" rel="noopener noreferrer">
               <Github className="mr-2 h-4 w-4" />
               GitHub
             </a>
