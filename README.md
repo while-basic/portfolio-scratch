@@ -274,7 +274,7 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Implement streaming support for chat
 - [ ] Add AI assistants to chat
 - [ ] Add total message count to dashboard
-- [ ] Implement image generation feature
+- [-] Implement image generation feature
 - [ ] Develop audio page
 - [ ] Add support voice chat
 - [ ] Add options to change model
@@ -284,12 +284,13 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Add realtime
 - [ ] Add cost for audio generation
 - [ ] Add color code start/stop for recording
-- [ ] Add option to download audio
+- [-] Add option to download audio
 - [ ] Add different chatbots
   - [ ] ChatGPT
   - [ ] Claude
   - [ ] Llama
   - [ ] Gemini
+- [ ] 
 
 
 ### Future Enhancements

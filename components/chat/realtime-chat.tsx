@@ -183,8 +183,7 @@ export function RealtimeChat() {
         audio: {
           channelCount: 1,
           sampleRate: 24000,
-          sampleSize: 16,
-          volume: 1.0
+          sampleSize: 16
         } 
       });
 
