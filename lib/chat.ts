@@ -1,11 +1,16 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Message } from '@/components/chat/message-list'
+
+export interface Message {
+  role: 'system' | 'user' | 'assistant'
+  content: string
+}
 
 export interface Conversation {
   id: string
   user_id: string
   title: string
   messages: Message[]
+  systemPrompt?: string
   summary?: string
   created_at: string
   updated_at: string
@@ -104,6 +109,24 @@ export async function deleteConversation(id: string) {
     console.error('Error deleting conversation:', error)
     throw error
   }
+}
+
+export async function updateSystemPrompt(id: string, systemPrompt: string): Promise<Conversation> {
+  const supabase = createClientComponentClient()
+
+  const { data, error } = await supabase
+    .from('conversations')
+    .update({ systemPrompt })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    console.error('Error updating system prompt:', error)
+    throw error
+  }
+
+  return data
 }
 
 export async function summarizeConversation(messages: Message[]): Promise<string> {

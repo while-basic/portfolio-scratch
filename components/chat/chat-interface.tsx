@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react'
 import { Message, MessageList } from './message-list'
 import { Conversation } from '@/lib/chat'
@@ -8,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Send } from "lucide-react"
 import { TokenDisplay } from './token-display'
 import { ModelDisplay } from './model-display'
+import { SystemPrompt } from './system-prompt'
 import { cn } from '@/lib/utils'
 
 interface ChatInterfaceProps {
@@ -20,6 +23,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [selectedModel, setSelectedModel] = useState('gpt-4o')
+  const [systemPrompt, setSystemPrompt] = useState('')
   const models = ['gpt-4o', 'gpt-3.5-turbo', 'gpt-4']
   const [tokenUsage, setTokenUsage] = useState<{
     total_tokens: number
@@ -58,10 +62,9 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: updatedMessages.map(msg => ({
-            role: msg.role,
-            content: msg.content
-          })),
+          messages: systemPrompt
+            ? [{ role: 'system', content: systemPrompt }, ...updatedMessages]
+            : updatedMessages,
           model: selectedModel
         }),
       })
@@ -165,6 +168,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
                 }}
               />
               <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                <SystemPrompt value={systemPrompt} onChange={setSystemPrompt} />
                 <select 
                   value={selectedModel} 
                   onChange={(e) => setSelectedModel(e.target.value)}
