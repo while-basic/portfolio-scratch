@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { MessageList } from './message-list'
+import { ImageGeneration } from './image-generation'
 import { Message, Conversation, TokenUsage } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -32,6 +33,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [topP, setTopP] = useState(1.0)
   const [frequencyPenalty, setFrequencyPenalty] = useState(0)
   const [presencePenalty, setPresencePenalty] = useState(0)
+  const [isImageMode, setIsImageMode] = useState(false);
 
   const handleSubmit = async () => {
     if (!inputMessage.trim() || isLoading) return
@@ -108,9 +110,13 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
               <span className="mr-2">💬</span>
               Chat
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start"
+              onClick={() => setIsImageMode(!isImageMode)}
+            >
               <span className="mr-2">⚡</span>
-              Realtime
+              {isImageMode ? 'Text Chat' : 'Image Generation'}
             </Button>
           </div>
         </div>
@@ -120,7 +126,9 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
         <div className="border-b p-4 flex justify-between items-center">
-          <h1 className="text-xl font-semibold">Chat</h1>
+          <h2 className="text-lg font-semibold">
+            {isImageMode ? 'Image Generation' : 'Chat'}
+          </h2>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">Clear</Button>
             <Button variant="outline" size="sm">Code</Button>            
@@ -128,30 +136,33 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
           </div>
         </div>
 
-        {/* Messages Area */}
-        <ScrollArea className="flex-1 p-4">
-          <MessageList messages={conversation?.messages || []} isLoading={isLoading} />
-        </ScrollArea>
-
-        {/* Input Area */}
-        <div className="border-t p-4">
-          <div className="flex gap-2">
-            <Textarea
-              placeholder="Enter user message..."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyDown={handleKeyPress}
-              className="min-h-[44px] max-h-[200px]"
-            />
-            <Button 
-              onClick={handleSubmit}
-              disabled={isLoading || !inputMessage.trim()}
-              className="px-8"
-            >
-              {isLoading ? 'Sending...' : 'Send'}
-            </Button>
-          </div>
-        </div>
+        {isImageMode ? (
+          <ImageGeneration />
+        ) : (
+          <>
+            <ScrollArea className="flex-1 p-4">
+              <MessageList messages={conversation?.messages || []} isLoading={isLoading} />
+            </ScrollArea>
+            <div className="border-t p-4">
+              <div className="flex gap-2">
+                <Textarea
+                  placeholder="Enter user message..."
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  className="min-h-[44px] max-h-[200px]"
+                />
+                <Button 
+                  onClick={handleSubmit}
+                  disabled={isLoading || !inputMessage.trim()}
+                  className="px-8"
+                >
+                  {isLoading ? 'Sending...' : 'Send'}
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Right Configuration Panel Toggle */}
