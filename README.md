@@ -216,121 +216,116 @@ Remember to:
 
 ## Todo List
 
-This list is prioritized from easiest to most challenging tasks. It should be updated regularly to reflect current progress and new requirements.
+This list is prioritized from highest to lowest priority. It is regularly updated to reflect current progress and new requirements.
 
 ### Completed Tasks
-- [x] Initial setup
-- [x] Center navlinks
-- [x] Navigation bar
-- [x] About section
-- [x] Projects section
-- [x] Skills section
-- [x] Experience section
-- [x] Gallery section
-- [x] Education section
-- [x] Make project tiles clickable
-- [x] Add resume page
-  - [x] Add cover letter podcast clip
-  - [x] Add resume podcast clip
-- [x] Add case studies
-- [x] Add breadcrumbs
-  - [x] Add breadcrumbs to chat page
-- [x] Add animations
-- [x] Add unit tests
-- [x] Implement chatbot for signed-in users
-- [x] Add SEO
-- [x] Add blog
-- [x] Create secret audio page
-- [x] Make site responsive on mobile
-- [x] Add loading screen
-- [x] Update README.md
+- [x] Initial setup and core features
+- [x] Navigation and layout
+  - [x] Center navlinks
+  - [x] Navigation bar
+  - [x] Add breadcrumbs
+  - [x] Add footer to home page
+  - [x] Make site responsive on mobile
+  - [x] Add loading screen
+- [x] Content sections
+  - [x] About section
+  - [x] Projects section
+  - [x] Skills section
+  - [x] Experience section
+  - [x] Gallery section
+  - [x] Education section
+  - [x] Blog section
+  - [x] Case studies
+- [x] Interactive features
+  - [x] Make project tiles clickable
+  - [x] Add animations
+  - [x] Create secret audio page
+  - [x] Add resume page with podcast clips
+- [x] Chat functionality
+  - [x] Implement chatbot for signed-in users
+  - [x] Add notice about chat for signed-in users only
+  - [x] Add estimated cost to chat
+  - [x] Add total cost for chat
+  - [x] Remove right sidebar from chat
+- [x] Documentation and testing
+  - [x] Add unit tests
+  - [x] Add SEO
+  - [x] Update README.md
   - [x] Update all pages with personal information
-- [x] Style blog heading correctly
-- [x] Add notice about chat for signed-in users only
-- [x] Implement ChatGPT clone with Supabase integration
-- [x] Add estimated cost to chat
-- [x] Add total cost for chat
-- [x] Add footer to home page
 
 ### High Priority Tasks
-- [ ] Chat modes should not work when not signed in
-- [ ] Make profile data persistent
-- [ ] Ability to delete conversations
-- [ ] Add social media links
-- [ ] Fix light/dark modes
-- [ ] Add visitor counter
-- [ ] Create contact form
-  - [ ] Set up Resend email
-- [-] Complete Supabase integration
-- [-] Add resume download functionality
-- [ ] Make chat responsive on mobile
-- [-] Correct styling on chat page
-- [-] Add avatars to chat interface
-- [-] Implement system prompts in chat
-- [-] Add option to change AI models
-- [-] Add Markdown support in chat
-- [-] Implement code highlighting in chat
-- [ ] Enhance admin dashboard
-  - [ ] Add total messages sent/recieved counter
-  - [ ] Add total users registered counter
-- [ ] Implement streaming support for chat
-- [ ] Add AI assistants to chat
-- [ ] Add total message count to dashboard
-- [-] Implement image generation feature
-- [ ] Develop audio page
-- [ ] Add support voice chat
-- [ ] Add options to change model
-- [ ] Scroll to latest message in chat
-- [ ] Add dropdown to select model
-- [ ] Fix layout and styling on chat page
-- [ ] Add realtime
-- [ ] Add cost for audio generation
-- [ ] Add color code start/stop for recording
-- [-] Add option to download audio
-- [ ] Collapsable sidebars
-- [ ] Add gallery for images generated
-- [ ] Add different chatbots
-  - [ ] ChatGPT
-  - [ ] Claude
-  - [ ] Llama
-  - [ ] Gemini
-- [ ] 
+- [ ] Authentication and User Experience
+  - [ ] Chat modes should not work when not signed in
+  - [ ] Make profile data persistent
+  - [ ] Ability to delete conversations
+  - [ ] Fix light/dark modes
+  - [ ] Add social media links
+  - [ ] Create contact form with Resend email
 
+- [ ] Chat Improvements
+  - [ ] Make chat responsive on mobile
+  - [ ] Add avatars to chat interface
+  - [ ] Implement streaming support
+  - [ ] Add scroll to latest message
+  - [ ] Add realtime capabilities
+  - [ ] Add cost for audio generation
+  - [ ] Add color code start/stop for recording
+
+- [ ] Analytics and Dashboard
+  - [ ] Add visitor counter
+  - [ ] Add total messages sent/received counter
+  - [ ] Add total users registered counter
+  - [ ] Add total message count
+
+### Medium Priority Tasks
+- [ ] Chat Features
+  - [ ] Implement different AI models
+    - [ ] ChatGPT
+    - [ ] Claude
+    - [ ] Llama
+    - [ ] Gemini
+  - [ ] Add support for voice chat
+  - [ ] Add gallery for generated images
+  - [ ] Collapsible sidebars
+
+- [ ] Content Management
+  - [ ] Add resume download functionality
+  - [ ] Develop comprehensive audio page
+  - [ ] Add option to download audio
 
 ### Future Enhancements
-- [ ] Optimize chat performance
-- [ ] Optimize performance for large datasets
-- [ ] Implement advanced search functionality
-- [ ] Add multimodal support
-  - [ ] vision
-  - [ ] file uploads
-- [ ] Integrate with additional third-party services
-- [ ] Implement user feedback system
-- [ ] Add interactive tutorials for new users
+- [ ] Performance Optimizations
+  - [ ] Optimize chat performance
+  - [ ] Optimize performance for large datasets
+  - [ ] Implement advanced search functionality
 
+- [ ] Advanced Features
+  - [ ] Add multimodal support
+    - [ ] Vision capabilities
+    - [ ] File upload support
+  - [ ] Integrate with additional third-party services
+  - [ ] Implement user feedback system
+  - [ ] Add interactive tutorials
 
-## Projects
+### Projects to Add
+- [ ] AI/ML Projects
+  - [ ] Medchat
+  - [ ] Law-GPT
+  - [ ] Amica Medical Doctor
+  - [ ] Natural Language Translator
+  - [ ] Langchain Agents
+  - [ ] AI Assistant
+  - [ ] Custom GPT
+  - [ ] Groq Chat
 
-- [ ] ChatGPT Clone
-- [ ] Medchat
-- [ ] Midisaber
-- [ ] Law-GPT
-- [ ] Blockchain TLD Service
-- [ ] 3D Blender Animation
-- [ ] Unreal Engine 5 Game Environment
-- [ ] Unity Game Environment
-- [ ] Amica Medical Doctor
-- [ ] Chattersync
-- [ ] Gemini Pro Vision
-- [ ] Replicate SDXL Image Generator
-- [ ] SDXL Image Generator
-- [ ] Ensemble
-- [ ] Natural Language Translator
-- [ ] Lanchain Agents
-- [ ] AI Assistant
-- [ ] Gemini Chat
-- [ ] Custom GPT
-- [ ] Groq Chat
+- [ ] Creative Projects
+  - [ ] 3D Blender Animation
+  - [ ] Unreal Engine 5 Game Environment
+  - [ ] Unity Game Environment
+
+- [ ] Web3 Projects
+  - [ ] Blockchain TLD Service
+  - [ ] Ensemble
 
 ## License
 
