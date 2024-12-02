@@ -51,7 +51,7 @@ const Navbar = () => {
     {
       href: "/chat",
       label: "Chat",
-      active: pathname === "/chat",
+      active: pathname === "/chat" || pathname === "/chat/image",
     },
   ]
 

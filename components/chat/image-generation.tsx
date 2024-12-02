@@ -36,35 +36,41 @@ export function ImageGeneration() {
   }
 
   return (
-    <div className="flex flex-col space-y-4 p-4">
-      <div className="flex space-x-2">
-        <Input
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe the image you want to generate..."
-          className="flex-1"
-          onKeyPress={(e) => e.key === 'Enter' && generateImage()}
-        />
-        <Button 
-          onClick={generateImage}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Generating...' : 'Generate'}
-        </Button>
+    <div className="flex flex-col h-full">
+      {/* Image Display Area */}
+      <div className="flex-1 overflow-y-auto p-4">
+        {generatedImage && (
+          <Card className="p-4">
+            <div className="relative w-full aspect-square">
+              <Image
+                src={generatedImage}
+                alt="Generated image"
+                fill
+                className="object-contain"
+              />
+            </div>
+          </Card>
+        )}
       </div>
 
-      {generatedImage && (
-        <Card className="p-4">
-          <div className="relative w-full aspect-square">
-            <Image
-              src={generatedImage}
-              alt="Generated image"
-              fill
-              className="object-contain"
-            />
-          </div>
-        </Card>
-      )}
+      {/* Input Area */}
+      <div className="border-t p-4 bg-background">
+        <div className="flex space-x-2">
+          <Input
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Describe the image you want to generate..."
+            className="flex-1"
+            onKeyPress={(e) => e.key === 'Enter' && generateImage()}
+          />
+          <Button 
+            onClick={generateImage}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Generating...' : 'Generate'}
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

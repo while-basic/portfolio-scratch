@@ -15,6 +15,7 @@ import { ChevronLeft, ChevronRight, Settings2, Sliders } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from 'next/navigation'
 
 interface ChatInterfaceProps {
   conversation: Conversation | null
@@ -22,6 +23,7 @@ interface ChatInterfaceProps {
 }
 
 export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps) {
+  const router = useRouter()
   const [inputMessage, setInputMessage] = useState('')
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -106,17 +108,21 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
       <div className={`${showLeftSidebar ? 'w-64' : 'w-0'} bg-background border-r transition-all duration-300 overflow-hidden`}>
         <div className="p-4">
           <div className="space-y-2">
-            <Button variant="ghost" className="w-full justify-start">
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start"
+              onClick={() => setIsImageMode(false)}
+            >
               <span className="mr-2">💬</span>
               Chat
             </Button>
             <Button 
               variant="ghost" 
               className="w-full justify-start"
-              onClick={() => setIsImageMode(!isImageMode)}
+              onClick={() => setIsImageMode(true)}
             >
               <span className="mr-2">⚡</span>
-              {isImageMode ? 'Text Chat' : 'Image Generation'}
+              Image Generation
             </Button>
           </div>
         </div>
