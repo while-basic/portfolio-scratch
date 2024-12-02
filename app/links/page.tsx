@@ -14,13 +14,13 @@ const links = {
     {
       title: "GitHub",
       description: "Check out my open source projects and contributions",
-      url: "https://github.com/chriscelaya",
+      url: "https://github.com/while-basic",
       icon: <Github className="w-5 h-5" />,
     },
     {
       title: "LinkedIn",
       description: "Connect with me professionally",
-      url: "https://linkedin.com/in/chriscelaya",
+      url: "https://linkedin.com/in/christophercelaya",
       icon: <Linkedin className="w-5 h-5" />,
     },
   ],
@@ -42,7 +42,7 @@ const links = {
     {
       title: "SoundCloud",
       description: "Listen to my music productions and mixes",
-      url: "https://soundcloud.com/chriscelaya",
+      url: "https://soundcloud.com/",
       icon: <Headphones className="w-5 h-5" />,
     },
   ],

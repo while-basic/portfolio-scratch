@@ -253,6 +253,8 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [x] Add footer to home page
 
 ### High Priority Tasks
+- [ ] Chat modes should not work when not signed in
+- [ ] Make profile data persistent
 - [ ] Ability to delete conversations
 - [ ] Add social media links
 - [ ] Fix light/dark modes

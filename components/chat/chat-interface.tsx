@@ -4,17 +4,11 @@ import { useState } from 'react'
 import { MessageList } from './message-list'
 import { ImageGeneration } from './image-generation'
 import { RealtimeChat } from './realtime-chat'
-import { Message, Conversation, TokenUsage } from '@/lib/chat'
+import { Message, Conversation } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import { TokenDisplay } from './token-display'
-import { ModelDisplay } from './model-display'
-import { SystemPrompt } from './system-prompt'
-import { ChevronLeft, ChevronRight, Settings2, Sliders, Plus } from "lucide-react"
-import { Slider } from "@/components/ui/slider"
-import { Separator } from "@/components/ui/separator"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChevronLeft } from "lucide-react"
 
 interface ChatInterfaceProps {
   conversation: Conversation | null
@@ -25,14 +19,9 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [inputMessage, setInputMessage] = useState('')
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
-  const [tokenUsage, setTokenUsage] = useState<TokenUsage | null>(null)
-  const [showLeftSidebar, setShowLeftSidebar] = useState(true)
-  const [temperature, setTemperature] = useState(1.0)
-  const [maxTokens, setMaxTokens] = useState(2048)
-  const [topP, setTopP] = useState(1.0)
-  const [frequencyPenalty, setFrequencyPenalty] = useState(0)
-  const [presencePenalty, setPresencePenalty] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isImageMode, setIsImageMode] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isRealtimeMode, setIsRealtimeMode] = useState(false)
 
   const handleSubmit = async () => {
@@ -47,12 +36,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          messages: updatedMessages,
-          temperature,
-          maxTokens,
-          topP,
-          frequencyPenalty,
-          presencePenalty
+          messages: updatedMessages
         })
       })
 
@@ -62,11 +46,6 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
 
       const data = await response.json()
       
-      // Update token usage from response
-      if (data.usage) {
-        setTokenUsage(data.usage)
-      }
-
       const newAssistantMessage = { role: 'assistant' as const, content: data.message }
       const finalMessages = [...updatedMessages, newAssistantMessage]
       onNewMessage(finalMessages)
@@ -97,61 +76,10 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         variant="ghost"
         size="icon"
         className="absolute left-2 top-2 z-10 shrink-0"
-        onClick={() => setShowLeftSidebar(!showLeftSidebar)}
+        onClick={() => {}}
       >
-        {showLeftSidebar ? <ChevronLeft /> : <ChevronRight />}
+        <ChevronLeft />
       </Button>
-
-      {/* Left Sidebar */}
-      <div className={`${showLeftSidebar ? 'w-64' : 'w-0'} bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-r border-border/40 transition-all duration-300 overflow-hidden`}>
-        <div className="p-4">
-          <div className="space-y-2">
-            <Button 
-              variant="outline" 
-              className="w-full justify-start"
-              onClick={() => {
-                onNewMessage([])
-              }}
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              New Chat
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start"
-              onClick={() => {
-                setIsImageMode(false)
-                setIsRealtimeMode(false)
-              }}
-            >
-              <span className="mr-2">💬</span>
-              Chat
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start"
-              onClick={() => {
-                setIsImageMode(true)
-                setIsRealtimeMode(false)
-              }}
-            >
-              <span className="mr-2">⚡</span>
-              Image Generation
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="w-full justify-start"
-              onClick={() => {
-                setIsImageMode(false)
-                setIsRealtimeMode(true)
-              }}
-            >
-              <span className="mr-2">🎤</span>
-              Realtime
-            </Button>
-          </div>
-        </div>
-      </div>
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-h-0">
@@ -161,10 +89,6 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             <h2 className="text-sm font-medium">
               {isRealtimeMode ? 'Realtime Chat' : isImageMode ? 'Image Generation' : 'Chat'}
             </h2>
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <ModelDisplay model="GPT-3.5" />
-              <TokenDisplay usage={tokenUsage} />
-            </div>
           </div>
           <div className="flex gap-1.5">
             <Button variant="ghost" size="sm">Clear</Button>
@@ -203,11 +127,6 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
                       {isLoading ? 'Sending...' : 'Send'}
                     </Button>
                   </div>
-                  {tokenUsage && (
-                    <div className="flex justify-end">
-                      <TokenDisplay usage={tokenUsage} />
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
