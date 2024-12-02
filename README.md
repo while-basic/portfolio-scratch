@@ -260,13 +260,13 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Create contact form
   - [ ] Set up Resend email
 - [-] Complete Supabase integration
-- [ ] Add resume download functionality
+- [-] Add resume download functionality
 - [ ] Make chat responsive on mobile
 - [ ] Correct styling on chat page
 - [-] Add avatars to chat interface
 - [ ] Implement system prompts in chat
 - [-] Add option to change AI models
-- [ ] Add Markdown support to chat
+- [ ] Add Markdown support in chat
 - [ ] Implement code highlighting in chat
 - [ ] Enhance admin dashboard
   - [ ] Add total messages sent/recieved counter
@@ -287,9 +287,10 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 
 
 ### Future Enhancements
+- [ ] Optimize chat performance
 - [ ] Optimize performance for large datasets
 - [ ] Implement advanced search functionality
-- [ ] Add multilingual support
+- [ ] Add multimodal support
 - [ ] Integrate with additional third-party services
 - [ ] Implement user feedback system
 - [ ] Add interactive tutorials for new users
@@ -346,6 +347,77 @@ This project can be deployed on Vercel or any other Next.js-compatible hosting p
 1. Configure environment variables in your hosting platform
 2. Set up the necessary database connections
 3. Update the deployment settings as needed
+
+## Code Highlighting Examples
+
+### JavaScript
+```javascript
+// This is a comment
+const greeting = "Hello, World!";
+const numbers = [1, 2, 3].map(num => num * 2);
+
+class Example {
+  constructor() {
+    this.value = 42;
+  }
+  
+  getValue() {
+    return this.value;
+  }
+}
+```
+
+### Python
+```python
+# This is a Python class
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def greet(self):
+        return f"Hello, my name is {self.name}!"
+
+# Create an instance
+person = Person("Alice", 30)
+print(person.greet())
+```
+
+### Java
+```java
+public class HelloWorld {
+    private String message;
+
+    public HelloWorld(String message) {
+        this.message = message;
+    }
+
+    public void printMessage() {
+        System.out.println(message);
+    }
+
+    public static void main(String[] args) {
+        HelloWorld hello = new HelloWorld("Hello, World!");
+        hello.printMessage();
+    }
+}
+```
+
+### CSS
+```css
+.container {
+    display: flex;
+    background-color: #1a1a1a;
+    padding: 20px;
+}
+
+.button {
+    color: white;
+    background: linear-gradient(to right, #4a90e2, #357abd);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+```
 
 ## Dashboard 
 

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Image from "next/image"
+import { MarkdownMessage } from "./markdown-message"
 
 export type Message = {
   role: "user" | "assistant"
@@ -73,9 +74,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                 : "bg-zinc-700 text-zinc-100"
             )}
           >
-            <div className="prose prose-sm dark:prose-invert max-w-none">
-              {message.content}
-            </div>
+            <MarkdownMessage content={message.content} />
           </div>
         </motion.div>
       ))}

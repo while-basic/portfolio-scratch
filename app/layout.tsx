@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "@/styles/mdx.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { personSchema, projectsSchema } from './schema';
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     siteName: "Christopher Celaya - Portfolio",
     images: [
       {
-        url: 'https://chriscelaya.com/images/og-image.jpg',
+        url: 'https://chriscelaya.com/images/me.jpg',
         width: 1200,
         height: 630,
         alt: 'Christopher Celaya - Software Developer & Mechatronic Technician',

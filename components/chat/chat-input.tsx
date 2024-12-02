@@ -24,7 +24,9 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
-      handleSubmit(e)
+      if (input.trim() && !isLoading) {
+        handleSubmit(e)
+      }
     }
   }
 
@@ -34,7 +36,7 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Type your message..."
+        placeholder="Type your message... (Press Shift+Enter for new line)"
         className="min-h-[80px] resize-none pr-14"
         disabled={isLoading}
       />
