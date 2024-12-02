@@ -1,14 +1,11 @@
 "use client"
 
-import { useRouter } from 'next/navigation'
 import { ImageGeneration } from '@/components/chat/image-generation'
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
 export default function ImageGenerationPage() {
-  const router = useRouter()
-
   return (
     <div className="flex flex-col min-h-[100dvh] bg-black">
       <div className="flex items-center justify-between h-14 px-4 bg-black border-b border-gray-800">

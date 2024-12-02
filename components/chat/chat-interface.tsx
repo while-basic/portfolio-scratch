@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { MessageList } from './message-list'
 import { ImageGeneration } from './image-generation'
+import { RealtimeChat } from './realtime-chat'
 import { Message, Conversation, TokenUsage } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -15,7 +16,6 @@ import { ChevronLeft, ChevronRight, Settings2, Sliders } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useRouter } from 'next/navigation'
 
 interface ChatInterfaceProps {
   conversation: Conversation | null
@@ -23,7 +23,6 @@ interface ChatInterfaceProps {
 }
 
 export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps) {
-  const router = useRouter()
   const [inputMessage, setInputMessage] = useState('')
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -35,7 +34,8 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const [topP, setTopP] = useState(1.0)
   const [frequencyPenalty, setFrequencyPenalty] = useState(0)
   const [presencePenalty, setPresencePenalty] = useState(0)
-  const [isImageMode, setIsImageMode] = useState(false);
+  const [isImageMode, setIsImageMode] = useState(false)
+  const [isRealtimeMode, setIsRealtimeMode] = useState(false)
 
   const handleSubmit = async () => {
     if (!inputMessage.trim() || isLoading) return
@@ -111,7 +111,10 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             <Button 
               variant="ghost" 
               className="w-full justify-start"
-              onClick={() => setIsImageMode(false)}
+              onClick={() => {
+                setIsImageMode(false)
+                setIsRealtimeMode(false)
+              }}
             >
               <span className="mr-2">💬</span>
               Chat
@@ -119,10 +122,24 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
             <Button 
               variant="ghost" 
               className="w-full justify-start"
-              onClick={() => setIsImageMode(true)}
+              onClick={() => {
+                setIsImageMode(true)
+                setIsRealtimeMode(false)
+              }}
             >
               <span className="mr-2">⚡</span>
               Image Generation
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start"
+              onClick={() => {
+                setIsImageMode(false)
+                setIsRealtimeMode(true)
+              }}
+            >
+              <span className="mr-2">🎤</span>
+              Realtime
             </Button>
           </div>
         </div>
@@ -133,7 +150,7 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
         {/* Top Bar */}
         <div className="border-b p-4 flex justify-between items-center">
           <h2 className="text-lg font-semibold">
-            {isImageMode ? 'Image Generation' : 'Chat'}
+            {isRealtimeMode ? 'Realtime Chat' : isImageMode ? 'Image Generation' : 'Chat'}
           </h2>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">Clear</Button>
@@ -142,7 +159,9 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
           </div>
         </div>
 
-        {isImageMode ? (
+        {isRealtimeMode ? (
+          <RealtimeChat />
+        ) : isImageMode ? (
           <ImageGeneration />
         ) : (
           <>

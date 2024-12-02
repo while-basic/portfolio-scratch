@@ -264,7 +264,7 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Make chat responsive on mobile
 - [-] Correct styling on chat page
 - [-] Add avatars to chat interface
-- [ ] Implement system prompts in chat
+- [-] Implement system prompts in chat
 - [-] Add option to change AI models
 - [-] Add Markdown support in chat
 - [-] Implement code highlighting in chat
@@ -280,6 +280,11 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Add options to change model
 - [ ] Scroll to latest message in chat
 - [ ] Add dropdown to select model
+- [ ] Fix layout and styling on chat page
+- [ ] Add realtime
+- [ ] Add cost for audio generation
+- [ ] Add color code start/stop for recording
+- [ ] Add option to download audio
 - [ ] Add different chatbots
   - [ ] ChatGPT
   - [ ] Claude
@@ -292,6 +297,8 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Optimize performance for large datasets
 - [ ] Implement advanced search functionality
 - [ ] Add multimodal support
+  - [ ] vision
+  - [ ] file uploads
 - [ ] Integrate with additional third-party services
 - [ ] Implement user feedback system
 - [ ] Add interactive tutorials for new users
