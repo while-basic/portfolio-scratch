@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { MessageList } from './message-list'
 import { ImageGeneration } from './image-generation'
-import RealtimeChat from './realtime-chat'
+import { RealtimeChat } from './realtime-chat'
 import { Message, Conversation, TokenUsage } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"

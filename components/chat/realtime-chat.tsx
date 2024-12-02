@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Mic, MicOff, StopCircle } from 'lucide-react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Mic, StopCircle } from 'lucide-react'
 
 interface Message {
   role: string;
@@ -13,29 +11,12 @@ interface Message {
   cost?: number;
 }
 
-const AVAILABLE_VOICES = [
-  { id: 'alloy', name: 'Alloy' },
-  { id: 'echo', name: 'Echo' },
-  { id: 'shimmer', name: 'Shimmer' },
-  { id: 'ash', name: 'Ash' },
-  { id: 'ballad', name: 'Ballad' },
-  { id: 'coral', name: 'Coral' },
-  { id: 'sage', name: 'Sage' },
-  { id: 'verse', name: 'Verse' },
-] as const
-
 export function RealtimeChat() {
-  const [isRecording, setIsRecording] = useState(false)
-  const [isConnected, setIsConnected] = useState(false)
-  const [hasAudioPermission, setHasAudioPermission] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
-  const [totalCost, setTotalCost] = useState(0)
-  const [selectedVoice, setSelectedVoice] = useState<string>('alloy')
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [audioQueue, setAudioQueue] = useState<Blob[]>([]);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isRecording, setIsRecording] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const chunksRef = useRef<Blob[]>([])
 
   useEffect(() => {
     return () => {
@@ -45,38 +26,9 @@ export function RealtimeChat() {
     }
   }, [])
 
-  const connectMicrophone = async () => {
-    try {
-      setError(null);
-      
-      // First request microphone permission
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setHasAudioPermission(true);
-      
-      // Keep track of the stream for later use
-      const audioTrack = stream.getAudioTracks()[0];
-      audioTrack.onended = () => {
-        setHasAudioPermission(false);
-        setIsConnected(false);
-        setError('Microphone disconnected');
-        if (mediaRecorderRef.current) {
-          mediaRecorderRef.current.stop();
-        }
-      };
-
-      // Log success
-      console.log('Microphone connected successfully');
-      
-    } catch (error) {
-      console.error('Error accessing microphone:', error);
-      setError('Could not access microphone. Please ensure you have granted microphone permissions.');
-      setHasAudioPermission(false);
-    }
-  };
-
   const processAudioChunk = async (audioData: Blob) => {
     try {
-      setIsProcessing(true);
+      setError(null);
       
       // Create form data for the transcription request
       const formData = new FormData();
@@ -103,7 +55,6 @@ export function RealtimeChat() {
 
       if (!transcription.trim()) {
         console.log('No speech detected in audio');
-        setIsProcessing(false);
         return;
       }
 
@@ -142,7 +93,7 @@ export function RealtimeChat() {
         },
         body: JSON.stringify({
           model: 'tts-1',
-          voice: selectedVoice,
+          voice: 'alloy',
           input: responseText
         })
       });
@@ -166,13 +117,9 @@ export function RealtimeChat() {
         cost
       }]);
 
-      setTotalCost(prev => prev + cost);
-      setIsProcessing(false);
-
     } catch (error) {
       console.error('Error processing audio:', error);
       setError('Failed to process audio. Please try again.');
-      setIsProcessing(false);
     }
   };
 
@@ -192,17 +139,17 @@ export function RealtimeChat() {
       });
       setIsRecording(true);
 
-      const chunks: Blob[] = [];
+      chunksRef.current = [];
 
       // Start collecting audio data
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          chunks.push(event.data);
+          chunksRef.current.push(event.data);
         }
       };
 
       mediaRecorderRef.current.onstop = async () => {
-        const audioBlob = new Blob(chunks, { type: 'audio/webm;codecs=opus' });
+        const audioBlob = new Blob(chunksRef.current, { type: 'audio/webm;codecs=opus' });
         await processAudioChunk(audioBlob);
       };
 
@@ -223,15 +170,6 @@ export function RealtimeChat() {
       console.error('Error stopping recording:', error);
       setError('Failed to stop recording.');
     }
-  };
-
-  const disconnect = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-    }
-    setIsRecording(false);
-    setIsConnected(false);
-    setError(null);
   };
 
   return (
@@ -296,71 +234,30 @@ export function RealtimeChat() {
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <Select
-                value={selectedVoice}
-                onValueChange={setSelectedVoice}
-                disabled={isRecording}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select voice" />
-                </SelectTrigger>
-                <SelectContent>
-                  {AVAILABLE_VOICES.map((voice) => (
-                    <SelectItem key={voice.id} value={voice.id}>
-                      {voice.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
-              {isProcessing && (
-                <span className="text-sm text-muted-foreground animate-pulse">
-                  Processing audio...
-                </span>
-              )}
-            </div>
-            
-            <div className="text-sm text-muted-foreground">
-              Total Cost: ${totalCost.toFixed(4)}
-            </div>
-          </div>
-
-          <div className="flex justify-center space-x-4">
-            {!hasAudioPermission ? (
-              <Button onClick={connectMicrophone} disabled={hasAudioPermission}>
-                <Mic className="h-4 w-4 mr-2" />
-                Connect Microphone
-              </Button>
-            ) : !isRecording ? (
               <Button
                 onClick={startRecording}
-                disabled={isRecording || isProcessing}
+                disabled={isRecording}
                 className="bg-green-500 hover:bg-green-600"
               >
                 <Mic className="h-4 w-4 mr-2" />
                 Start Recording
               </Button>
-            ) : (
-              <Button
-                onClick={stopRecording}
-                disabled={!isRecording || isProcessing}
-                className="bg-red-500 hover:bg-red-600"
-              >
-                <StopCircle className="h-4 w-4 mr-2" />
-                Stop Recording
-              </Button>
-            )}
+            </div>
+            
+            <div className="text-sm text-muted-foreground">
+              Total Cost: $0.0000
+            </div>
+          </div>
 
-            {hasAudioPermission && (
-              <Button
-                onClick={disconnect}
-                variant="outline"
-                disabled={isProcessing}
-              >
-                <MicOff className="h-4 w-4 mr-2" />
-                Disconnect
-              </Button>
-            )}
+          <div className="flex justify-center space-x-4">
+            <Button
+              onClick={stopRecording}
+              disabled={!isRecording}
+              className="bg-red-500 hover:bg-red-600"
+            >
+              <StopCircle className="h-4 w-4 mr-2" />
+              Stop Recording
+            </Button>
           </div>
 
           {error && (
