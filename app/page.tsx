@@ -3,6 +3,7 @@ import { ServiceCard } from "@/components/service-card";
 import { WorkCarousel } from "@/components/work-carousel";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, Laptop, Cog, Headphones } from "lucide-react";
+import { Footer } from "@/components/footer";
 
 export default function HomePage() {
   return (
@@ -100,6 +101,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

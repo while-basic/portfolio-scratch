@@ -285,6 +285,8 @@ This list is prioritized from easiest to most challenging tasks. It should be up
 - [ ] Add cost for audio generation
 - [ ] Add color code start/stop for recording
 - [-] Add option to download audio
+- [ ] Collapsable sidebars
+- [ ] Add gallery for images generated
 - [ ] Add different chatbots
   - [ ] ChatGPT
   - [ ] Claude
