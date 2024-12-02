@@ -73,8 +73,8 @@ export async function POST(request: Request) {
       )
     }
 
-    // Try primary model first, fall back to gpt-3.5-turbo if rate limited
-    const modelOptions = ['gpt-4o', 'gpt-3.5-turbo']
+    // Try primary model first, fall back to gpt-4o if rate limited
+    const modelOptions = ['gpt-4o', 'gpt-4o']
     let lastError: Error | null = null
     
     for (const currentModel of modelOptions) {

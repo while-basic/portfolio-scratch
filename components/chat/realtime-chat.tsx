@@ -34,14 +34,12 @@ export function RealtimeChat() {
       const formData = new FormData();
       formData.append('file', audioData, 'audio.webm');
       formData.append('model', 'whisper-1');
-      formData.append('response_format', 'text');
-      
-      // Send audio to OpenAI API for transcription
+
+      // First, get the transcription
       const transcriptionResponse = await fetch('https://api.openai.com/v1/audio/transcriptions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`
-          // Note: Don't set Content-Type header, let the browser set it with the boundary
         },
         body: formData
       });
@@ -50,65 +48,33 @@ export function RealtimeChat() {
         throw new Error(`Transcription failed: ${transcriptionResponse.statusText}`);
       }
 
-      const transcription = await transcriptionResponse.text();
-      console.log('Transcribed text:', transcription);
+      const { text: transcription } = await transcriptionResponse.json();
 
       if (!transcription.trim()) {
         console.log('No speech detected in audio');
         return;
       }
 
-      // Get AI response
-      const completionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      // Process the transcription through our API route
+      const chatResponse = await fetch('/api/chat-audio', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'gpt-4-turbo-preview',
-          messages: [
-            { role: 'system', content: 'You are a helpful assistant.' },
-            { role: 'user', content: transcription }
-          ],
-          max_tokens: 150,
-          temperature: 0.7
+          audioTranscription: transcription
         })
       });
 
-      if (!completionResponse.ok) {
-        throw new Error(`Completion failed: ${completionResponse.statusText}`);
+      if (!chatResponse.ok) {
+        throw new Error('Failed to process chat response');
       }
 
-      const completion = await completionResponse.json();
-      const responseText = completion.choices[0]?.message?.content || '';
-      console.log('AI response:', responseText);
+      const { responseText, audioBuffer, cost } = await chatResponse.json();
 
-      // Convert response to speech
-      const speechResponse = await fetch('https://api.openai.com/v1/audio/speech', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'tts-1',
-          voice: 'alloy',
-          input: responseText
-        })
-      });
-
-      if (!speechResponse.ok) {
-        throw new Error(`Speech synthesis failed: ${speechResponse.statusText}`);
-      }
-
-      const audioBlob = await speechResponse.blob();
+      // Convert the audio buffer back to a Blob
+      const audioBlob = new Blob([new Uint8Array(audioBuffer)], { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
-
-      // Calculate cost (approximate)
-      const inputTokens = transcription.split(' ').length;
-      const outputTokens = responseText.split(' ').length;
-      const cost = ((inputTokens + outputTokens) / 1000) * 0.015;
 
       setMessages(prev => [...prev, {
         role: 'assistant',
