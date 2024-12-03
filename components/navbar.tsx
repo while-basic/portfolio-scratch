@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Home } from "lucide-react"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { User } from '@supabase/auth-helpers-nextjs'
 import { NavDropdown } from "@/components/nav-dropdown"
@@ -106,12 +106,21 @@ const Navbar = () => {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-6">
           {user ? (
-            <button
-              onClick={handleSignOut}
-              className="text-sm font-medium hover:opacity-80"
-            >
-              Sign Out
-            </button>
+            <>
+              <Link
+                href="/dashboard"
+                className="flex items-center space-x-2 text-sm font-medium hover:opacity-80"
+              >
+                <Home className="h-4 w-4" />
+                <span>Dashboard</span>
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className="text-sm font-medium hover:opacity-80"
+              >
+                Sign Out
+              </button>
+            </>
           ) : (
             <Link
               href="/auth/sign-in"
@@ -157,12 +166,22 @@ const Navbar = () => {
             ))}
             <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
               {user ? (
-                <button
-                  onClick={handleSignOut}
-                  className="text-sm font-medium hover:opacity-80"
-                >
-                  Sign Out
-                </button>
+                <div className="flex items-center space-x-4">
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center space-x-2 text-sm font-medium hover:opacity-80"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Home className="h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm font-medium hover:opacity-80"
+                  >
+                    Sign Out
+                  </button>
+                </div>
               ) : (
                 <Link
                   href="/auth/sign-in"
