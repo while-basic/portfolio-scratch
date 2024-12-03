@@ -20,9 +20,17 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/auth/sign-in', req.url))
   }
 
+  // Protect admin routes
+  if (req.nextUrl.pathname.startsWith('/admin') && req.nextUrl.pathname !== '/admin/login') {
+    const adminToken = req.cookies.get('admin_token')
+    if (!adminToken || adminToken.value !== 'authenticated') {
+      return NextResponse.redirect(new URL('/admin/login', req.url))
+    }
+  }
+
   return res
 }
 
 export const config = {
-  matcher: ['/', '/auth/sign-in', '/auth/sign-up', '/dashboard', '/profile']
+  matcher: ['/', '/auth/sign-in', '/auth/sign-up', '/dashboard', '/profile', '/admin/:path*']
 }

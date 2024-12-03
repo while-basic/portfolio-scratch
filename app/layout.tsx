@@ -49,7 +49,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
               <RootLayoutClient>
                 {children}
               </RootLayoutClient>

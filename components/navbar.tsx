@@ -77,6 +77,11 @@ const Navbar = () => {
     //   label: "Chat",
     //   active: pathname === "/chat" || pathname === "/chat/image",
     // },
+    {
+      href: "/admin/login",
+      label: "Admin",
+      active: pathname.startsWith("/admin"),
+    }
   ]
 
   return (
