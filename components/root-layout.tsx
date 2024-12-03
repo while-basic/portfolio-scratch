@@ -8,12 +8,12 @@ import { usePageView } from "@/hooks/use-page-view"
 import { ClientBoundary } from "./client-boundary"
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+  src: "../app/fonts/GeistVF.woff",
   variable: "--font-geist-sans",
 })
 
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "../app/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
 })
 
