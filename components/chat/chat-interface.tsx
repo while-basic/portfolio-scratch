@@ -3,60 +3,89 @@
 import { useState } from 'react'
 import { MessageList } from './message-list'
 import { ImageGeneration } from './image-generation'
-import { RealtimeChat } from './realtime-chat'
-import { Message, Conversation } from '@/lib/chat'
+import { Message } from '@/lib/chat'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import { ChevronLeft } from "lucide-react"
+import { CollapsibleSidebar } from './collapsible-sidebar'
 
-interface ChatInterfaceProps {
-  conversation: Conversation | null
-  onNewMessage: (messages: Message[]) => void
-}
-
-export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps) {
+export function ChatInterface() {
+  const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isImageMode, setIsImageMode] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isRealtimeMode, setIsRealtimeMode] = useState(false)
+  const [currentMode, setCurrentMode] = useState<'chat' | 'image'>('chat')
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null)
 
   const handleSubmit = async () => {
     if (!inputMessage.trim() || isLoading) return
 
+    const newMessage: Message = {
+      role: 'user',
+      content: inputMessage
+    }
+
+    setMessages(prev => [...prev, newMessage])
+    setInputMessage('')
     setIsLoading(true)
-    const newMessage = { role: 'user' as const, content: inputMessage }
-    const updatedMessages = [...(conversation?.messages || []), newMessage]
-    
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          messages: updatedMessages
-        })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: inputMessage }),
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to send message')
-      }
-
       const data = await response.json()
-      
-      const newAssistantMessage = { role: 'assistant' as const, content: data.message }
-      const finalMessages = [...updatedMessages, newAssistantMessage]
-      onNewMessage(finalMessages)
-      setInputMessage('')
-    } catch (err) {
+      if (data.message) {
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: data.message
+        }
+        setMessages(prev => [...prev, assistantMessage])
+      }
+    } catch (error) {
+      console.error('Error sending message:', error)
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
-        variant: "destructive"
+        variant: "destructive",
       })
-      console.error('Chat error:', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleImageGeneration = async (prompt: string) => {
+    if (!prompt.trim() || isLoading) return
+
+    setIsLoading(true)
+    try {
+      const response = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      })
+
+      const data = await response.json()
+      if (data.url) {
+        setGeneratedImageUrl(data.url)
+        toast({
+          title: "Success",
+          description: "Image generated successfully!",
+        })
+      }
+    } catch (error) {
+      console.error('Error generating image:', error)
+      toast({
+        title: "Error",
+        description: "Failed to generate image. Please try again.",
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }
@@ -65,69 +94,67 @@ export function ChatInterface({ conversation, onNewMessage }: ChatInterfaceProps
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      handleSubmit()
+      if (currentMode === 'chat') {
+        handleSubmit()
+      } else {
+        handleImageGeneration(inputMessage)
+      }
     }
   }
-  
+
   return (
-    <div className="flex h-[100vh]">
-      {/* Left Sidebar Toggle */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute left-2 top-2 z-10 shrink-0"
-        onClick={() => {}}
-      >
-        <ChevronLeft />
-      </Button>
-
-      {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col min-h-0">
-        {/* Top Bar */}
-        <div className="shrink-0 border-b border-border/40 p-3 flex justify-between items-center bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex items-center gap-3">
-            <h2 className="text-sm font-medium">
-              {isRealtimeMode ? 'Realtime Chat' : isImageMode ? 'Image Generation' : 'Chat'}
-            </h2>
-          </div>
-          <div className="flex gap-1.5">
-            <Button variant="ghost" size="sm">Clear</Button>
-            <Button variant="ghost" size="sm">Code</Button>            
-            <Button variant="ghost" size="sm">History</Button>
-          </div>
-        </div>
-
-        {isRealtimeMode ? (
-          <RealtimeChat />
-        ) : isImageMode ? (
-          <ImageGeneration />
-        ) : (
-          <div className="flex flex-col min-h-0 flex-1">
-            <div className="flex-1 overflow-auto">
-              <div className="max-w-3xl mx-auto p-4">
-                <MessageList messages={conversation?.messages || []} isLoading={isLoading} />
+    <div className="flex h-screen">
+      <CollapsibleSidebar 
+        currentMode={currentMode}
+        onModeChange={setCurrentMode}
+      />
+      
+      <div className="flex-1 flex flex-col">
+        {currentMode === 'chat' ? (
+          <>
+            <div className="flex-1 overflow-y-auto p-4">
+              <MessageList messages={messages} isLoading={isLoading} />
+            </div>
+            <div className="border-t p-4 bg-background">
+              <div className="flex space-x-2">
+                <Textarea
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-1"
+                  onKeyDown={handleKeyPress}
+                />
+                <Button 
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Sending...' : 'Send'}
+                </Button>
               </div>
             </div>
-            <div className="shrink-0 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="max-w-3xl mx-auto p-4">
-                <div className="flex flex-col gap-2">
-                  <div className="flex gap-2">
-                    <Textarea
-                      placeholder="Enter user message..."
-                      value={inputMessage}
-                      onChange={(e) => setInputMessage(e.target.value)}
-                      onKeyDown={handleKeyPress}
-                      className="min-h-[44px] max-h-[200px] resize-none"
-                    />
-                    <Button 
-                      onClick={handleSubmit}
-                      disabled={isLoading || !inputMessage.trim()}
-                      className="px-8 shrink-0"
-                    >
-                      {isLoading ? 'Sending...' : 'Send'}
-                    </Button>
-                  </div>
-                </div>
+          </>
+        ) : (
+          <div className="flex-1 flex flex-col">
+            <ImageGeneration
+              onGenerate={handleImageGeneration}
+              isLoading={isLoading}
+              generatedImageUrl={generatedImageUrl}
+            />
+            <div className="border-t p-4 bg-background">
+              <div className="flex space-x-2">
+                <Textarea
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  placeholder="Describe the image you want to generate..."
+                  className="flex-1"
+                  onKeyDown={handleKeyPress}
+                />
+                <Button 
+                  onClick={() => handleImageGeneration(inputMessage)}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Generating...' : 'Generate'}
+                </Button>
               </div>
             </div>
           </div>

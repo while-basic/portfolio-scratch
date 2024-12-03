@@ -1,13 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import { usePathname } from "next/navigation"
-import { Navbar } from "@/components/navbar"
-import { Sidebar } from "@/components/sidebar"
-import { Footer } from "@/components/footer"
-import { MobileNav } from "@/components/mobile-nav"
-import { usePageView } from "@/hooks/use-page-view"
 import { Suspense } from "react"
+import { usePathname } from "next/navigation"
+import Navbar from "@/components/navbar"
+import Sidebar from "@/components/sidebar"
+import { Footer } from "@/components/footer"
+import MobileNav from "@/components/mobile-nav"
+import { usePageView } from "@/hooks/use-page-view"
 
 interface LayoutWrapperProps {
   children: React.ReactNode

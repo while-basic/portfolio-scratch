@@ -1,6 +1,6 @@
 "use client"
 
-import { ImageGeneration } from '@/components/chat/image-generation'
+import { ImageGenerationContainer } from '@/components/chat/image-generation-container'
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
@@ -19,7 +19,7 @@ export default function ImageGenerationPage() {
         </div>
       </div>
       <div className="flex-1 overflow-hidden">
-        <ImageGeneration />
+        <ImageGenerationContainer />
       </div>
     </div>
   )
