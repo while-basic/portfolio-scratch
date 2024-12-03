@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-interface User {
+export interface User {
   id: string
   email: string
   createdAt: string

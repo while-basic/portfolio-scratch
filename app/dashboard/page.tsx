@@ -12,20 +12,45 @@ import { RecentUsers } from "@/components/dashboard/recent-users"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Users, Mail, Eye, BookOpen } from "lucide-react"
 
+// Move interfaces outside of component
+interface PageView {
+  id: string
+  path: string
+  count: number
+  created_at: string
+}
+
+interface UserStats {
+  totalUsers: number
+  totalEmails: number
+  totalViews: number
+  totalPosts: number
+  pageViews: PageView[]
+}
+
+interface RecentUser {
+  id: string
+  email: string
+  created_at: string
+}
+
+// Import User type from recent-users component
+import type { User } from "@/components/dashboard/recent-users"
+
 export default function DashboardPage() {
   const { user } = useAuth()
-  const [stats, setStats] = useState({
+
+  const [stats, setStats] = useState<UserStats>({
     totalUsers: 0,
     totalEmails: 0,
     totalViews: 0,
     totalPosts: 0,
+    pageViews: [],
   })
-  const [recentUsers, setRecentUsers] = useState([])
+  const [recentUsers, setRecentUsers] = useState<RecentUser[]>([])
   const [loading, setLoading] = useState(true)
   const supabase = createClientComponentClient()
-
-  // Sample analytics data - replace with real data from your database
-  const analyticsData = {
+  const [analyticsData, setAnalyticsData] = useState({
     labels: ['January', 'February', 'March', 'April', 'May', 'June'],
     datasets: [
       {
@@ -35,27 +60,47 @@ export default function DashboardPage() {
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
       },
     ],
-  }
+  })
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Fetch users count
-        const { count: usersCount } = await supabase
-          .from('users')
-          .select('*', { count: 'exact' })
+        const [
+          usersResponse,
+          emailsResponse,
+          viewsResponse,
+          postsResponse,
+          monthlyViewsResponse
+        ] = await Promise.all([
+          // Fetch users count
+          supabase.from('users').select('*', { count: 'exact' }),
+          // Fetch emails count
+          supabase.from('emails').select('*', { count: 'exact' }),
+          // Fetch total page views
+          supabase.from('page_views').select('*'),
+          // Fetch blog posts count
+          supabase.from('posts').select('*', { count: 'exact' }),
+          // Fetch monthly page views
+          supabase
+            .from('page_views')
+            .select('*')
+            .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+            .order('created_at', { ascending: true })
+        ])
 
-        // Fetch emails count (assuming you have an emails table)
-        const { count: emailsCount } = await supabase
-          .from('emails')
-          .select('*', { count: 'exact' })
+        const totalViews = viewsResponse.data?.reduce((sum, view) => sum + (view.count || 0), 0) || 0
 
         setStats({
-          totalUsers: usersCount || 0,
-          totalEmails: emailsCount || 0,
-          totalViews: 1254, // Replace with actual analytics data
-          totalPosts: 15, // Replace with actual blog posts count
+          totalUsers: usersResponse.count || 0,
+          totalEmails: emailsResponse.count || 0,
+          totalViews,
+          totalPosts: postsResponse.count || 0,
+          pageViews: monthlyViewsResponse.data || []
         })
+
+        // Process analytics data
+        const processedData = processAnalyticsData(monthlyViewsResponse.data || [])
+        setAnalyticsData(processedData)
 
         // Fetch recent users
         const { data: recentUsersData } = await supabase
@@ -74,6 +119,40 @@ export default function DashboardPage() {
 
     fetchStats()
   }, [supabase])
+
+  // Helper function to process analytics data
+  const processAnalyticsData = (views: PageView[]) => {
+    const monthlyData = views.reduce((acc, view) => {
+      const date = new Date(view.created_at)
+      const month = date.toLocaleString('default', { month: 'long' })
+      acc[month] = (acc[month] || 0) + view.count
+      return acc
+    }, {} as Record<string, number>)
+
+    const labels = Object.keys(monthlyData)
+    const data = Object.values(monthlyData)
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Page Views',
+          data,
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        },
+      ],
+    }
+  }
+
+  // Convert RecentUser to User type
+  const convertToUsers = (recentUsers: RecentUser[]): User[] => {
+    return recentUsers.map(user => ({
+      id: user.id,
+      email: user.email,
+      createdAt: user.created_at
+    }));
+  };
 
   return (
     <ProtectedRoute>
@@ -124,7 +203,7 @@ export default function DashboardPage() {
 
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <RecentUsers users={recentUsers} loading={loading} />
+          <RecentUsers users={convertToUsers(recentUsers)} loading={loading} />
           <VisitorCounter />
         </div>
       </div>

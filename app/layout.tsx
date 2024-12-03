@@ -1,28 +1,17 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+// app/layout.tsx
+// Server component
 import "./globals.css";
-import "@/styles/mdx.css";
+import { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/navbar";
-import { personSchema, projectsSchema } from './schema';
-import { LoadingScreen } from "@/components/loading-screen";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/toaster";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-});
+import { Analytics } from "@/components/analytics";
+import { RootLayoutClient } from "@/components/root-layout";
 
 export const metadata: Metadata = {
   title: "Christopher Celaya | Software Developer & Mechatronic Technician",
-  description: "Results-driven Software Developer and Mechatronic Technician with expertise in full-stack development, industrial automation, and project management. Expert in React, Node.js, and industrial systems.",
-  keywords: ["Christopher Celaya", "Software Developer", "Mechatronic Technician", "Full-Stack Developer", "Industrial Automation", "React", "Node.js", "El Paso", "Texas", "Industrial Manufacturing", "Project Management", "UTEP", "Electrical Engineering"],
+  description: "Results-driven Software Developer and Mechatronic Technician with expertise in full-stack development, industrial automation, and project management.",
+  keywords: ["Christopher Celaya", "Software Developer", "Mechatronic Technician", "Full-Stack Developer", "Industrial Automation", "React", "Node.js", "El Paso", "Texas"],
   authors: [{ name: "Christopher Celaya" }],
   creator: "Christopher Celaya",
   publisher: "Christopher Celaya",
@@ -32,39 +21,21 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
     },
-  },
-  alternates: {
-    canonical: 'https://chriscelaya.com',
   },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://chriscelaya.com",
     title: "Christopher Celaya | Software Developer & Mechatronic Technician",
-    description: "Results-driven Software Developer and Mechatronic Technician specializing in full-stack development, industrial automation, and project management.",
-    siteName: "Christopher Celaya - Portfolio",
-    images: [
-      {
-        url: 'https://chriscelaya.com/images/me.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Christopher Celaya - Software Developer & Mechatronic Technician',
-      }
-    ],
+    description: "Results-driven Software Developer and Mechatronic Technician with expertise in full-stack development, industrial automation, and project management.",
+    siteName: "Christopher Celaya",
   },
   twitter: {
     card: "summary_large_image",
     title: "Christopher Celaya | Software Developer & Mechatronic Technician",
-    description: "Software Developer and Mechatronic Technician specializing in full-stack development and industrial automation",
-    creator: "@chriscelaya",
-    images: ['https://chriscelaya.com/images/twitter-image.jpg'],
-  },
-  verification: {
-    google: "your-google-verification-code",
+    description: "Results-driven Software Developer and Mechatronic Technician with expertise in full-stack development, industrial automation, and project management.",
+    creator: "@christophercelaya",
   },
 };
 
@@ -75,9 +46,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
-      >
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -85,15 +54,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <div className="flex min-h-screen flex-col">
-              <LoadingScreen />
-              <Navbar />
-              <main>
-                {children}
-              </main>
-              <Toaster />
-            </div>
+            <Analytics />
+            <RootLayoutClient>
+              {children}
+            </RootLayoutClient>
           </AuthProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
