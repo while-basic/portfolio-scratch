@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
-import { NavDropdown } from "./nav-dropdown"
 import { Menu, X } from "lucide-react"
 
 const Navbar = () => {
@@ -56,7 +55,7 @@ const Navbar = () => {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b bg-white/80 dark:bg-black/80 backdrop-blur-sm">
-      <div className="container flex h-14 items-center justify-between">
+      <div className="max-w-[1400px] mx-auto flex h-14 items-center justify-between px-6">
         <div className="flex items-center">
           <Link href="/" className="text-lg font-semibold hover:opacity-80">
             Christopher Celaya
@@ -79,7 +78,7 @@ const Navbar = () => {
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-6">
           <a 
             href="mailto:mr.christophercelaya@gmail.com" 
             className="text-sm hover:opacity-80"
@@ -87,13 +86,22 @@ const Navbar = () => {
             mr.christophercelaya@gmail.com
           </a>
           <ModeToggle />
-          <NavDropdown />
+          <button
+            className="flex items-center space-x-1.5 hover:opacity-80"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span className="text-sm">menu</span>
+            <div className="flex flex-col gap-1.5">
+              <div className="w-6 h-[1px] bg-current"></div>
+              <div className="w-6 h-[1px] bg-current"></div>
+            </div>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 hover:opacity-80"
+          className="md:hidden p-2"
         >
           {isOpen ? (
             <X className="h-6 w-6" />

@@ -18,7 +18,7 @@ export function Footer() {
               <li><Link href="/projects" className="hover:text-white">Projects</Link></li>
               <li><Link href="/skills" className="hover:text-white">Skills</Link></li>
               <li><Link href="/experience" className="hover:text-white">Experience</Link></li>
-              <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
+              {/* <li><Link href="/blog" className="hover:text-white">Blog</Link></li> */}
             </ul>
           </div>
           <div className="space-y-4">
@@ -27,7 +27,7 @@ export function Footer() {
               <li><Link href="/resume.pdf" className="hover:text-white">Resume</Link></li>
               <li><Link href="/case-studies" className="hover:text-white">Case Studies</Link></li>
               <li><Link href="/gallery" className="hover:text-white">Gallery</Link></li>
-              <li><Link href="/chat" className="hover:text-white">Chat</Link></li>
+              {/* <li><Link href="/chat" className="hover:text-white">Chat</Link></li> */}
             </ul>
           </div>
           <div className="space-y-4">

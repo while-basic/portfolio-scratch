@@ -29,10 +29,10 @@ export function LoadingScreen() {
   }, []);
 
   useEffect(() => {
-    // Hide loading screen after 2.5 seconds
+    // Hide loading screen after 1.0 seconds
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
