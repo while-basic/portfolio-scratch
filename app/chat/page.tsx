@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useCallback, useEffect } from 'react'
-import { Chat } from "@/components/chat/chat"
 import { ChatInterface } from "@/components/chat/chat-interface"
+import { Message } from "@/components/chat/message-list"
 import { Sidebar } from "@/components/chat/sidebar"
 import { withClientBoundary } from "@/components/client-wrapper"
 import { useAuth } from "@/lib/auth-context"

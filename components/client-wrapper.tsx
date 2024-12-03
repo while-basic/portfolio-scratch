@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import { ClientBoundary } from './client-boundary';
 
 export function withClientBoundary<P extends object>(

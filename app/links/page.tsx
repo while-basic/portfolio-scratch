@@ -1,5 +1,6 @@
 'use client';
 
+import { Metadata } from "next"
 import { PageLayout } from "@/components/page-layout";
 import { Card } from "@/components/ui/card";
 import { ExternalLink, Github, Linkedin, Globe, Code, Headphones } from "lucide-react";
@@ -136,6 +137,11 @@ function LinksPage() {
       </div>
     </PageLayout>
   );
+}
+
+export const metadata: Metadata = {
+  title: "Links | Christopher Celaya",
+  description: "Connect with Christopher Celaya through various social platforms and explore featured projects.",
 }
 
 export default withClientBoundary(LinksPage);
