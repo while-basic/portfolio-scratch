@@ -1,6 +1,10 @@
-"use client"
+'use client';
 
 import { useAuth } from "@/lib/auth-context"
+import { useToast } from "@/components/ui/use-toast"
+import { getProfile, updateProfile, createProfile } from "@/lib/profiles"
+import type { Profile } from "@/types/profile"
+import { withClientBoundary } from "@/components/client-wrapper";
 import { ProtectedRoute } from "@/components/auth/protected-route"
 import { Card } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -9,7 +13,6 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import { Badge } from "@/components/ui/badge"
-import { useToast } from "@/components/ui/use-toast"
 import {
   CalendarDays,
   Mail,
@@ -19,10 +22,8 @@ import {
   Link as LinkIcon,
   Loader2,
 } from "lucide-react"
-import { getProfile, updateProfile, createProfile } from "@/lib/profiles"
-import type { Profile } from "@/types/profile"
 
-export default function ProfilePage() {
+function ProfilePage() {
   const { user } = useAuth()
   const { toast } = useToast()
   const [isEditing, setIsEditing] = useState(false)
@@ -272,3 +273,5 @@ export default function ProfilePage() {
     </ProtectedRoute>
   )
 }
+
+export default withClientBoundary(ProfilePage);

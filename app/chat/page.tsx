@@ -1,18 +1,18 @@
 "use client"
 
+import { useState, useCallback, useEffect } from 'react'
+import { Chat } from "@/components/chat/chat"
+import { ChatInterface } from "@/components/chat/chat-interface"
+import { Sidebar } from "@/components/chat/sidebar"
+import { withClientBoundary } from "@/components/client-wrapper"
+import { useAuth } from "@/lib/auth-context"
+import { Conversation, getConversations, createConversation, updateConversation } from "@/lib/chat"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Menu } from "lucide-react"
 import Link from "next/link"
-import { useAuth } from "@/lib/auth-context"
 import { AuthDialog } from "@/components/chat/auth-dialog"
-import { ChatInterface } from "@/components/chat/chat-interface"
-import { Sidebar } from "@/components/chat/sidebar"
-import { useEffect, useState, useCallback } from "react"
-import { getConversations, createConversation, updateConversation, Conversation } from "@/lib/chat"
-import { Message } from "@/components/chat/message-list"
-import { cn } from "@/lib/utils"
 
-export default function ChatPage() {
+function ChatPage() {
   const { user, loading } = useAuth()
   const [showAuthDialog, setShowAuthDialog] = useState(false)
   const [showSidebar, setShowSidebar] = useState(true)
@@ -128,3 +128,5 @@ export default function ChatPage() {
     </div>
   )
 }
+
+export default withClientBoundary(ChatPage)

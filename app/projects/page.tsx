@@ -1,27 +1,28 @@
-import { Metadata } from "next"
-import { PageLayout } from "@/components/page-layout";
-import { Card } from "@/components/ui/card";
-import { Github } from "lucide-react";
-import { getProjects } from "@/lib/projects";
+'use client';
+
 import { ProjectCard } from "@/components/project-card";
 import { ProjectLinkButton } from "@/components/project-link-button";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { Project } from "@/lib/projects"; 
+import { Card } from "@/components/ui/card";
+import { Github } from "lucide-react";
+import { withClientBoundary } from "@/components/client-wrapper";
+import { getProjects } from "@/lib/projects";
+import { useEffect, useState } from "react";
+import type { Project } from "@/lib/projects";
 
-export const metadata: Metadata = {
-  title: "Projects | Christopher Celaya",
-  description: "Featured projects and portfolio work by Christopher Celaya",
-}
+function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
 
-// This ensures the page is statically generated at build time
-export const revalidate = 3600; // Revalidate every hour
-
-async function ProjectsPage() {
-  const projects = await getProjects();
+  useEffect(() => {
+    const loadProjects = async () => {
+      const projectData = await getProjects();
+      setProjects(projectData);
+    };
+    loadProjects();
+  }, []);
 
   return (
-    <PageLayout>
-      <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-4">Projects</h1>
           <p className="text-xl text-muted-foreground">A showcase of my recent work and side projects</p>
@@ -58,8 +59,8 @@ async function ProjectsPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }
 
-export default ProjectsPage;
+export default withClientBoundary(ProjectsPage);

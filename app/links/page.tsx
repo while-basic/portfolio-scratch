@@ -1,13 +1,12 @@
+'use client';
+
 import { Metadata } from "next"
 import { PageLayout } from "@/components/page-layout";
 import { Card } from "@/components/ui/card";
 import { ExternalLink, Github, Linkedin, Globe, Code, Headphones } from "lucide-react";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Links | Christopher Celaya",
-  description: "Connect with Christopher Celaya through various social platforms and explore featured projects.",
-}
+import { withClientBoundary } from "@/components/client-wrapper";
 
 const links = {
   social: [
@@ -48,7 +47,7 @@ const links = {
   ],
 };
 
-export default function LinksPage() {
+function LinksPage() {
   return (
     <PageLayout>
       <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -139,3 +138,10 @@ export default function LinksPage() {
     </PageLayout>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Links | Christopher Celaya",
+  description: "Connect with Christopher Celaya through various social platforms and explore featured projects.",
+}
+
+export default withClientBoundary(LinksPage);

@@ -10,6 +10,7 @@ import { AnalyticsChart } from "@/components/dashboard/analytics-chart"
 import { RecentUsers } from "@/components/dashboard/recent-users"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Users, Mail, Eye, BookOpen } from "lucide-react"
+import { withClientBoundary } from "@/components/client-wrapper"
 
 // Move interfaces outside of component
 interface PageView {
@@ -36,7 +37,7 @@ interface RecentUser {
 // Import User type from recent-users component
 import type { User } from "@/components/dashboard/recent-users"
 
-export default function DashboardPage() {
+function DashboardPage() {
   const { user } = useAuth()
 
   const [stats, setStats] = useState<UserStats>({
@@ -209,3 +210,5 @@ export default function DashboardPage() {
     </ProtectedRoute>
   )
 }
+
+export default withClientBoundary(DashboardPage);

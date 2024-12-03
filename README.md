@@ -175,6 +175,7 @@ After forking this repository, you'll need to update various files with your per
   [ ] Responsive on desktop
   [ ] Reponsive on mobile
   [ ] Connect all metrics to Supabase
+  [ ] Add sidebar with relevant options
 
 ### 7. Environment Variables
 Create a `.env.local` file with these variables:
