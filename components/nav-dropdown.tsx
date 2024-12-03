@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, FileText, BookOpen } from 'lucide-react';
+import { Github, Linkedin, FileText, BookOpen, Menu } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,12 +12,6 @@ import {
 
 export function NavDropdown() {
   const menuItems = [
-    { 
-      icon: <BookOpen className="w-4 h-4" />, 
-      label: 'Blog', 
-      href: '/blog',
-      internal: true 
-    },
     { 
       icon: <Github className="w-4 h-4" />, 
       label: 'GitHub', 
@@ -51,20 +45,17 @@ export function NavDropdown() {
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           aria-label="Menu"
         >
-          <span className="text-sm font-medium text-white">menu</span>
-          <div className="flex flex-col gap-1.5">
-            <div className="w-6 h-[1px] bg-white"></div>
-            <div className="w-6 h-[1px] bg-white"></div>
-          </div>
+          <span className="text-sm font-medium">Menu</span>
+          <Menu className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[180px] bg-[#111111] border-white/10">
+      <DropdownMenuContent align="end" className="w-[180px]">
         {menuItems.map((item) => (
           <DropdownMenuItem key={item.label} asChild>
             {item.internal ? (
               <Link
                 href={item.href}
-                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white cursor-pointer"
+                className="flex items-center gap-3 w-full"
               >
                 {item.icon}
                 {item.label}
@@ -74,7 +65,7 @@ export function NavDropdown() {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white cursor-pointer"
+                className="flex items-center gap-3 w-full"
               >
                 {item.icon}
                 {item.label}

@@ -75,17 +75,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [personSchema, projectsSchema]
-            })
-          }}
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >

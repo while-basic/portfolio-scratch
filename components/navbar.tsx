@@ -1,15 +1,41 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Menu, X } from "lucide-react"
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import type { User } from '@supabase/auth-helpers-nextjs'
+import { NavDropdown } from "@/components/nav-dropdown"
 
 const Navbar = () => {
   const pathname = usePathname()
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  
+  const [user, setUser] = useState<User | null>(null)
+  const supabase = createClientComponentClient()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth])
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.refresh()
+  }
+
   const routes = [
     {
       href: "/about",
@@ -79,23 +105,23 @@ const Navbar = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-6">
-          <a 
-            href="mailto:mr.christophercelaya@gmail.com" 
-            className="text-sm hover:opacity-80"
-          >
-            mr.christophercelaya@gmail.com
-          </a>
+          {user ? (
+            <button
+              onClick={handleSignOut}
+              className="text-sm font-medium hover:opacity-80"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <Link
+              href="/auth/sign-in"
+              className="text-sm font-medium hover:opacity-80"
+            >
+              Sign In
+            </Link>
+          )}
           <ModeToggle />
-          <button
-            className="flex items-center space-x-1.5 hover:opacity-80"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className="text-sm">menu</span>
-            <div className="flex flex-col gap-1.5">
-              <div className="w-6 h-[1px] bg-current"></div>
-              <div className="w-6 h-[1px] bg-current"></div>
-            </div>
-          </button>
+          <NavDropdown />
         </div>
 
         {/* Mobile Menu Button */}
@@ -130,12 +156,22 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
-              <a 
-                href="mailto:mr.christophercelaya@gmail.com" 
-                className="text-sm hover:opacity-80"
-              >
-                mr.christophercelaya@gmail.com
-              </a>
+              {user ? (
+                <button
+                  onClick={handleSignOut}
+                  className="text-sm font-medium hover:opacity-80"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <Link
+                  href="/auth/sign-in"
+                  className="text-sm font-medium hover:opacity-80"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
               <div className="px-3">
                 <ModeToggle />
               </div>
