@@ -5,9 +5,17 @@ import { PageLayout } from "@/components/page-layout";
 import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
-import { projectData as ecotrackData } from './ecotrack';
-import { projectData as smartbudgetData } from './smartbudget';
-import { projectData as devflowData } from './devflow';
+import { projectData as medchatData } from './medchat';
+import { projectData as midisaberData } from './midisaber';
+import { projectData as lawgptData } from './law-gpt';
+import { projectData as blockchainTldData } from './blockchain-tld';
+import { projectData as blenderData } from './3d-blender-animation';
+import { projectData as ue5Data } from './ue5-game-environment';
+import { projectData as unityData } from './unity-game-environment';
+import { projectData as amicaData } from './amica-medical-doctor';
+import { projectData as chattersyncData } from './chattersync';
+import { projectData as geminiData } from './gemini-pro-vision';
+import { projectData as translatorData } from './natural-language-translator';
 
 interface ProjectDetails {
   duration: string;
@@ -42,25 +50,31 @@ interface ProjectData {
 }
 
 const allProjectData: ProjectData = {
-  ...ecotrackData,
-  ...smartbudgetData,
-  ...devflowData
+  ...medchatData,
+  ...midisaberData,
+  ...lawgptData,
+  ...blockchainTldData,
+  ...blenderData,
+  ...ue5Data,
+  ...unityData,
+  ...amicaData,
+  ...chattersyncData,
+  ...geminiData,
+  ...translatorData
 };
 
 export default function ProjectPage() {
   const params = useParams();
-  const slug = params?.slug;
-  const projectSlug = Array.isArray(slug) ? slug[0] : slug || '';
-  const project = allProjectData[projectSlug];
+  const slug = typeof params?.slug === 'string' ? params.slug : '';
+  const project = allProjectData[slug];
 
   if (!project) {
     return (
       <PageLayout>
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-4">Project Not Found</h1>
-          <Link href="/projects" className="text-blue-500 hover:text-blue-600">
-            <FaArrowLeft className="inline mr-2" />
-            Back to Projects
+          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
+          <Link href="/projects" className="text-primary hover:underline inline-flex items-center gap-2">
+            <FaArrowLeft /> Back to Projects
           </Link>
         </div>
       </PageLayout>
@@ -69,23 +83,19 @@ export default function ProjectPage() {
 
   return (
     <PageLayout>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="container mx-auto px-4 py-8"
-      >
-        <div className="mb-6">
-          <Link href="/projects" className="text-blue-500 hover:text-blue-600 flex items-center">
-            <FaArrowLeft className="mr-2" />
-            Back to Projects
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Link href="/projects" className="text-primary hover:underline inline-flex items-center gap-2 mb-8">
+            <FaArrowLeft /> Back to Projects
           </Link>
-        </div>
 
-        <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-        <p className="text-xl text-gray-300 mb-8">{project.description}</p>
+          <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
+          <p className="text-xl text-muted-foreground mb-8">{project.description}</p>
 
-        <div className="space-y-12">
           <Section title="Introduction">
             <p>{project.introduction}</p>
           </Section>
@@ -103,18 +113,22 @@ export default function ProjectPage() {
           </Section>
 
           <Section title="Project Details">
-            <List items={[
-              `Duration: ${project.projectDetails.duration}`,
-              `Role: ${project.projectDetails.role}`,
-              `Team Size: ${project.projectDetails.team}`,
-              `Key Stakeholders: ${project.projectDetails.stakeholders.join(', ')}`
-            ]} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p><strong>Duration:</strong> {project.projectDetails.duration}</p>
+                <p><strong>Role:</strong> {project.projectDetails.role}</p>
+              </div>
+              <div>
+                <p><strong>Team:</strong> {project.projectDetails.team}</p>
+                <p><strong>Stakeholders:</strong> {project.projectDetails.stakeholders.join(', ')}</p>
+              </div>
+            </div>
           </Section>
 
           <Section title="Technology Stack">
             {Object.entries(project.technologyStack).map(([category, technologies]) => (
               <div key={category} className="mb-4">
-                <h4 className="text-lg font-semibold capitalize mb-2">{category}:</h4>
+                <h4 className="font-semibold mb-2">{category}</h4>
                 <List items={technologies} />
               </div>
             ))}
@@ -143,24 +157,24 @@ export default function ProjectPage() {
           <Section title="Conclusion">
             <p>{project.conclusion}</p>
           </Section>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </PageLayout>
   );
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mb-8">
+    <section className="mb-12">
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
-      <div className="text-gray-300">{children}</div>
+      <div className="text-muted-foreground">{children}</div>
     </section>
   );
 }
 
 function List({ items }: { items: string[] }) {
   return (
-    <ul className="list-disc list-inside space-y-2">
+    <ul className="list-disc pl-6 space-y-2">
       {items.map((item, index) => (
         <li key={index}>{item}</li>
       ))}
