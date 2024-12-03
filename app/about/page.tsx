@@ -13,7 +13,7 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 pt-24 pb-8">
       <Breadcrumb />
       <h1 className="text-4xl font-bold mb-8">About Me</h1>
-      
+
       <div className="grid grid-cols-1 gap-8">
         <Card className="p-6">
           <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
@@ -64,29 +64,23 @@ export default function AboutPage() {
           <h2 className="text-2xl font-semibold mb-4">Core Skills</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold mb-2">Software Development</h3>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Python</Badge>
-                <Badge variant="secondary">JavaScript</Badge>
-                <Badge variant="secondary">React</Badge>
-                <Badge variant="secondary">Node.js</Badge>
-                <Badge variant="secondary">C</Badge>
-              </div>
-            </div>
-            <div>
               <h3 className="font-semibold mb-2">Industrial Automation</h3>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">PLCs</Badge>
+                <Badge variant="secondary">SCADA</Badge>
                 <Badge variant="secondary">HMIs</Badge>
-                <Badge variant="secondary">Robotics</Badge>
-                <Badge variant="secondary">Computer Vision</Badge>
-                <Badge variant="secondary">Embedded Systems</Badge>
+                <Badge variant="secondary">Industrial IoT Devices</Badge>
+                <Badge variant="secondary">Robotic Proceses</Badge>
+                <Badge variant="secondary">Vision Inspection</Badge>
+                <Badge variant="secondary">Automated Guided Vehicles (AGVs)</Badge>
               </div>
             </div>
             <div>
               <h3 className="font-semibold mb-2">Technologies</h3>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">AI</Badge>
+                <Badge variant="secondary">Machine Learning</Badge>
+                <Badge variant="secondary">Artificial Intelligence</Badge>
+                <Badge variant="secondary">Deep Learning</Badge>
                 <Badge variant="secondary">Virtual Reality</Badge>
                 <Badge variant="secondary">Blockchain</Badge>
                 <Badge variant="secondary">Data Centers</Badge>
@@ -96,10 +90,47 @@ export default function AboutPage() {
             <div>
               <h3 className="font-semibold mb-2">Mechanical Systems</h3>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Pneumatics</Badge>
+                <Badge variant="secondary">Chillers</Badge>
                 <Badge variant="secondary">Hydraulics</Badge>
-                <Badge variant="secondary">Preventative Maintenance</Badge>
-                <Badge variant="secondary">Troubleshooting</Badge>
+                <Badge variant="secondary">Compressors</Badge>
+                <Badge variant="secondary">Air Handling</Badge>
+                <Badge variant="secondary">Pneumatic</Badge>
+                <Badge variant="secondary">Conveyors & Material Handling</Badge>
+                <Badge variant="secondary">Cooling Towers</Badge>
+                <Badge variant="secondary">Plumbing</Badge>
+                <Badge variant="secondary">Fire Suppression</Badge>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Electrical Systems</h3>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary">Power Distribution</Badge>
+                <Badge variant="secondary">Transformers</Badge>
+                <Badge variant="secondary">Circuit Breakers and Switchgear</Badge>
+                <Badge variant="secondary">Electric Motors (AC/DC)</Badge>
+                <Badge variant="secondary">Variable Frequency Drives (VFDs)</Badge>
+                <Badge variant="secondary">Generators and Backup Power Systems</Badge>
+                <Badge variant="secondary">Control Panels and PLCs</Badge>
+                <Badge variant="secondary">Electrical Grounding</Badge>
+              </div>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Software Development</h3>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary">Python</Badge>
+                <Badge variant="secondary">JavaScript</Badge>
+                <Badge variant="secondary">React</Badge>
+                <Badge variant="secondary">Node.js</Badge>
+                <Badge variant="secondary">C</Badge>
+                <Badge variant="secondary">C++</Badge>
+                <Badge variant="secondary">HTML</Badge>
+                <Badge variant="secondary">CSS</Badge>
+                <Badge variant="secondary">Tailwind</Badge>
+                <Badge variant="secondary">Git</Badge>
+                <Badge variant="secondary">GitHub</Badge>
+                <Badge variant="secondary">Docker</Badge>
+                <Badge variant="secondary">Next.js</Badge>
+                <Badge variant="secondary">MongoDB</Badge>
               </div>
             </div>
           </div>
