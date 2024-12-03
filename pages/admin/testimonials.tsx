@@ -20,7 +20,11 @@ const Testimonials = () => {
       const data = await testimonialService.getAll();
       setTestimonials(data);
     } catch (error) {
-      toast.error('Failed to load testimonials');
+      toast({
+        variant: 'destructive',
+        title: 'Failed to load testimonials',
+        description: error instanceof Error ? error.message : 'An unknown error occurred'
+      });
       console.error(error);
     } finally {
       setLoading(false);
@@ -35,7 +39,11 @@ const Testimonials = () => {
       setTestimonials(testimonials.filter(t => t.id !== id));
       toast.success('Testimonial deleted successfully');
     } catch (error) {
-      toast.error('Failed to delete testimonial');
+      toast({
+        variant: 'destructive',
+        title: 'Failed to delete testimonial',
+        description: error instanceof Error ? error.message : 'An unknown error occurred'
+      });
       console.error(error);
     }
   };
@@ -48,7 +56,11 @@ const Testimonials = () => {
       ));
       toast.success(`Testimonial ${!featured ? 'featured' : 'unfeatured'} successfully`);
     } catch (error) {
-      toast.error('Failed to update testimonial');
+      toast({
+        variant: 'destructive',
+        title: 'Failed to update testimonial',
+        description: error instanceof Error ? error.message : 'An unknown error occurred'
+      });
       console.error(error);
     }
   };
