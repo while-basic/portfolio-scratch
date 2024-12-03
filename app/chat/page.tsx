@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Menu } from "lucide-react"
 import Link from "next/link"
 import { AuthDialog } from "@/components/chat/auth-dialog"
+import { cn } from "@/lib/utils"
 
 function ChatPage() {
   const { user, loading } = useAuth()

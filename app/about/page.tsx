@@ -1,14 +1,11 @@
-import { Metadata } from "next"
+'use client';
+
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Breadcrumb } from "@/components/breadcrumb"
+import { withClientBoundary } from "@/components/client-wrapper"
 
-export const metadata: Metadata = {
-  title: "About | Christopher Celaya",
-  description: "Learn more about Christopher Celaya and his journey in software development and technology.",
-}
-
-export default function AboutPage() {
+function AboutPage() {
   return (
     <div className="container mx-auto px-4 pt-24 pb-8">
       <Breadcrumb />
@@ -139,3 +136,5 @@ export default function AboutPage() {
     </div>
   )
 }
+
+export default withClientBoundary(AboutPage);

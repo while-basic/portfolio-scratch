@@ -7,6 +7,7 @@ import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@/components/analytics";
 import { RootLayoutClient } from "@/components/root-layout";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Christopher Celaya | Software Developer & Mechatronic Technician",
@@ -30,13 +31,7 @@ export const metadata: Metadata = {
     title: "Christopher Celaya | Software Developer & Mechatronic Technician",
     description: "Results-driven Software Developer and Mechatronic Technician with expertise in full-stack development, industrial automation, and project management.",
     siteName: "Christopher Celaya",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Christopher Celaya | Software Developer & Mechatronic Technician",
-    description: "Results-driven Software Developer and Mechatronic Technician with expertise in full-stack development, industrial automation, and project management.",
-    creator: "@christophercelaya",
-  },
+  }
 };
 
 export default function RootLayout({
@@ -54,12 +49,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
+            <Suspense>
+              <RootLayoutClient>
+                {children}
+              </RootLayoutClient>
+            </Suspense>
+            <Toaster />
             <Analytics />
-            <RootLayoutClient>
-              {children}
-            </RootLayoutClient>
           </AuthProvider>
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>

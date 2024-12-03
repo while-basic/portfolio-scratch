@@ -5,7 +5,7 @@ import "@/styles/mdx.css"
 import Navbar from "@/components/navbar"
 import { LoadingScreen } from "@/components/loading-screen"
 import { usePageView } from "@/hooks/use-page-view"
-import { ClientBoundary } from "./client-boundary"
+import { Suspense } from "react"
 
 const geistSans = localFont({
   src: "../app/fonts/GeistVF.woff",
@@ -26,7 +26,7 @@ export function RootLayoutClient({
   usePageView()
 
   return (
-    <ClientBoundary>
+    <Suspense fallback={<LoadingScreen />}>
       <div className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased flex min-h-screen flex-col`}>
         <LoadingScreen />
         <Navbar />
@@ -34,6 +34,6 @@ export function RootLayoutClient({
           {children}
         </main>
       </div>
-    </ClientBoundary>
+    </Suspense>
   )
 }

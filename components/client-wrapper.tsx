@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { ClientBoundary } from './client-boundary';
 
 export function withClientBoundary<P extends object>(
@@ -8,9 +9,11 @@ export function withClientBoundary<P extends object>(
 ) {
   return function WrappedComponent(props: P) {
     return (
-      <ClientBoundary fallback={fallback}>
-        <Component {...props} />
-      </ClientBoundary>
+      <Suspense fallback={fallback}>
+        <ClientBoundary fallback={fallback}>
+          <Component {...props} />
+        </ClientBoundary>
+      </Suspense>
     );
   };
 }
