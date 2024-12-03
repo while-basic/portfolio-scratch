@@ -1,11 +1,14 @@
+'use client';
+
 import Link from "next/link";
 import { ServiceCard } from "@/components/service-card";
 import { WorkCarousel } from "@/components/work-carousel";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, Laptop, Cog, Headphones } from "lucide-react";
 import { Footer } from "@/components/footer";
+import { withClientBoundary } from "@/components/client-wrapper";
 
-export default function HomePage() {
+function HomePage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
@@ -105,3 +108,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+export default withClientBoundary(HomePage);
