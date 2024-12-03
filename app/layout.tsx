@@ -50,12 +50,14 @@ export default function RootLayout({
         >
           <AuthProvider>
             <Suspense fallback={<div>Loading...</div>}>
-              <RootLayoutClient>
-                {children}
-              </RootLayoutClient>
+              <Suspense fallback={<div>Loading...</div>}>
+                <RootLayoutClient>
+                  {children}
+                </RootLayoutClient>
+              </Suspense>
+              <Toaster />
+              <Analytics />
             </Suspense>
-            <Toaster />
-            <Analytics />
           </AuthProvider>
         </ThemeProvider>
       </body>

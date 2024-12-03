@@ -26,14 +26,16 @@ export function RootLayoutClient({
   usePageView()
 
   return (
-    <Suspense fallback={<LoadingScreen />}>
-      <div className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased flex min-h-screen flex-col`}>
-        <LoadingScreen />
-        <Navbar />
-        <main>
-          {children}
-        </main>
-      </div>
-    </Suspense>
+    <div className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased flex min-h-screen flex-col`}>
+      <LoadingScreen />
+      <Navbar />
+      <main>
+        <Suspense fallback={<LoadingScreen />}>
+          <Suspense fallback={<div>Loading...</div>}>
+            {children}
+          </Suspense>
+        </Suspense>
+      </main>
+    </div>
   )
 }
