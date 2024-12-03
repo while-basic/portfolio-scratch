@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+
+  --card: 0 0% 0%;
+  --card-foreground: 0 0% 100%;
+ 
+  --popover: 0 0% 0%;
+  --popover-foreground: 0 0% 100%;
+ 
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+ 
+  --secondary: 0 0% 13%;
+  --secondary-foreground: 0 0% 100%;
+ 
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 0 0% 100%;
+ 
+  --accent: 0 0% 13%;
+  --accent-foreground: 0 0% 100%;
+ 
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 13%;
+  --input: 0 0% 13%;
+  --ring: 0 0% 100%;
+ 
+  --radius: 0.5rem;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: 'Geist', sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+  }
+
+  code.hljs {
+    padding: 3px 5px;
+  }
+
+  .hljs {
+    color: #D4D4D4;
+    background: #1c1c1c;
+  }
+
+  .hljs-keyword {
+    color: #C586C0;
+  }
+
+  .hljs-built_in {
+    color: #4EC9B0;
+  }
+
+  .hljs-type {
+    color: #4EC9B0;
+  }
+
+  .hljs-literal {
+    color: #569CD6;
+  }
+
+  .hljs-number {
+    color: #B5CEA8;
+  }
+
+  .hljs-regexp {
+    color: #D16969;
+  }
+
+  .hljs-string {
+    color: #CE9178;
+  }
+
+  .hljs-subst {
+    color: #D4D4D4;
+  }
+
+  .hljs-symbol {
+    color: #D4D4D4;
+  }
+
+  .hljs-class {
+    color: #4EC9B0;
+  }
+
+  .hljs-function {
+    color: #DCDCAA;
+  }
+
+  .hljs-title {
+    color: #DCDCAA;
+  }
+
+  .hljs-params {
+    color: #D4D4D4;
+  }
+
+  .hljs-comment {
+    color: #6A9955;
+    font-style: italic;
+  }
+
+  .hljs-doctag {
+    color: #608B4E;
+  }
+
+  .hljs-meta,
+  .hljs-meta .hljs-keyword {
+    color: #9B9B9B;
+  }
+
+  .hljs-meta .hljs-string {
+    color: #CE9178;
+  }
+
+  .hljs-attr {
+    color: #9CDCFE;
+  }
+
+  .hljs-attribute {
+    color: #9CDCFE;
+  }
+
+  .hljs-name {
+    color: #569CD6;
+  }
+
+  .hljs-section {
+    color: #DCDCAA;
+  }
+
+  .hljs-tag {
+    color: #569CD6;
+  }
+
+  .hljs-variable {
+    color: #9CDCFE;
+  }
+
+  .hljs-template-variable {
+    color: #9CDCFE;
+  }
+
+  .hljs-template-tag {
+    color: #569CD6;
+  }
+
+  .language-cpp .hljs-keyword,
+  .language-cpp .hljs-literal {
+    color: #C586C0;
+  }
+
+  .language-cpp .hljs-built_in {
+    color: #4EC9B0;
+  }
+
+  .language-java .hljs-keyword {
+    color: #C586C0;
+  }
+
+  .language-java .hljs-class .hljs-title {
+    color: #4EC9B0;
+  }
+
+  .language-javascript .hljs-keyword {
+    color: #C586C0;
+  }
+
+  .language-javascript .hljs-built_in {
+    color: #DCDCAA;
+  }
+}
+
+@layer base {
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 0 0% 100%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-black text-white;
+  }
+}
+
+/* Blog styles */
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mb-4 mt-0;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mt-8 mb-4;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose pre {
+  @apply bg-card p-4 rounded-lg my-4;
+}
+
+.prose code {
+  @apply text-sm font-mono;
+}
