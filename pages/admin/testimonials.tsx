@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ProtectedRoute } from '@/components/admin/protected-route';
 import { Star, Plus, Edit, Trash2, ExternalLink, Loader2 } from 'lucide-react';
 import { testimonialService, type Testimonial } from '@/lib/services/testimonials';
-import { toast } from 'react-hot-toast';
+import { useToast } from "@/components/ui/use-toast";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     loadTestimonials();

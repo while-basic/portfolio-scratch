@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ProtectedRoute } from '@/components/admin/protected-route';
 import { Wrench, Plus, Edit, Trash2, MoveUp, MoveDown, Loader2 } from 'lucide-react';
 import { skillService, type Skill, type SkillCategory } from '@/lib/services/skills';
-import { toast } from 'react-hot-toast';
+import { useToast } from "@/components/ui/use-toast";
 
 const Skills = () => {
   const [categories, setCategories] = useState<SkillCategory[]>([]);
@@ -10,6 +10,7 @@ const Skills = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     loadData();
