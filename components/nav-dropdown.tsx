@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, FileText, BookOpen, Menu } from 'lucide-react';
+import { Github, Linkedin, FileText, BookOpen, Menu, Settings } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,6 +34,12 @@ export function NavDropdown() {
       icon: <BookOpen className="w-4 h-4" />,
       label: 'Featured Links',
       href: '/links',
+      internal: true
+    },
+    {
+      icon: <Settings className="w-4 h-4" />,
+      label: 'Admin Login',
+      href: '/admin/login',
       internal: true
     }
   ];
