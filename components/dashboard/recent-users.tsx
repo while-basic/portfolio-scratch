@@ -12,10 +12,9 @@ export interface User {
 
 interface RecentUsersProps {
   users: User[]
-  loading?: boolean
 }
 
-export function RecentUsers({ users, loading = false }: RecentUsersProps) {
+export function RecentUsers({ users }: RecentUsersProps) {
   return (
     <Card className="p-6">
       <h2 className="text-xl font-semibold mb-4">Recent Users</h2>

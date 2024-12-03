@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { WelcomeDialog } from "@/components/welcome-dialog"
-import { Card } from "@/components/ui/card"
 import { useAuth } from "@/lib/auth-context"
 import { ProtectedRoute } from "@/components/auth/protected-route"
 import { VisitorCounter } from "@/components/visitor-counter"
@@ -203,7 +202,7 @@ export default function DashboardPage() {
 
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <RecentUsers users={convertToUsers(recentUsers)} loading={loading} />
+          <RecentUsers users={convertToUsers(recentUsers)} />
           <VisitorCounter />
         </div>
       </div>

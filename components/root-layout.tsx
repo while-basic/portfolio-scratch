@@ -3,7 +3,6 @@
 import localFont from "next/font/local"
 import "@/styles/mdx.css"
 import Navbar from "@/components/navbar"
-import { personSchema, projectsSchema } from '../app/schema'
 import { LoadingScreen } from "@/components/loading-screen"
 import { usePageView } from "@/hooks/use-page-view"
 
