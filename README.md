@@ -162,11 +162,18 @@ After forking this repository, you'll need to update various files with your per
   - Include project outcomes
   - Update metrics and results
 
-### 6. Blog
+### 6. Blog (in-progress)
 - **Blog Posts** (`/app/blog/`)
   - Add your own posts
   - Update blog layout
   - Customize categories
+
+### 7. Dashboard (in-progress)
+- **Dashboard** (`/app/dashboard/page.tsx`)
+  - Fix visitor counter
+  - Set up analytics
+  - Customize admin features
+  - 
 
 ### 7. Environment Variables
 Create a `.env.local` file with these variables:
