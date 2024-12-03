@@ -26,6 +26,12 @@ export function NavDropdown() {
     },
     { 
       icon: <FileText className="w-4 h-4" />, 
+      label: 'Admin ⚙', 
+      href: '/admin/login',
+      internal: true 
+    },
+    { 
+      icon: <FileText className="w-4 h-4" />, 
       label: 'Resume', 
       href: '/resume.pdf',
       internal: true 

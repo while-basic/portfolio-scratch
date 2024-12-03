@@ -72,15 +72,10 @@ const Navbar = () => {
       label: "Resume",
       active: pathname === "/resume",
     },
-    // {
-    //   href: "/chat",
-    //   label: "Chat",
-    //   active: pathname === "/chat" || pathname === "/chat/image",
-    // },
     {
-      href: "/admin/login",
-      label: "Admin",
-      active: pathname.startsWith("/admin"),
+      href: "/chat",
+      label: "Chat (coming soon)",
+      active: pathname === "/chat",
     }
   ]
 
