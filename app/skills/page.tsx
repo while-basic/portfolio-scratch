@@ -22,22 +22,25 @@ const skillCategories: SkillCategory[] = [
       "JavaScript",
       "TypeScript",
       "Java",
-      "C/C++",    ]
+      "C/C++",    
+      "SQL",
+    ]
   },
   {
     title: "Web Technologies",
     icon: <FaServer className="text-purple-500 text-xl" />,
     description: "Modern web development technologies and frameworks",
     skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "TypeScript",
       "React",
       "Next.js",
       "Node.js",
-      "Express",
       "HTML5",
       "CSS3/Sass",
       "Tailwind CSS",
-      "REST APIs",
-      "GraphQL"
     ]
   },
   {
@@ -62,7 +65,7 @@ const skillCategories: SkillCategory[] = [
       "Docker",
       "AWS",
       "Google Cloud",
-      "CI/CD",
+      "Azure",
       "Linux",
       "Bash Scripting"
     ]
@@ -128,7 +131,6 @@ export default function SkillsPage() {
                   <Badge variant="secondary">Git</Badge>
                   <Badge variant="secondary">Docker</Badge>
                   <Badge variant="secondary">VS Code</Badge>
-                  <Badge variant="secondary">Jira</Badge>
                   <Badge variant="secondary">Figma</Badge>
                 </div>
               </div>

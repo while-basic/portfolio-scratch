@@ -3,9 +3,9 @@ export const personSchema = {
   "@type": "Person",
   "name": "Christopher Celaya",
   "url": "https://chriscelaya.com",
-  "image": "https://chriscelaya.com/images/profile.jpg",
+  "image": "https://chriscelaya.com/images/me.jpg",
   "sameAs": [
-    "https://github.com/chriscelaya",
+    "https://github.com/while-basic",
     "https://linkedin.com/in/christophercelaya"
   ],
   "jobTitle": "Software Developer",
