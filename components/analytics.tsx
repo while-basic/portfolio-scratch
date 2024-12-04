@@ -9,9 +9,9 @@ export function Analytics() {
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    if (pathname) {
+    if (pathname && searchParams) {
       // Track the page view with the full URL (including search params)
-      const url = searchParams.size > 0 
+      const url = searchParams?.size > 0 
         ? `${pathname}?${searchParams.toString()}`
         : pathname
       
