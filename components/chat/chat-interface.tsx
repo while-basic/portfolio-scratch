@@ -1,7 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
-import { Mic, Send } from "lucide-react"
+import { Send } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { MessageList } from './message-list'
+
+interface Message {
+  role: 'user' | 'assistant' | 'system'
+  content: string
+  imageUrl?: string
+}
 
 interface ChatInterfaceProps {
   mode: 'chat' | 'image'
@@ -9,80 +16,130 @@ interface ChatInterfaceProps {
 
 export function ChatInterface({ mode }: ChatInterfaceProps) {
   const [message, setMessage] = useState("")
+  const [messages, setMessages] = useState<Message[]>([])
+  const [isLoading, setIsLoading] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!message.trim()) return
+    if (!message.trim() || isLoading) return
     
-    // Handle message submission here
+    const userMessage = { role: 'user' as const, content: message.trim() }
+    setMessages(prev => [...prev, userMessage])
     setMessage("")
+    setIsLoading(true)
+
+    try {
+      if (mode === 'image') {
+        // Handle image generation
+        const response = await fetch('/api/generate-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: userMessage.content,
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to generate image')
+        }
+
+        const data = await response.json()
+        if (data.url) {
+          setMessages(prev => [...prev, {
+            role: 'assistant',
+            content: 'Here\'s your generated image:',
+            imageUrl: data.url
+          }])
+        } else {
+          throw new Error('No image URL returned')
+        }
+      } else {
+        // Handle chat
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            messages: [...messages, userMessage],
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to send message')
+        }
+
+        const data = await response.json()
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: data.message
+        }])
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: error instanceof Error 
+          ? `Error: ${error.message}` 
+          : 'Sorry, there was an error processing your request.'
+      }])
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSubmit(e)
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current
+    if (textarea) {
+      textarea.style.height = 'auto'
+      textarea.style.height = textarea.scrollHeight + 'px'
     }
   }
 
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
-    }
+    adjustTextareaHeight()
   }, [message])
 
   return (
     <div className="flex flex-col h-full">
-      {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="h-full flex items-center justify-center text-white/50">
-          {mode === 'chat' ? (
-            <p>Start a conversation...</p>
-          ) : (
-            <p>Describe the image you want to generate...</p>
-          )}
-        </div>
+      <div className="flex-1 overflow-y-auto p-4">
+        <MessageList messages={messages} />
       </div>
-      
-      {/* Input Area */}
-      <div className="border-t border-white/10 bg-black">
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-4">
-          <div className="flex items-center gap-2 bg-white/5 rounded-lg pl-4 pr-2 focus-within:bg-white/10 transition-colors">
+
+      <form onSubmit={handleSubmit} className="border-t p-4 bg-background">
+        <div className="flex space-x-2">
+          <div className="flex-1 overflow-hidden">
             <textarea
               ref={textareaRef}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Enter user message..."
-              className="flex-1 bg-transparent border-0 focus:ring-0 resize-none py-3 text-white placeholder-white/50 text-sm min-h-[20px] max-h-48"
-              rows={1}
+              placeholder={mode === 'image' ? "Describe the image you want to generate..." : "Type a message..."}
+              className={cn(
+                "w-full resize-none bg-transparent outline-none",
+                "min-h-[40px] max-h-[200px] p-2 border rounded-md"
+              )}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  handleSubmit(e)
+                }
+              }}
             />
-            <div className="flex gap-2 self-end py-2">
-              <Button 
-                type="button" 
-                variant="ghost" 
-                size="icon" 
-                className="text-white/50 hover:text-white hover:bg-white/5 h-8 w-8"
-              >
-                <Mic className="h-4 w-4" />
-              </Button>
-              <Button 
-                type="submit" 
-                variant="ghost" 
-                size="icon" 
-                className={cn(
-                  "text-white/50 hover:text-white hover:bg-white/5 h-8 w-8",
-                  message.trim() && "text-white"
-                )}
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
           </div>
-        </form>
-      </div>
+          <div className="flex items-end space-x-2">
+            <Button 
+              type="submit" 
+              size="icon"
+              disabled={isLoading || !message.trim()}
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </form>
     </div>
   )
 }

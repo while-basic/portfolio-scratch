@@ -39,6 +39,11 @@ const routes = [
     href: "/admin/messages",
   },
   {
+    label: "Image Generation",
+    icon: Image,
+    href: "/image-generation",
+  },
+  {
     label: "Gallery",
     icon: Image,
     href: "/admin/gallery",

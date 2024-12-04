@@ -5,11 +5,17 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Image from "next/image"
 import { MarkdownMessage } from "./markdown-message"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { ZoomInIcon, DownloadIcon } from "lucide-react"
+import { useState } from "react"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 
 export type Message = {
   role: "system" | "user" | "assistant"
   content: string
   avatar?: string  // Optional custom avatar URL
+  imageUrl?: string
 }
 
 interface MessageListProps {
@@ -18,6 +24,25 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages, isLoading }: MessageListProps) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+
+  const handleDownload = async (imageUrl: string) => {
+    try {
+      const response = await fetch(imageUrl)
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'generated-image.png'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error downloading image:', error)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {messages.map((message, index) => (
@@ -83,6 +108,47 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             <div className="prose prose-invert max-w-none">
               <MarkdownMessage content={message.content} />
             </div>
+            {message.imageUrl && (
+              <Card className="mt-2 p-2 group relative cursor-pointer">
+                <div className="relative w-full aspect-square">
+                  <Image
+                    src={message.imageUrl}
+                    alt="Generated image"
+                    fill
+                    className="object-contain rounded-md"
+                    onClick={() => setSelectedImage(message.imageUrl || null)}
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-4">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-white hover:bg-white/20"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (message.imageUrl) {
+                          setSelectedImage(message.imageUrl)
+                        }
+                      }}
+                    >
+                      <ZoomInIcon className="h-6 w-6" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-white hover:bg-white/20"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (message.imageUrl) {
+                          handleDownload(message.imageUrl)
+                        }
+                      }}
+                    >
+                      <DownloadIcon className="h-6 w-6" />
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            )}
           </div>
         </motion.div>
       ))}
@@ -106,6 +172,22 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           </div>
         </motion.div>
       )}
+
+      {/* Image Preview Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl">
+          {selectedImage && (
+            <div className="relative w-full aspect-square">
+              <Image
+                src={selectedImage}
+                alt="Generated image preview"
+                fill
+                className="object-contain"
+              />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

@@ -60,6 +60,7 @@ export default function RootLayout({
             </Suspense>
           </AuthProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

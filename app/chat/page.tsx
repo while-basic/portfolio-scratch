@@ -9,9 +9,11 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeft, MessageSquare, Image, ChevronDown } from "lucide-react"
 import { AuthDialog } from "@/components/chat/auth-dialog"
 import { cn } from "@/lib/utils"
+import { useRouter } from 'next/navigation'
 
 function ChatPage() {
   const { user, loading } = useAuth()
+  const router = useRouter()
   const [showAuthDialog, setShowAuthDialog] = useState(false)
   const [showSidebar] = useState(true)
   const [currentMode, setCurrentMode] = useState<'chat' | 'image'>('chat')
@@ -71,6 +73,7 @@ function ChatPage() {
             )}
             onClick={() => setCurrentMode('chat')}
           >
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <MessageSquare className="h-4 w-4 mr-3" />
             Chat
           </Button>
@@ -82,8 +85,9 @@ function ChatPage() {
                 ? "text-white bg-white/5"
                 : "text-white/70 hover:text-white hover:bg-white/5"
             )}
-            onClick={() => setCurrentMode('image')}
+            onClick={() => router.push('/generate')}
           >
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image className="h-4 w-4 mr-3" />
             Image Generation
           </Button>

@@ -102,7 +102,7 @@ export function ImageGeneration({ onGenerate, isLoading, generatedImageUrl }: Im
             placeholder="Describe the image you want to generate..."
             className="flex-1"
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
+              if (e.key === 'Enter' && !e.shiftKey && !isLoading) {
                 e.preventDefault()
                 handleSubmit()
               }
