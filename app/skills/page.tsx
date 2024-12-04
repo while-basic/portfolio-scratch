@@ -76,7 +76,6 @@ const skillCategories: SkillCategory[] = [
     description: "Other technical skills and areas of expertise",
     skills: [
       "Machine Learning",
-      "Data Analysis",
       "System Architecture",
       "Project Management",
       "Technical Documentation",
@@ -97,27 +96,30 @@ export default function SkillsPage() {
           <p className="text-xl text-muted-foreground">A comprehensive overview of my technical expertise</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {skillCategories.map((category) => (
-            <Card key={category.title} className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 rounded-full bg-background flex items-center justify-center border">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold mb-8 text-center text-foreground">Skills & Expertise</h1>
+          <div className="grid gap-8">
+            {skillCategories.map((category, index) => (
+              <Card key={index} className="p-6 bg-card">
+                <div className="flex items-center gap-3 mb-4">
                   {category.icon}
+                  <h2 className="text-2xl font-semibold text-foreground">{category.title}</h2>
                 </div>
-                <h2 className="text-2xl font-semibold">{category.title}</h2>
-              </div>
-              
-              <p className="text-muted-foreground mb-6">{category.description}</p>
-              
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <Badge key={skill} variant="secondary">
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </Card>
-          ))}
+                <p className="text-muted-foreground mb-6">{category.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill, idx) => (
+                    <Badge 
+                      key={idx} 
+                      variant="secondary"
+                      className="text-secondary-foreground bg-secondary hover:bg-secondary/80"
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
 
         {/* Additional Skills Section */}

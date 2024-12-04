@@ -104,12 +104,12 @@ export function ChatInterface({ mode }: ChatInterfaceProps) {
   }, [message])
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-background">
       <div className="flex-1 overflow-y-auto p-4">
         <MessageList messages={messages} />
       </div>
 
-      <form onSubmit={handleSubmit} className="border-t p-4 bg-background">
+      <form onSubmit={handleSubmit} className="border-t border-border p-4 bg-card">
         <div className="flex space-x-2">
           <div className="flex-1 overflow-hidden">
             <textarea
@@ -118,8 +118,9 @@ export function ChatInterface({ mode }: ChatInterfaceProps) {
               onChange={(e) => setMessage(e.target.value)}
               placeholder={mode === 'image' ? "Describe the image you want to generate..." : "Type a message..."}
               className={cn(
-                "w-full resize-none bg-transparent outline-none",
-                "min-h-[40px] max-h-[200px] p-2 border rounded-md"
+                "w-full resize-none bg-background text-foreground",
+                "min-h-[40px] max-h-[200px] p-2 border border-border rounded-md",
+                "placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               )}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -134,6 +135,7 @@ export function ChatInterface({ mode }: ChatInterfaceProps) {
               type="submit" 
               size="icon"
               disabled={isLoading || !message.trim()}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Send className="h-4 w-4" />
             </Button>

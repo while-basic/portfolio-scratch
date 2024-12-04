@@ -91,92 +91,51 @@ export default function ExperiencePage() {
 
   return (
     <PageLayout>
-      <div className="container mx-auto px-4 py-8 max-w-5xl">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Professional Experience</h1>
-          <p className="text-xl text-muted-foreground">
-            My journey through industrial automation and software development
-          </p>
-        </div>
-
-        <div className="space-y-8">
-          {experiences.map((experience, index) => (
-            <Card key={index} className="p-6">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                <div>
-                  <h2 className="text-2xl font-semibold mb-2">{experience.title}</h2>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-muted-foreground">
-                      <FaBuilding className="mr-2" />
-                      {experience.company}
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold mb-8 text-center text-foreground">Professional Experience</h1>
+          <div className="space-y-8">
+            {experiences.map((exp, index) => (
+              <Card key={index} className="p-6 bg-card text-card-foreground">
+                <div className="flex flex-col space-y-4">
+                  <div className="flex flex-col space-y-2">
+                    <h2 className="text-2xl font-semibold text-foreground">{exp.title}</h2>
+                    <div className="flex items-center space-x-2 text-muted-foreground">
+                      <FaBuilding className="text-primary" />
+                      <span>{exp.company}</span>
                     </div>
-                    <div className="flex items-center text-muted-foreground">
-                      <FaMapMarkerAlt className="mr-2" />
-                      {experience.location}
+                    <div className="flex items-center space-x-2 text-muted-foreground">
+                      <FaMapMarkerAlt className="text-primary" />
+                      <span>{exp.location}</span>
                     </div>
-                    <div className="flex items-center text-muted-foreground">
-                      <FaCalendarAlt className="mr-2" />
-                      {experience.period}
+                    <div className="flex items-center space-x-2 text-muted-foreground">
+                      <FaCalendarAlt className="text-primary" />
+                      <span>{exp.period}</span>
                     </div>
                   </div>
-                </div>
-                
-                {experience.technologies && (
-                  <div className="mt-4 md:mt-0">
+
+                  <div className="space-y-2">
+                    <h3 className="font-semibold text-foreground">Key Responsibilities:</h3>
+                    <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                      {exp.responsibilities.map((resp, idx) => (
+                        <li key={idx}>{resp}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {exp.technologies && (
                     <div className="flex flex-wrap gap-2">
-                      {experience.technologies.map((tech) => (
-                        <Badge key={tech} variant="secondary">
+                      {exp.technologies.map((tech, idx) => (
+                        <Badge key={idx} variant="secondary" className="text-xs">
                           {tech}
                         </Badge>
                       ))}
                     </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-3">Key Responsibilities</h3>
-                <ul className="space-y-2">
-                  {experience.responsibilities.map((responsibility, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="mr-2 mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                      <span className="text-muted-foreground">{responsibility}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Skills Gained Section */}
-        <div className="mt-12">
-          <Card className="p-6">
-            <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Key Skills Developed</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-lg font-medium mb-3">Technical Skills</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary">Industrial Automation</Badge>
-                  <Badge variant="secondary">PLC Programming</Badge>
-                  <Badge variant="secondary">SCADA Systems</Badge>
-                  <Badge variant="secondary">Electrical Systems</Badge>
-                  <Badge variant="secondary">Preventive Maintenance</Badge>
-                  <Badge variant="secondary">Technical Documentation</Badge>
+                  )}
                 </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium mb-3">Soft Skills</h3>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary">Project Management</Badge>
-                  <Badge variant="secondary">Team Collaboration</Badge>
-                  <Badge variant="secondary">Problem Solving</Badge>
-                  <Badge variant="secondary">Quality Assurance</Badge>
-                  <Badge variant="secondary">Safety Compliance</Badge>
-                </div>
-              </div>
-            </div>
-          </Card>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </PageLayout>

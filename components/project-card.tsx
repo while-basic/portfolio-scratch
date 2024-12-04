@@ -24,7 +24,7 @@ export function ProjectCard({
   slug
 }: ProjectCardProps) {
   const CardContent = () => (
-    <div className="bg-[#111111] rounded-lg overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300">
+    <div className="bg-background rounded-lg overflow-hidden border border-border hover:border-primary/20 transition-all duration-300">
       {imageUrl && (
         <div className="relative h-48 w-full overflow-hidden">
           <Image
@@ -39,13 +39,13 @@ export function ProjectCard({
         </div>
       )}
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-        <p className="text-gray-400 mb-4">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 text-foreground">{title}</h3>
+        <p className="text-muted-foreground mb-4">{description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
           {tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 bg-white/5 text-gray-300 rounded-full text-sm"
+              className="px-2 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
             >
               {tag}
             </span>

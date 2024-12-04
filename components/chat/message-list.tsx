@@ -99,13 +99,13 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
               "shadow-sm hover:shadow-md transition-shadow duration-200",
               "break-words whitespace-pre-wrap max-w-[85%]",
               message.role === "assistant" 
-                ? "bg-zinc-800/90 text-zinc-100 border border-zinc-700/50" 
+                ? "bg-secondary text-secondary-foreground border border-border" 
                 : message.role === "system" 
-                ? "bg-zinc-700/90 text-zinc-100 border border-zinc-600/50"
-                : "bg-violet-600/90 text-white border border-violet-500/50"
+                ? "bg-muted text-muted-foreground border border-border"
+                : "bg-primary text-primary-foreground border border-border"
             )}
           >
-            <div className="prose prose-invert max-w-none">
+            <div className="prose dark:prose-invert max-w-none">
               <MarkdownMessage content={message.content} />
             </div>
             {message.imageUrl && (
