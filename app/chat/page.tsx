@@ -6,7 +6,7 @@ import { withClientBoundary } from "@/components/client-wrapper"
 import { useAuth } from "@/lib/auth-context"
 import { getConversations } from "@/lib/chat"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, MessageSquare, Image, ChevronDown } from "lucide-react"
+import { ChevronLeft, MessageSquare, Image, ChevronDown, Paintbrush } from "lucide-react"
 import { AuthDialog } from "@/components/chat/auth-dialog"
 import { cn } from "@/lib/utils"
 import { useRouter } from 'next/navigation'
@@ -63,40 +63,53 @@ function ChatPage() {
           </Button>
         </div>
         <nav className="flex-1 p-2 space-y-1">
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full justify-start text-sm font-medium px-3 py-5",
-              currentMode === 'chat' 
-                ? "text-foreground bg-secondary" 
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-            )}
-            onClick={() => setCurrentMode('chat')}
-          >
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-            <MessageSquare className="h-4 w-4 mr-3" />
-            Chat
-          </Button>
-          <Button
-            variant="ghost"
-            className={cn(
-              "w-full justify-start text-sm font-medium px-3 py-5",
-              currentMode === 'image'
-                ? "text-foreground bg-secondary"
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-            )}
-            onClick={() => router.push('/generate')}
-          >
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-            <Image className="h-4 w-4 mr-3" />
-            Image Generation
-          </Button>
+          <div className="flex flex-col space-y-2">
+            <Button
+              variant={currentMode === 'chat' ? 'secondary' : 'ghost'}
+              className="justify-start"
+              onClick={() => setCurrentMode('chat')}
+            >
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Chat
+            </Button>
+            <Button
+              variant={currentMode === 'image' ? 'secondary' : 'ghost'}
+              className="justify-start"
+              onClick={() => setCurrentMode('image')}
+            >
+              <Image className="mr-2 h-4 w-4" />
+              Image Generation
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start"
+              onClick={() => router.push('/chat/inpainter')}
+            >
+              <Paintbrush className="mr-2 h-4 w-4" />
+              Inpainter
+            </Button>
+          </div>
         </nav>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col bg-background">
-        <ChatInterface mode={currentMode} />
+        {/* Fixed Header Section */}
+        <div className="w-full bg-background px-4 sm:px-6 lg:px-8 pt-20 pb-4">
+          <div className="max-w-4xl mx-auto">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-foreground">AI Chat Assistant</h1>
+              <p className="mt-2 text-lg text-muted-foreground">
+                Have natural conversations with an AI that understands context and can help with various tasks
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Chat Interface in a scrollable container */}
+        <div className="flex-1 overflow-hidden relative">
+          <ChatInterface mode={currentMode} />
+        </div>
       </div>
 
       {/* Right Configuration Panel */}
