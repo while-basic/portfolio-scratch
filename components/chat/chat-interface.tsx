@@ -17,6 +17,11 @@ interface ChatInterfaceProps {
   onRateLimit?: () => void
 }
 
+interface APIError {
+  code?: string;
+  message?: string;
+}
+
 export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInterfaceProps) {
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
@@ -47,7 +52,7 @@ export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInter
           })
           
           if (!res.ok) {
-            const error = await res.json() as { code?: string; message?: string };
+            const error = await res.json() as APIError;
             throw error
           }
           
@@ -79,7 +84,7 @@ export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInter
           })
 
           if (!res.ok) {
-            const error = await res.json() as { code?: string; message?: string };
+            const error = await res.json() as APIError;
             if (error.code === 'rate_limit_exceeded') {
               onRateLimit?.()
             }
@@ -88,9 +93,10 @@ export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInter
 
           return res
         }, {
-          shouldRetry: (error) => {
+          shouldRetry: (error: unknown) => {
             // Only retry on rate limit errors for non-image requests
-            return error?.code === 'rate_limit_exceeded' && mode === 'chat'
+            const apiError = error as APIError;
+            return apiError?.code === 'rate_limit_exceeded' && mode === 'chat'
           }
         })
 

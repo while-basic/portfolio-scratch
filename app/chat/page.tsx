@@ -83,7 +83,7 @@ function ChatPage() {
             <Button
               variant={currentMode === 'image' ? 'secondary' : 'ghost'}
               className="justify-start"
-              onClick={() => setCurrentMode('image')}
+              onClick={() => router.push('/chat/image')}
             >
               <ImageIcon className="mr-2 h-4 w-4" />
               Image Generation
