@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
 import { useState } from "react"
 
-const MobileNav = () => {
+export const MobileNav = () => {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
@@ -44,40 +44,41 @@ const MobileNav = () => {
     },
     {
       href: "/chat",
-      label: "Chat (coming soon)",
+      label: "Chat",
       active: pathname === "/chat",
     }
   ]
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild className="md:hidden">
-        <Button variant="ghost" size="icon" className="md:hidden relative z-50">
+      <SheetTrigger asChild>
+        <Button 
+          variant="ghost" 
+          size="icon"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+        >
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="p-0 z-[1000]">
-        <div className="mt-16">
-          <div className="space-y-4 py-4">
-            <div className="px-3 py-2">
-              <div className="space-y-1">
-                {routes.map((route) => (
-                  <Link
-                    key={route.href}
-                    href={route.href}
-                    onClick={() => setOpen(false)}
-                    className={`text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition ${
-                      route.active ? "text-primary bg-primary/10" : "text-muted-foreground"
-                    }`}
-                  >
-                    {route.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+      <SheetContent 
+        side="left" 
+        className="w-[280px] sm:w-[360px] pr-0"
+      >
+        <nav className="flex flex-col space-y-4">
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              onClick={() => setOpen(false)}
+              className={`px-2 py-1 text-sm font-medium transition-colors hover:text-primary ${
+                route.active ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              {route.label}
+            </Link>
+          ))}
+        </nav>
       </SheetContent>
     </Sheet>
   )
