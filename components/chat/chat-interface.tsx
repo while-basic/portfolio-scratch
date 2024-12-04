@@ -1,164 +1,87 @@
-'use client'
-
-import { useState } from 'react'
-import { MessageList } from './message-list'
-import { ImageGeneration } from './image-generation'
-import { Message } from '@/lib/chat'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
-import { CollapsibleSidebar } from './collapsible-sidebar'
+import { Mic, Send } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-export function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [inputMessage, setInputMessage] = useState('')
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
-  const [currentMode, setCurrentMode] = useState<'chat' | 'image'>('chat')
-  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null)
+interface ChatInterfaceProps {
+  mode: 'chat' | 'image'
+}
 
-  const handleSubmit = async () => {
-    if (!inputMessage.trim() || isLoading) return
+export function ChatInterface({ mode }: ChatInterfaceProps) {
+  const [message, setMessage] = useState("")
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-    const newMessage: Message = {
-      role: 'user',
-      content: inputMessage
-    }
-
-    setMessages(prev => [...prev, newMessage])
-    setInputMessage('')
-    setIsLoading(true)
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: inputMessage }),
-      })
-
-      const data = await response.json()
-      if (data.message) {
-        const assistantMessage: Message = {
-          role: 'assistant',
-          content: data.message
-        }
-        setMessages(prev => [...prev, assistantMessage])
-      }
-    } catch (error) {
-      console.error('Error sending message:', error)
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!message.trim()) return
+    
+    // Handle message submission here
+    setMessage("")
   }
 
-  const handleImageGeneration = async (prompt: string) => {
-    if (!prompt.trim() || isLoading) return
-
-    setIsLoading(true)
-    try {
-      const response = await fetch('/api/generate-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt }),
-      })
-
-      const data = await response.json()
-      if (data.url) {
-        setGeneratedImageUrl(data.url)
-        toast({
-          title: "Success",
-          description: "Image generated successfully!",
-        })
-      }
-    } catch (error) {
-      console.error('Error generating image:', error)
-      toast({
-        title: "Error",
-        description: "Failed to generate image. Please try again.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      if (currentMode === 'chat') {
-        handleSubmit()
-      } else {
-        handleImageGeneration(inputMessage)
-      }
+      handleSubmit(e)
     }
   }
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+    }
+  }, [message])
+
   return (
-    <div className="flex h-screen">
-      <CollapsibleSidebar 
-        currentMode={currentMode}
-        onModeChange={setCurrentMode}
-      />
+    <div className="flex flex-col h-full">
+      {/* Chat Area */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="h-full flex items-center justify-center text-white/50">
+          {mode === 'chat' ? (
+            <p>Start a conversation...</p>
+          ) : (
+            <p>Describe the image you want to generate...</p>
+          )}
+        </div>
+      </div>
       
-      <div className="flex-1 flex flex-col">
-        {currentMode === 'chat' ? (
-          <>
-            <div className="flex-1 overflow-y-auto p-4">
-              <MessageList messages={messages} isLoading={isLoading} />
-            </div>
-            <div className="border-t p-4 bg-background">
-              <div className="flex space-x-2">
-                <Textarea
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1"
-                  onKeyDown={handleKeyPress}
-                />
-                <Button 
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Sending...' : 'Send'}
-                </Button>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="flex-1 flex flex-col">
-            <ImageGeneration
-              onGenerate={handleImageGeneration}
-              isLoading={isLoading}
-              generatedImageUrl={generatedImageUrl}
+      {/* Input Area */}
+      <div className="border-t border-white/10 bg-black">
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-4">
+          <div className="flex items-center gap-2 bg-white/5 rounded-lg pl-4 pr-2 focus-within:bg-white/10 transition-colors">
+            <textarea
+              ref={textareaRef}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Enter user message..."
+              className="flex-1 bg-transparent border-0 focus:ring-0 resize-none py-3 text-white placeholder-white/50 text-sm min-h-[20px] max-h-48"
+              rows={1}
             />
-            <div className="border-t p-4 bg-background">
-              <div className="flex space-x-2">
-                <Textarea
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Describe the image you want to generate..."
-                  className="flex-1"
-                  onKeyDown={handleKeyPress}
-                />
-                <Button 
-                  onClick={() => handleImageGeneration(inputMessage)}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Generating...' : 'Generate'}
-                </Button>
-              </div>
+            <div className="flex gap-2 self-end py-2">
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="icon" 
+                className="text-white/50 hover:text-white hover:bg-white/5 h-8 w-8"
+              >
+                <Mic className="h-4 w-4" />
+              </Button>
+              <Button 
+                type="submit" 
+                variant="ghost" 
+                size="icon" 
+                className={cn(
+                  "text-white/50 hover:text-white hover:bg-white/5 h-8 w-8",
+                  message.trim() && "text-white"
+                )}
+              >
+                <Send className="h-4 w-4" />
+              </Button>
             </div>
           </div>
-        )}
+        </form>
       </div>
     </div>
   )
