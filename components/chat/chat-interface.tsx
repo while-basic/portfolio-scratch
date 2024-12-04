@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Send } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { MessageList } from './message-list'
+import { withRetry } from '@/lib/api-utils'
 
 interface Message {
   role: 'user' | 'assistant' | 'system'
@@ -12,9 +13,11 @@ interface Message {
 
 interface ChatInterfaceProps {
   mode: 'chat' | 'image'
+  model?: string
+  onRateLimit?: () => void
 }
 
-export function ChatInterface({ mode }: ChatInterfaceProps) {
+export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInterfaceProps) {
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -32,19 +35,24 @@ export function ChatInterface({ mode }: ChatInterfaceProps) {
     try {
       if (mode === 'image') {
         // Handle image generation
-        const response = await fetch('/api/generate-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: userMessage.content,
-          }),
+        const response = await withRetry(async () => {
+          const res = await fetch('/api/generate-image', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: userMessage.content,
+            }),
+          })
+          
+          if (!res.ok) {
+            const error = await res.json() as { code?: string; message?: string };
+            throw error
+          }
+          
+          return res
         })
-
-        if (!response.ok) {
-          throw new Error('Failed to generate image')
-        }
 
         const data = await response.json()
         if (data.url) {
@@ -58,19 +66,33 @@ export function ChatInterface({ mode }: ChatInterfaceProps) {
         }
       } else {
         // Handle chat
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            messages: [...messages, userMessage],
-          }),
-        })
+        const response = await withRetry(async () => {
+          const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              messages: [...messages, userMessage],
+              model,
+            }),
+          })
 
-        if (!response.ok) {
-          throw new Error('Failed to send message')
-        }
+          if (!res.ok) {
+            const error = await res.json() as { code?: string; message?: string };
+            if (error.code === 'rate_limit_exceeded') {
+              onRateLimit?.()
+            }
+            throw error
+          }
+
+          return res
+        }, {
+          shouldRetry: (error) => {
+            // Only retry on rate limit errors for non-image requests
+            return error?.code === 'rate_limit_exceeded' && mode === 'chat'
+          }
+        })
 
         const data = await response.json()
         setMessages(prev => [...prev, {

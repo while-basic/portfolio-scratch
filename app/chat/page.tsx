@@ -6,10 +6,11 @@ import { withClientBoundary } from "@/components/client-wrapper"
 import { useAuth } from "@/lib/auth-context"
 import { getConversations } from "@/lib/chat"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, MessageSquare, Image, ChevronDown, Paintbrush } from "lucide-react"
+import { ChevronLeft, MessageSquare, ImageIcon, ChevronDown, Paintbrush } from "lucide-react"
 import { AuthDialog } from "@/components/chat/auth-dialog"
 import { cn } from "@/lib/utils"
 import { useRouter } from 'next/navigation'
+import { ModelSelector } from "@/components/chat/model-selector"
 
 function ChatPage() {
   const { user, loading } = useAuth()
@@ -24,6 +25,8 @@ function ChatPage() {
   const [topP, setTopP] = useState(1.0)
   const [frequencyPenalty, setFrequencyPenalty] = useState(0.0)
   const [presencePenalty, setPresencePenalty] = useState(0.0)
+  const [model, setModel] = useState("gpt-4o")
+  const [isRateLimited, setIsRateLimited] = useState(false)
 
   const loadConversations = useCallback(async () => {
     try {
@@ -36,6 +39,11 @@ function ChatPage() {
       }
     }
   }, [user?.id])
+
+  const handleModelChange = (newModel: string) => {
+    setModel(newModel)
+    setIsRateLimited(false) // Reset rate limit flag when model changes
+  }
 
   useEffect(() => {
     if (!loading && !user) {
@@ -77,7 +85,7 @@ function ChatPage() {
               className="justify-start"
               onClick={() => setCurrentMode('image')}
             >
-              <Image className="mr-2 h-4 w-4" />
+              <ImageIcon className="mr-2 h-4 w-4" />
               Image Generation
             </Button>
             <Button
@@ -97,18 +105,22 @@ function ChatPage() {
         {/* Fixed Header Section */}
         <div className="w-full bg-background px-4 sm:px-6 lg:px-8 pt-20 pb-4">
           <div className="max-w-4xl mx-auto">
-            <div>
+            <div className="flex justify-between items-center">
               <h1 className="text-4xl font-bold tracking-tight text-foreground">AI Chat Assistant</h1>
-              <p className="mt-2 text-lg text-muted-foreground">
-                Have natural conversations with an AI that understands context and can help with various tasks
-              </p>
             </div>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Have natural conversations with an AI that understands context and can help with various tasks
+            </p>
           </div>
         </div>
 
         {/* Chat Interface in a scrollable container */}
         <div className="flex-1 overflow-hidden relative">
-          <ChatInterface mode={currentMode} />
+          <ChatInterface 
+            mode={currentMode} 
+            model={model}
+            onRateLimit={() => setIsRateLimited(true)}
+          />
         </div>
       </div>
 
@@ -125,11 +137,16 @@ function ChatPage() {
           <div className="p-4 space-y-6">
             {/* Model Selection */}
             <div className="space-y-2">
-              <label className="text-sm text-muted-foreground">Model</label>
-              <Button variant="outline" className="w-full justify-between border-border text-muted-foreground hover:text-foreground hover:bg-secondary/50">
-                gpt-4
-                <ChevronDown className="h-4 w-4 ml-2" />
-              </Button>
+              <div className="flex justify-between items-center">
+                <label className="text-sm text-muted-foreground">Model</label>
+                {isRateLimited && (
+                  <span className="text-xs text-red-500">Rate limit exceeded. Try another model.</span>
+                )}
+              </div>
+              <ModelSelector
+                value={model}
+                onValueChange={handleModelChange}
+              />
             </div>
 
             {/* Response Format */}
