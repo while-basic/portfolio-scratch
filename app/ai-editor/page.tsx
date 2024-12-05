@@ -85,9 +85,9 @@ export default function AIEditorPage() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Settings</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Editor Preferences</DropdownMenuItem>
-                <DropdownMenuItem>AI Settings</DropdownMenuItem>
-                <DropdownMenuItem>Keyboard Shortcuts</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/ai-editor/editor-preferences')}>Editor Preferences</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/ai-editor/ai-settings')}>AI Settings</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/ai-editor/about')}>About</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
