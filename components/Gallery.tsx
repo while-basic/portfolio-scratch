@@ -1,95 +1,94 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import React from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInView } from 'react-intersection-observer'
+import { useEffect } from 'react'
+import Image from 'next/image'
+import { ImageData } from '@/types/gallery'
+import LoadingGallery from '@/components/LoadingGallery'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
-interface ImageItem {
-  id: string;
-  url: string;
-  title: string;
-  username: string;
-  uploadDate: string;
-  likes: number;
-  category: string;
+// Mock data generator for demo purposes
+const generateMockImages = (page: number): ImageData[] => {
+  return Array.from({ length: 9 }, (_, i) => ({
+    id: `${page}-${i}`,
+    url: `https://images.unsplash.com/photo-${1500000000 + (page * 9 + i)}?auto=format&fit=crop&w=800&q=60`,
+    description: `AI Generated Image ${page * 9 + i}`,
+    createdAt: new Date().toISOString()
+  }))
 }
 
 export default function Gallery() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const { ref, inView } = useInView()
+
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery({
+    queryKey: ['gallery-images'],
+    queryFn: async ({ pageParam = 1 }) => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        return {
+          images: generateMockImages(pageParam),
+          nextPage: pageParam < 5 ? pageParam + 1 : null
+        }
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+        throw new Error(`Failed to fetch images: ${errorMessage}`)
+      }
+    },
+    getNextPageParam: (lastPage: { nextPage: number | null }) => lastPage.nextPage,
+    initialPageParam: 1,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 2
+  })
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage])
+
+  if (isLoading) return <LoadingGallery />
   
-  // Placeholder data - replace with actual data from your backend
-  const images: ImageItem[] = [];
-  
-  const categories = [
-    { id: 'all', name: 'All' },
-    { id: 'popular', name: 'Most Popular' },
-    { id: 'recent', name: 'Recent Uploads' },
-    { id: 'ai', name: 'AI Generated' },
-  ];
+  if (isError) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-red-500">Error loading images: {error.message}</p>
+      </div>
+    )
+  }
 
   return (
-    <section className="w-full py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">Community Gallery</h2>
-        
-        {/* Categories */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-full transition-colors ${
-                selectedCategory === category.id
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 hover:bg-gray-200'
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Upload Button */}
-        <div className="text-center mb-8">
-          <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors">
-            Share Your Creation
-          </button>
-        </div>
-
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {images.length > 0 ? (
-            images.map((image) => (
-              <div
-                key={image.id}
-                className="relative group aspect-square overflow-hidden rounded-lg bg-gray-100"
-              >
-                <Image
-                  src={image.url}
-                  alt={image.title}
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <p className="font-medium">{image.title}</p>
-                    <p className="text-sm">by {image.username}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span>❤️ {image.likes}</span>
-                      <span>•</span>
-                      <span className="text-sm">{image.uploadDate}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12 text-gray-500">
-              No images to display yet. Be the first to share!
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {data?.pages.map((page, pageIndex) => (
+        <React.Fragment key={pageIndex}>
+          {page.images.map((image: ImageData) => (
+            <div key={image.id} className="relative aspect-square">
+              <Image
+                src={image.url}
+                alt={image.description}
+                fill
+                className="object-cover rounded-lg hover:opacity-90 transition-opacity"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
+                priority={pageIndex === 0}
+              />
             </div>
-          )}
-        </div>
+          ))}
+        </React.Fragment>
+      ))}
+      
+      <div ref={ref} className="h-10 col-span-full flex justify-center">
+        {isFetchingNextPage && <LoadingSpinner />}
       </div>
-    </section>
-  );
+    </div>
+  )
 }

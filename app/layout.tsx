@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@/components/analytics";
 import { RootLayoutClient } from "@/components/root-layout";
 import { Suspense } from "react";
+import Providers from './providers'
 
 export const metadata: Metadata = {
   title: "Christopher Celaya | Software Developer & Mechatronic Technician",
@@ -42,24 +43,26 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <Suspense fallback={<div>Loading...</div>}>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>
               <Suspense fallback={<div>Loading...</div>}>
-                <RootLayoutClient>
-                  {children}
-                </RootLayoutClient>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <RootLayoutClient>
+                    {children}
+                  </RootLayoutClient>
+                </Suspense>
+                <Toaster />
+                <Analytics />
               </Suspense>
-              <Toaster />
-              <Analytics />
-            </Suspense>
-          </AuthProvider>
-        </ThemeProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </Providers>
         <Toaster />
       </body>
     </html>
