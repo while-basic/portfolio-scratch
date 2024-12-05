@@ -26,7 +26,7 @@ Objective: Create a user-friendly community section that allows users to share a
 	•	Include a comment section for discussions and feedback.
 	•	Share Options:
 	•	Provide social media sharing buttons (e.g., Twitter, LinkedIn).
-	•	Add a “Copy Link” button for easy sharing.
+	•	Add a “Download” button for easy sharing.
 
 4. Upload and Moderation
 
