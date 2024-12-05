@@ -15,6 +15,11 @@ interface ChatInterfaceProps {
   mode: 'chat' | 'image'
   model?: string
   onRateLimit?: () => void
+  temperature?: number
+  maxTokens?: number
+  topP?: number
+  frequencyPenalty?: number
+  presencePenalty?: number
 }
 
 interface APIError {
@@ -22,7 +27,7 @@ interface APIError {
   message?: string;
 }
 
-export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInterfaceProps) {
+export function ChatInterface({ mode, model = "gpt-4o", onRateLimit, temperature, maxTokens, topP, frequencyPenalty, presencePenalty }: ChatInterfaceProps) {
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -80,6 +85,11 @@ export function ChatInterface({ mode, model = "gpt-4o", onRateLimit }: ChatInter
             body: JSON.stringify({
               messages: [...messages, userMessage],
               model,
+              temperature,
+              maxTokens,
+              topP,
+              frequencyPenalty,
+              presencePenalty,
             }),
           })
 

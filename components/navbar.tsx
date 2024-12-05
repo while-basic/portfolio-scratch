@@ -7,7 +7,6 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { Menu, X, Home } from "lucide-react"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { User } from '@supabase/auth-helpers-nextjs'
-import { NavDropdown } from "@/components/nav-dropdown"
 import { MobileNav } from "@/components/mobile-nav"
 
 const Navbar = () => {
@@ -77,129 +76,121 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+      <div className="container flex h-14 items-center justify-between">
+        <Link href="/" className="text-lg font-semibold hover:opacity-80">
+          Christopher Celaya
+        </Link>
+
+        <nav className="hidden md:flex items-center space-x-6">
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className={`text-sm font-medium transition-colors hover:opacity-80 ${
+                route.active ? "opacity-100" : "opacity-60"
+              }`}
+            >
+              {route.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="hidden md:flex items-center space-x-4">
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium hover:opacity-80"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className="text-sm font-medium hover:opacity-80"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/auth/sign-in"
+              className="text-sm font-medium hover:opacity-80"
+            >
+              Sign In
+            </Link>
+          )}
+          <ModeToggle />
+        </div>
+
         <div className="md:hidden">
           <MobileNav />
         </div>
 
-        <div className="hidden md:flex">
-          <div className="flex items-center">
-            <Link href="/" className="text-lg font-semibold hover:opacity-80">
-              Christopher Celaya
-            </Link>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2"
+        >
+          {isOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <div className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-white/95 dark:bg-black/95 backdrop-blur-sm overflow-y-auto">
+          <div className="px-4 py-4 space-y-3 border-b border-gray-200 dark:border-gray-800">
             {routes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
-                className={`text-sm font-medium transition-colors hover:opacity-80 ${
-                  route.active ? "opacity-100" : "opacity-60"
+                className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  route.active 
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white" 
+                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 }`}
+                onClick={() => setIsOpen(false)}
               >
                 {route.label}
               </Link>
             ))}
-          </nav>
-
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-6">
-            {user ? (
-              <>
-                <Link
-                  href="/dashboard"
-                  className="flex items-center space-x-2 text-sm font-medium hover:opacity-80"
-                >
-                  <Home className="h-4 w-4" />
-                  <span>Dashboard</span>
-                </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="text-sm font-medium hover:opacity-80"
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/auth/sign-in"
-                className="text-sm font-medium hover:opacity-80"
-              >
-                Sign In
-              </Link>
-            )}
-            <ModeToggle />
-            <NavDropdown />
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2"
-          >
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-white/95 dark:bg-black/95 backdrop-blur-sm overflow-y-auto">
-            <div className="px-4 py-4 space-y-3 border-b border-gray-200 dark:border-gray-800">
-              {routes.map((route) => (
-                <Link
-                  key={route.href}
-                  href={route.href}
-                  className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    route.active 
-                      ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white" 
-                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {route.label}
-                </Link>
-              ))}
-              <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
-                {user ? (
-                  <div className="flex items-center space-x-4">
-                    <Link
-                      href="/dashboard"
-                      className="flex items-center space-x-2 text-sm font-medium hover:opacity-80"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Home className="h-4 w-4" />
-                      <span>Dashboard</span>
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      className="text-sm font-medium hover:opacity-80"
-                    >
-                      Sign Out
-                    </button>
-                  </div>
-                ) : (
+            <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
+              {user ? (
+                <div className="flex items-center space-x-4">
                   <Link
-                    href="/auth/sign-in"
-                    className="text-sm font-medium hover:opacity-80"
+                    href="/dashboard"
+                    className="flex items-center space-x-2 text-sm font-medium hover:opacity-80"
                     onClick={() => setIsOpen(false)}
                   >
-                    Sign In
+                    <Home className="h-4 w-4" />
+                    <span>Dashboard</span>
                   </Link>
-                )}
-                <div className="px-3">
-                  <ModeToggle />
+                  <button
+                    onClick={handleSignOut}
+                    className="text-sm font-medium hover:opacity-80"
+                  >
+                    Sign Out
+                  </button>
                 </div>
+              ) : (
+                <Link
+                  href="/auth/sign-in"
+                  className="text-sm font-medium hover:opacity-80"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
+              <div className="px-3">
+                <ModeToggle />
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   )
 }

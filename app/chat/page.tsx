@@ -6,17 +6,19 @@ import { withClientBoundary } from "@/components/client-wrapper"
 import { useAuth } from "@/lib/auth-context"
 import { getConversations } from "@/lib/chat"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, MessageSquare, ImageIcon, ChevronDown, Paintbrush } from "lucide-react"
+import { ChevronLeft, MessageSquare, ImageIcon, ChevronDown, Paintbrush, Menu, Settings } from "lucide-react"
 import { AuthDialog } from "@/components/chat/auth-dialog"
-import { cn } from "@/lib/utils"
 import { useRouter } from 'next/navigation'
 import { ModelSelector } from "@/components/chat/model-selector"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Slider } from "@/components/ui/slider"
 
 function ChatPage() {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [showAuthDialog, setShowAuthDialog] = useState(false)
-  const [showSidebar] = useState(true)
+  const [showLeftSidebar, setShowLeftSidebar] = useState(false)
+  const [showRightSidebar, setShowRightSidebar] = useState(false)
   const [currentMode, setCurrentMode] = useState<'chat' | 'image'>('chat')
 
   // Model configuration state
@@ -42,7 +44,7 @@ function ChatPage() {
 
   const handleModelChange = (newModel: string) => {
     setModel(newModel)
-    setIsRateLimited(false) // Reset rate limit flag when model changes
+    setIsRateLimited(false)
   }
 
   useEffect(() => {
@@ -56,11 +58,162 @@ function ChatPage() {
 
   return (
     <div className="flex h-[100dvh] bg-background">
-      {/* Left Navigation */}
-      <div className={cn(
-        "w-[260px] border-r border-border flex flex-col bg-card",
-        showSidebar ? "" : "hidden lg:flex"
-      )}>
+      {/* Mobile Navigation Controls */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
+        <div className="flex h-full items-center justify-between px-4">
+          <Sheet open={showLeftSidebar} onOpenChange={setShowLeftSidebar}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[240px] sm:w-[280px] p-0">
+              <nav className="flex flex-col h-full pt-4 space-y-1">
+                <div className="flex flex-col space-y-2 px-2">
+                  <Button
+                    variant={currentMode === 'chat' ? 'secondary' : 'ghost'}
+                    className="justify-start"
+                    onClick={() => {
+                      setCurrentMode('chat')
+                      setShowLeftSidebar(false)
+                    }}
+                  >
+                    <MessageSquare className="mr-2 h-4 w-4" />
+                    Chat
+                  </Button>
+                  <Button
+                    variant={currentMode === 'image' ? 'secondary' : 'ghost'}
+                    className="justify-start"
+                    onClick={() => {
+                      router.push('/chat/image')
+                      setShowLeftSidebar(false)
+                    }}
+                  >
+                    <ImageIcon className="mr-2 h-4 w-4" />
+                    Image Generation
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="justify-start"
+                    onClick={() => {
+                      router.push('/chat/inpainter')
+                      setShowLeftSidebar(false)
+                    }}
+                  >
+                    <Paintbrush className="mr-2 h-4 w-4" />
+                    Inpainter
+                  </Button>
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
+
+          <h1 className="text-lg font-semibold">AI Chat Assistant</h1>
+
+          <Sheet open={showRightSidebar} onOpenChange={setShowRightSidebar}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Settings className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px] sm:w-[300px]">
+              <div className="space-y-6 pt-4">
+                {/* Model Selection */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm text-muted-foreground">Model</label>
+                    {isRateLimited && (
+                      <span className="text-xs text-red-500">Rate limit exceeded. Try another model.</span>
+                    )}
+                  </div>
+                  <ModelSelector
+                    value={model}
+                    onValueChange={handleModelChange}
+                  />
+                </div>
+
+                {/* Temperature Control */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm text-muted-foreground">Temperature</label>
+                    <span className="text-sm text-muted-foreground">{temperature.toFixed(2)}</span>
+                  </div>
+                  <Slider
+                    value={[temperature]}
+                    min={0}
+                    max={2}
+                    step={0.01}
+                    onValueChange={([value]) => setTemperature(value)}
+                  />
+                </div>
+
+                {/* Max Tokens Control */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm text-muted-foreground">Max Tokens</label>
+                    <span className="text-sm text-muted-foreground">{maxTokens}</span>
+                  </div>
+                  <Slider
+                    value={[maxTokens]}
+                    min={1}
+                    max={4096}
+                    step={1}
+                    onValueChange={([value]) => setMaxTokens(value)}
+                  />
+                </div>
+
+                {/* Top P Control */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm text-muted-foreground">Top P</label>
+                    <span className="text-sm text-muted-foreground">{topP.toFixed(2)}</span>
+                  </div>
+                  <Slider
+                    value={[topP]}
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    onValueChange={([value]) => setTopP(value)}
+                  />
+                </div>
+
+                {/* Frequency Penalty Control */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm text-muted-foreground">Frequency Penalty</label>
+                    <span className="text-sm text-muted-foreground">{frequencyPenalty.toFixed(2)}</span>
+                  </div>
+                  <Slider
+                    value={[frequencyPenalty]}
+                    min={0}
+                    max={2}
+                    step={0.01}
+                    onValueChange={([value]) => setFrequencyPenalty(value)}
+                  />
+                </div>
+
+                {/* Presence Penalty Control */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm text-muted-foreground">Presence Penalty</label>
+                    <span className="text-sm text-muted-foreground">{presencePenalty.toFixed(2)}</span>
+                  </div>
+                  <Slider
+                    value={[presencePenalty]}
+                    min={0}
+                    max={2}
+                    step={0.01}
+                    onValueChange={([value]) => setPresencePenalty(value)}
+                  />
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+
+      {/* Left Navigation - Desktop */}
+      <div className="hidden md:flex w-[260px] border-r border-border flex-col bg-card">
         <div className="flex items-center h-14 px-3 border-b border-border">
           <Button
             variant="ghost"
@@ -102,8 +255,8 @@ function ChatPage() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col bg-background">
-        {/* Fixed Header Section */}
-        <div className="w-full bg-background px-4 sm:px-6 lg:px-8 pt-20 pb-4">
+        {/* Fixed Header Section - Desktop */}
+        <div className="hidden md:block w-full bg-background px-4 sm:px-6 lg:px-8 pt-20 pb-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex justify-between items-center">
               <h1 className="text-4xl font-bold tracking-tight text-foreground">AI Chat Assistant</h1>
@@ -115,17 +268,22 @@ function ChatPage() {
         </div>
 
         {/* Chat Interface in a scrollable container */}
-        <div className="flex-1 overflow-hidden relative">
+        <div className="flex-1 overflow-hidden relative pt-14 md:pt-0">
           <ChatInterface 
             mode={currentMode} 
             model={model}
             onRateLimit={() => setIsRateLimited(true)}
+            temperature={temperature}
+            maxTokens={maxTokens}
+            topP={topP}
+            frequencyPenalty={frequencyPenalty}
+            presencePenalty={presencePenalty}
           />
         </div>
       </div>
 
-      {/* Right Configuration Panel */}
-      <div className="w-[300px] border-l border-border bg-background flex flex-col">
+      {/* Right Configuration Panel - Desktop */}
+      <div className="hidden md:flex w-[300px] border-l border-border bg-background flex-col">
         <div className="p-4 border-b border-border">
           <Button variant="outline" className="w-full justify-between border-border text-muted-foreground hover:text-foreground hover:bg-secondary/50">
             Your presets
@@ -149,128 +307,84 @@ function ChatPage() {
               />
             </div>
 
-            {/* Response Format */}
-            <div className="space-y-2">
-              <label className="text-sm text-muted-foreground">Response format</label>
-              <Button variant="outline" className="w-full justify-between border-border text-muted-foreground hover:text-foreground hover:bg-secondary/50">
-                text
-                <ChevronDown className="h-4 w-4 ml-2" />
-              </Button>
-            </div>
-
-            {/* Functions Section */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label className="text-sm text-muted-foreground">Functions</label>
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground hover:bg-secondary/50 h-8 px-2">
-                  Add
-                </Button>
+            {/* LLM Controls */}
+            <div className="space-y-6">
+              {/* Temperature Control */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm text-muted-foreground">Temperature</label>
+                  <span className="text-sm text-muted-foreground">{temperature.toFixed(2)}</span>
+                </div>
+                <Slider
+                  value={[temperature]}
+                  min={0}
+                  max={2}
+                  step={0.01}
+                  onValueChange={([value]) => setTemperature(value)}
+                />
               </div>
-            </div>
 
-            {/* Model Configuration */}
-            <div className="space-y-4">
-              <h3 className="text-sm text-muted-foreground">Model configuration</h3>
-              
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm text-muted-foreground">Temperature</label>
-                    <span className="text-sm text-muted-foreground">{temperature.toFixed(2)}</span>
-                  </div>
-                  <input 
-                    type="range"
-                    min="0"
-                    max="2"
-                    step="0.01"
-                    value={temperature}
-                    onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                    className="w-full accent-foreground bg-background h-1 rounded-lg appearance-none cursor-pointer"
-                  />
+              {/* Max Tokens Control */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm text-muted-foreground">Max Tokens</label>
+                  <span className="text-sm text-muted-foreground">{maxTokens}</span>
                 </div>
+                <Slider
+                  value={[maxTokens]}
+                  min={1}
+                  max={4096}
+                  step={1}
+                  onValueChange={([value]) => setMaxTokens(value)}
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm text-muted-foreground">Max tokens</label>
-                    <span className="text-sm text-muted-foreground">{maxTokens}</span>
-                  </div>
-                  <input 
-                    type="range"
-                    min="1"
-                    max="4096"
-                    value={maxTokens}
-                    onChange={(e) => setMaxTokens(parseInt(e.target.value))}
-                    className="w-full accent-foreground bg-background h-1 rounded-lg appearance-none cursor-pointer"
-                  />
+              {/* Top P Control */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm text-muted-foreground">Top P</label>
+                  <span className="text-sm text-muted-foreground">{topP.toFixed(2)}</span>
                 </div>
+                <Slider
+                  value={[topP]}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  onValueChange={([value]) => setTopP(value)}
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm text-muted-foreground">Stop sequences</label>
-                  </div>
-                  <input 
-                    type="text"
-                    placeholder="Enter sequence and press Tab"
-                    className="w-full bg-secondary/50 border-border rounded-md text-muted-foreground placeholder-muted-foreground text-sm h-9"
-                  />
+              {/* Frequency Penalty Control */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm text-muted-foreground">Frequency Penalty</label>
+                  <span className="text-sm text-muted-foreground">{frequencyPenalty.toFixed(2)}</span>
                 </div>
+                <Slider
+                  value={[frequencyPenalty]}
+                  min={0}
+                  max={2}
+                  step={0.01}
+                  onValueChange={([value]) => setFrequencyPenalty(value)}
+                />
+              </div>
 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm text-muted-foreground">Top P</label>
-                    <span className="text-sm text-muted-foreground">{topP.toFixed(2)}</span>
-                  </div>
-                  <input 
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={topP}
-                    onChange={(e) => setTopP(parseFloat(e.target.value))}
-                    className="w-full accent-foreground bg-background h-1 rounded-lg appearance-none cursor-pointer"
-                  />
+              {/* Presence Penalty Control */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm text-muted-foreground">Presence Penalty</label>
+                  <span className="text-sm text-muted-foreground">{presencePenalty.toFixed(2)}</span>
                 </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm text-muted-foreground">Frequency penalty</label>
-                    <span className="text-sm text-muted-foreground">{frequencyPenalty.toFixed(2)}</span>
-                  </div>
-                  <input 
-                    type="range"
-                    min="0"
-                    max="2"
-                    step="0.01"
-                    value={frequencyPenalty}
-                    onChange={(e) => setFrequencyPenalty(parseFloat(e.target.value))}
-                    className="w-full accent-foreground bg-background h-1 rounded-lg appearance-none cursor-pointer"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm text-muted-foreground">Presence penalty</label>
-                    <span className="text-sm text-muted-foreground">{presencePenalty.toFixed(2)}</span>
-                  </div>
-                  <input 
-                    type="range"
-                    min="0"
-                    max="2"
-                    step="0.01"
-                    value={presencePenalty}
-                    onChange={(e) => setPresencePenalty(parseFloat(e.target.value))}
-                    className="w-full accent-foreground bg-background h-1 rounded-lg appearance-none cursor-pointer"
-                  />
-                </div>
+                <Slider
+                  value={[presencePenalty]}
+                  min={0}
+                  max={2}
+                  step={0.01}
+                  onValueChange={([value]) => setPresencePenalty(value)}
+                />
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="p-4 border-t border-border">
-          <Button variant="outline" className="w-full justify-center border-border text-muted-foreground hover:text-foreground hover:bg-secondary/50">
-            Save as preset
-          </Button>
         </div>
       </div>
 
