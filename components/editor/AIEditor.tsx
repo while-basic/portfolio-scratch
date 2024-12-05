@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -19,7 +21,6 @@ interface AIEditorProps {
 
 const AIEditor: React.FC<AIEditorProps> = ({ session }) => {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [aiSuggestion, setAiSuggestion] = useState('');
   const [editorReady, setEditorReady] = useState(false);
   
   const editor = useEditor({
@@ -71,7 +72,17 @@ const AIEditor: React.FC<AIEditorProps> = ({ session }) => {
       }
 
       const data = await response.json();
-      setAiSuggestion(data.suggestion);
+      
+      // Automatically insert the AI response at the cursor position
+      if (editor && data.suggestion) {
+        const currentPosition = editor.state.selection.from;
+        editor.chain()
+          .focus()
+          .insertContentAt(currentPosition, data.suggestion)
+          .run();
+        
+        toast.success('AI suggestion applied');
+      }
     } catch (error) {
       console.error('AI assist error:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to get AI assistance. Please try again.');
@@ -119,32 +130,6 @@ const AIEditor: React.FC<AIEditorProps> = ({ session }) => {
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full mx-4">
             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
             <p className="text-center mt-4 text-gray-600 dark:text-gray-300">Processing with AI...</p>
-          </div>
-        </div>
-      )}
-
-      {aiSuggestion && !isProcessing && (
-        <div className="fixed bottom-8 right-8 max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-semibold mb-2">AI Suggestion</h3>
-          <p className="text-gray-600 dark:text-gray-300">{aiSuggestion}</p>
-          <div className="mt-4 flex justify-end space-x-2">
-            <button
-              onClick={() => {
-                if (editor) {
-                  editor.commands.setContent(aiSuggestion);
-                }
-                setAiSuggestion('');
-              }}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Apply
-            </button>
-            <button
-              onClick={() => setAiSuggestion('')}
-              className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
-            >
-              Dismiss
-            </button>
           </div>
         </div>
       )}
