@@ -64,6 +64,11 @@ const Navbar = () => {
       active: pathname === "/gallery",
     },
     {
+      href: "/ai-gallery",
+      label: "AI Gallery",
+      active: pathname === "/ai-gallery",
+    },
+    {
       href: "/resume",
       label: "Resume",
       active: pathname === "/resume",
