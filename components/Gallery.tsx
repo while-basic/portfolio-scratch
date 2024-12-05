@@ -71,13 +71,13 @@ export default function Gallery() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div className="flex gap-4 mb-6">
+    <div className="space-y-8">
+      <div className="flex gap-4 mb-6 overflow-x-auto pb-2">
         {categories.map(category => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`px-4 py-2 rounded-full ${
+            className={`px-4 py-2 rounded-full whitespace-nowrap ${
               activeCategory === category 
                 ? 'bg-primary text-white' 
                 : 'bg-gray-100 hover:bg-gray-200'
@@ -87,26 +87,28 @@ export default function Gallery() {
           </button>
         ))}
       </div>
-      {data?.pages.map((page, pageIndex) => (
-        <React.Fragment key={pageIndex}>
-          {page.images.map((image: ImageData) => (
-            <div key={image.id} className="relative aspect-square">
-              <Image
-                src={image.url}
-                alt={image.description}
-                fill
-                className="object-cover rounded-lg hover:opacity-90 transition-opacity"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                loading="lazy"
-                priority={pageIndex === 0}
-              />
-            </div>
-          ))}
-        </React.Fragment>
-      ))}
-      
-      <div ref={ref} className="h-10 col-span-full flex justify-center">
-        {isFetchingNextPage && <LoadingSpinner />}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data?.pages.map((page, pageIndex) => (
+          <React.Fragment key={pageIndex}>
+            {page.images.map((image: ImageData, imageIndex: number) => (
+              <div key={image.id} className="relative aspect-square">
+                <Image
+                  src={image.url}
+                  alt={image.description}
+                  fill
+                  className="object-cover rounded-lg hover:opacity-90 transition-opacity"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  loading={pageIndex === 0 && imageIndex < 6 ? 'eager' : 'lazy'}
+                />
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+        
+        <div ref={ref} className="h-10 col-span-full flex justify-center">
+          {isFetchingNextPage && <LoadingSpinner />}
+        </div>
       </div>
     </div>
   )
