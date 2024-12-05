@@ -105,31 +105,42 @@ function ImageGenerationPage() {
   }
 
   // Share to AI Gallery
-  const shareToGallery = async (imageId: string) => {
+  const shareToGallery = async (imageUrl: string, prompt: string) => {
     try {
+      if (!imageUrl || !prompt) {
+        throw new Error('Missing imageUrl or prompt');
+      }
+
       const response = await fetch('/api/share-to-gallery', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ imageId }),
-      })
+        body: JSON.stringify({
+          imageUrl,
+          prompt
+        })
+      });
 
-      if (!response.ok) throw new Error('Failed to share to gallery')
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData);
+      }
 
       toast({
         title: "Success",
-        description: "Image shared to AI Gallery",
-      })
-    } catch (err) {
-      console.error('Error sharing to gallery:', err)
+        description: "Image shared to gallery successfully!"
+      });
+    } catch (error) {
+      console.error('Error sharing to gallery:', error);
       toast({
         title: "Error",
         description: "Failed to share to gallery",
-        variant: "destructive",
-      })
+        variant: "destructive"
+      });
+      throw error;
     }
-  }
+  };
 
   const saveGeneratedImage = async (imageUrl: string, prompt: string) => {
     try {
@@ -352,7 +363,7 @@ function ImageGenerationPage() {
                                 <Facebook className="mr-2 h-4 w-4" />
                                 Share on Facebook
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => shareToGallery(imageUrl)}>
+                              <DropdownMenuItem onClick={() => shareToGallery(imageUrl, prompt)}>
                                 <ImageIcon className="mr-2 h-4 w-4" />
                                 Share to AI Gallery
                               </DropdownMenuItem>
@@ -419,7 +430,7 @@ function ImageGenerationPage() {
                             <Facebook className="mr-2 h-4 w-4" />
                             Share on Facebook
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareToGallery(image.id)}>
+                          <DropdownMenuItem onClick={() => shareToGallery(image.image_url, image.prompt)}>
                             <ImageIcon className="mr-2 h-4 w-4" />
                             Share to AI Gallery
                           </DropdownMenuItem>

@@ -31,6 +31,7 @@ interface GalleryImage {
   created_at: string
   likes: number
   shares: number
+  user_id: string
   profile: {
     first_name: string | null
     last_name: string | null
@@ -49,15 +50,22 @@ export default function AIGalleryPage() {
   // Fetch gallery images
   const fetchGalleryImages = useCallback(async () => {
     try {
+      setLoading(true)
       const response = await fetch('/api/get-gallery-images')
-      if (!response.ok) throw new Error('Failed to fetch gallery images')
+      
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(errorText)
+      }
+      
       const data = await response.json()
+      console.log('Fetched gallery images:', data) // Debug log
       setImages(data)
     } catch (err) {
       console.error('Error fetching gallery images:', err)
       toast({
         title: "Error",
-        description: "Failed to load gallery images",
+        description: err instanceof Error ? err.message : "Failed to load gallery images",
         variant: "destructive",
       })
     } finally {
@@ -146,6 +154,20 @@ export default function AIGalleryPage() {
 
   const sortedByLikes = [...images].sort((a, b) => b.likes - a.likes)
 
+  const handleDeleteImage = async (imageId: string) => {
+    const response = await fetch(`/api/delete-from-gallery?id=${imageId}`, {
+      method: 'DELETE'
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(errorText)
+    }
+
+    // Refresh the gallery after deletion
+    fetchGalleryImages()
+  }
+
   return (
     <div className="min-h-screen bg-black">
       <div className="container mx-auto px-4 py-12">
@@ -203,12 +225,15 @@ export default function AIGalleryPage() {
           isOpen={!!selectedImage}
           onClose={() => setSelectedImage(null)}
           imageUrl={selectedImage.image_url}
+          imageId={selectedImage.id}
           prompt={selectedImage.prompt}
           userName={`${selectedImage.profile?.first_name || ''} ${selectedImage.profile?.last_name || ''}`}
           createdAt={selectedImage.created_at}
           likes={selectedImage.likes}
           onLike={() => handleLike(selectedImage.id)}
           hasLiked={likedImages.has(selectedImage.id)}
+          canDelete={selectedImage.user_id === user?.id}
+          onDelete={() => handleDeleteImage(selectedImage.id)}
         />
       )}
     </div>

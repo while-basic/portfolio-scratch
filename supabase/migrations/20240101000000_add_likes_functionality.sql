@@ -1,48 +1,62 @@
--- Create image_likes table
-create table if not exists public.image_likes (
-  id uuid default uuid_generate_v4() primary key,
-  image_id uuid not null references public.ai_gallery(id) on delete cascade,
-  user_id uuid not null references auth.users(id) on delete cascade,
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-  unique(image_id, user_id)
+-- Remove conflicting table creation and keep only the likes functionality
+CREATE TABLE IF NOT EXISTS public.image_likes (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    image_id uuid NOT NULL REFERENCES public.ai_gallery(id) ON DELETE CASCADE,
+    user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+    UNIQUE(image_id, user_id)
 );
 
--- Enable RLS
-alter table public.image_likes enable row level security;
+-- Add RLS policies for image_likes
+ALTER TABLE public.image_likes ENABLE ROW LEVEL SECURITY;
 
--- Create policy to allow users to like/unlike
-create policy "Users can like/unlike images"
-  on public.image_likes for all
-  using (auth.uid() = user_id);
+CREATE POLICY "Users can view all likes"
+    ON public.image_likes
+    FOR SELECT
+    TO authenticated
+    USING (true);
+
+CREATE POLICY "Users can insert their own likes"
+    ON public.image_likes
+    FOR INSERT
+    TO authenticated
+    WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own likes"
+    ON public.image_likes
+    FOR DELETE
+    TO authenticated
+    USING (auth.uid() = user_id);
 
 -- Create function to increment likes
-create or replace function public.increment_likes(image_id uuid)
-returns void
-language plpgsql
-security definer
-as $$
-begin
-  update public.ai_gallery
-  set likes = likes + 1
-  where id = image_id;
-end;
+CREATE OR REPLACE FUNCTION public.increment_likes(image_id uuid)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  UPDATE public.ai_gallery
+  SET likes = likes + 1
+  WHERE id = image_id;
+END;
 $$;
 
 -- Create function to decrement likes
-create or replace function public.decrement_likes(image_id uuid)
-returns void
-language plpgsql
-security definer
-as $$
-begin
-  update public.ai_gallery
-  set likes = greatest(0, likes - 1)
-  where id = image_id;
-end;
+CREATE OR REPLACE FUNCTION public.decrement_likes(image_id uuid)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  UPDATE public.ai_gallery
+  SET likes = greatest(0, likes - 1)
+  WHERE id = image_id;
+END;
 $$;
 
 -- Grant permissions
-grant usage on schema public to authenticated;
-grant all on public.image_likes to authenticated;
-grant execute on function public.increment_likes to authenticated;
-grant execute on function public.decrement_likes to authenticated; 
+GRANT USAGE ON SCHEMA public TO authenticated;
+GRANT ALL ON public.image_likes TO authenticated;
+GRANT EXECUTE ON FUNCTION public.increment_likes TO authenticated;
+GRANT EXECUTE ON FUNCTION public.decrement_likes TO authenticated;
+  

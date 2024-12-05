@@ -4,62 +4,46 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   try {
-    const { imageId } = await req.json()
+    const body = await req.json()
+    const { imageUrl, prompt } = body
+
+    if (!imageUrl || !prompt) {
+      return new NextResponse("Missing imageUrl or prompt", { status: 400 })
+    }
+
     const supabase = createRouteHandlerClient({ cookies })
-
-    // Get the current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-    if (userError || !user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    
+    // Get the current user's session
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    
+    if (sessionError) {
+      console.error('Session error:', sessionError)
+      return new NextResponse(`Authentication error: ${sessionError.message}`, { status: 401 })
     }
 
-    // Get the image details
-    const { data: imageData, error: imageError } = await supabase
-      .from('generated_images')
-      .select('*')
-      .eq('id', imageId)
-      .single()
-
-    if (imageError || !imageData) {
-      return NextResponse.json(
-        { error: 'Image not found' },
-        { status: 404 }
-      )
+    if (!session) {
+      return new NextResponse("No active session found", { status: 401 })
     }
 
-    // Share to gallery
-    const { data, error } = await supabase
+    // Insert the image into the gallery
+    const { error: insertError } = await supabase
       .from('ai_gallery')
       .insert([
         {
-          user_id: user.id,
-          image_url: imageData.image_url,
-          prompt: imageData.prompt,
-          created_at: new Date().toISOString(),
-          likes: 0,
-          shares: 0,
+          user_id: session.user.id,
+          image_url: imageUrl,
+          prompt: prompt,
         }
       ])
-      .select()
-      .single()
 
-    if (error) {
-      console.error('Error sharing to gallery:', error)
-      return NextResponse.json(
-        { error: 'Failed to share to gallery' },
-        { status: 500 }
-      )
+    if (insertError) {
+      console.error('Error sharing image:', insertError)
+      return new NextResponse(`Database error: ${insertError.message}`, { status: 500 })
     }
 
-    return NextResponse.json(data)
+    return new NextResponse("Image shared successfully", { status: 200 })
   } catch (error) {
-    console.error('Error processing request:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Error in share-to-gallery route:', error)
+    return new NextResponse(`Server error: ${error instanceof Error ? error.message : 'Unknown error'}`, { status: 500 })
   }
 } 

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const supabase = createRouteHandlerClient({ cookies })
 
-    // First get the gallery images
+    // Get gallery images with user profiles
     const { data: galleryData, error: galleryError } = await supabase
       .from('ai_gallery')
       .select('*')
@@ -14,46 +14,46 @@ export async function GET() {
 
     if (galleryError) {
       console.error('Error fetching gallery images:', galleryError)
-      return NextResponse.json(
-        { error: 'Failed to fetch gallery images' },
-        { status: 500 }
-      )
+      return new NextResponse(`Failed to fetch gallery images: ${galleryError.message}`, { status: 500 })
     }
 
-    // Then fetch the profiles for each user_id
-    if (galleryData && galleryData.length > 0) {
-      const userIds = galleryData.map(item => item.user_id)
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
-        .select('*')
-        .in('id', userIds)
+    // Get all unique user IDs from gallery images
+    const userIds = Array.from(new Set(galleryData.map(item => item.user_id)))
 
-      if (profilesError) {
-        console.error('Error fetching profiles:', profilesError)
-        return NextResponse.json(
-          { error: 'Failed to fetch user profiles' },
-          { status: 500 }
-        )
+    // Fetch profiles for these users
+    const { data: profilesData, error: profilesError } = await supabase
+      .from('profiles')
+      .select('*')
+      .in('id', userIds)
+
+    if (profilesError) {
+      console.error('Error fetching profiles:', profilesError)
+      return new NextResponse(`Failed to fetch profiles: ${profilesError.message}`, { status: 500 })
+    }
+
+    // Create a map of profiles for quick lookup
+    const profilesMap = new Map(profilesData.map(profile => [profile.id, profile]))
+
+    // Combine the data
+    const transformedData = galleryData.map(item => ({
+      id: item.id,
+      image_url: item.image_url,
+      prompt: item.prompt,
+      created_at: item.created_at,
+      likes: item.likes || 0,
+      shares: item.shares || 0,
+      user_id: item.user_id,
+      profile: profilesMap.get(item.user_id) || {
+        first_name: null,
+        last_name: null,
+        avatar_url: null
       }
+    }))
 
-      // Combine the data
-      const combinedData = galleryData.map(galleryItem => {
-        const profile = profilesData.find(p => p.id === galleryItem.user_id)
-        return {
-          ...galleryItem,
-          profile: profile || null
-        }
-      })
-
-      return NextResponse.json(combinedData)
-    }
-
-    return NextResponse.json(galleryData)
+    return NextResponse.json(transformedData)
   } catch (error) {
-    console.error('Error processing request:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Error in get-gallery-images route:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    return new NextResponse(`Internal Server Error: ${errorMessage}`, { status: 500 })
   }
 } 

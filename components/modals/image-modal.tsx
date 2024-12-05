@@ -1,34 +1,112 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import Image from "next/image"
-import { Heart } from "lucide-react"
+import { Heart, Trash2, Loader2 } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
+import { toast } from '@/components/ui/use-toast'
 
 interface ImageModalProps {
   isOpen: boolean
   onClose: () => void
   imageUrl: string
+  imageId: string
   prompt: string
   userName: string
   createdAt: string
   likes: number
   onLike: () => void
   hasLiked: boolean
+  onDelete?: () => void
+  canDelete?: boolean
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({
   isOpen,
   onClose,
   imageUrl,
+  imageId,
   prompt,
   userName,
   createdAt,
   likes,
   onLike,
-  hasLiked
+  hasLiked,
+  canDelete = false
 }) => {
+  const [isDeleting] = useState(false)
+  const [isSharing, setIsSharing] = useState<boolean>(false);
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch('/api/delete-from-gallery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete image');
+      }
+
+      // Close the modal
+      onClose();
+      
+      toast({
+        description: "Image deleted successfully"
+      });
+      
+      // Trigger a page refresh
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      toast({
+        description: "Failed to delete image",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleShareToGallery = async () => {
+    try {
+      setIsSharing(true);
+      
+      const response = await fetch('/api/share-to-gallery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          imageUrl: imageUrl,
+          prompt: prompt
+        })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      toast({
+        title: "Success",
+        description: "Image shared to gallery successfully!"
+      });
+      onClose();
+    } catch (error) {
+      console.error('Failed to share image:', error);
+      toast({
+        title: "Error",
+        description: "Failed to share image to gallery",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
@@ -80,8 +158,31 @@ const ImageModal: React.FC<ImageModalProps> = ({
                   </p>
                 </div>
               </div>
+
+              <button 
+                onClick={handleShareToGallery}
+                disabled={isSharing}
+                className="mt-4 p-2 rounded bg-blue-500 hover:bg-blue-600 disabled:opacity-50"
+              >
+                {isSharing ? 'Sharing...' : 'Share to Gallery'}
+              </button>
             </div>
           </div>
+
+          {canDelete && (
+            <button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="p-2 rounded-full hover:bg-white/10 text-red-500 absolute top-4 left-4"
+              aria-label="Delete image"
+            >
+              {isDeleting ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <Trash2 className="h-5 w-5" />
+              )}
+            </button>
+          )}
 
           <Dialog.Close asChild>
             <button
