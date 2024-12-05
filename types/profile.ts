@@ -10,6 +10,11 @@ export type Profile = {
   bio: string | null
   website: string | null
   avatar_url: string | null
+  cover_image: string | null
+  github: string | null
+  twitter: string | null
+  linkedin: string | null
+  skills: string[]
   created_at: string
   updated_at: string
 }

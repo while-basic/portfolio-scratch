@@ -4,10 +4,11 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
-import { Menu, X, Home } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { User } from '@supabase/auth-helpers-nextjs'
 import { MobileNav } from "@/components/mobile-nav"
+import { DashboardDropdown } from "@/components/dashboard-dropdown"
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -67,11 +68,6 @@ const Navbar = () => {
       label: "Resume",
       active: pathname === "/resume",
     }
-    // {
-    //   href: "/chat",
-    //   label: "Chat (coming soon)",
-    //   active: pathname === "/chat",
-    // }
   ]
 
   return (
@@ -98,28 +94,20 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4">
           {user ? (
             <>
-              <Link
-                href="/dashboard"
-                className="text-sm font-medium hover:opacity-80"
-              >
-                Dashboard
-              </Link>
-              <button
-                onClick={handleSignOut}
-                className="text-sm font-medium hover:opacity-80"
-              >
-                Sign Out
-              </button>
+              <DashboardDropdown onSignOut={handleSignOut} />
+              <ModeToggle />
             </>
           ) : (
-            <Link
-              href="/auth/sign-in"
-              className="text-sm font-medium hover:opacity-80"
-            >
-              Sign In
-            </Link>
+            <>
+              <Link
+                href="/auth/sign-in"
+                className="text-sm font-medium hover:opacity-80"
+              >
+                Sign In
+              </Link>
+              <ModeToggle />
+            </>
           )}
-          <ModeToggle />
         </div>
 
         <div className="md:hidden">
@@ -149,45 +137,32 @@ const Navbar = () => {
                 href={route.href}
                 className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   route.active 
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white" 
-                    : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                 }`}
                 onClick={() => setIsOpen(false)}
               >
                 {route.label}
               </Link>
             ))}
-            <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  <Link
-                    href="/dashboard"
-                    className="flex items-center space-x-2 text-sm font-medium hover:opacity-80"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Home className="h-4 w-4" />
-                    <span>Dashboard</span>
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="text-sm font-medium hover:opacity-80"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              ) : (
-                <Link
-                  href="/auth/sign-in"
-                  className="text-sm font-medium hover:opacity-80"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Sign In
-                </Link>
-              )}
-              <div className="px-3">
-                <ModeToggle />
+          </div>
+
+          {/* Mobile Auth Section */}
+          <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <DashboardDropdown onSignOut={handleSignOut} />
               </div>
-            </div>
+            ) : (
+              <Link
+                href="/auth/sign-in"
+                className="text-sm font-medium hover:opacity-80"
+                onClick={() => setIsOpen(false)}
+              >
+                Sign In
+              </Link>
+            )}
+            <ModeToggle />
           </div>
         </div>
       )}
