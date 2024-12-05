@@ -1,23 +1,28 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
 
   const {
     data: { session },
-  } = await supabase.auth.getSession()
+  } = await supabase.auth.getSession();
+
+  // Protected routes that require authentication
+  const protectedPaths = ['/ai-editor', '/dashboard'];
+  const isProtectedPath = protectedPaths.some(path => req.nextUrl.pathname.startsWith(path));
+
+  if (isProtectedPath && !session) {
+    const redirectUrl = new URL('/login', req.url);
+    redirectUrl.searchParams.set('redirectedFrom', req.nextUrl.pathname);
+    return NextResponse.redirect(redirectUrl);
+  }
 
   // If user is signed in and the current path is /auth/sign-in or /auth/sign-up redirect the user to /
   if (session && (req.nextUrl.pathname === '/auth/sign-in' || req.nextUrl.pathname === '/auth/sign-up')) {
     return NextResponse.redirect(new URL('/', req.url))
-  }
-
-  // If user is not signed in and the current path is /dashboard or /profile, redirect the user to /auth/sign-in
-  if (!session && (req.nextUrl.pathname === '/dashboard' || req.nextUrl.pathname === '/profile')) {
-    return NextResponse.redirect(new URL('/auth/sign-in', req.url))
   }
 
   // Protect admin routes
@@ -33,12 +38,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/',
-    '/auth/sign-in',
-    '/auth/sign-up',
-    '/dashboard',
-    '/profile',
-    '/admin',
-    '/admin/(.*)'
-  ]
+    '/((?!_next/static|_next/image|favicon.ico|public/).*)',
+  ],
 }

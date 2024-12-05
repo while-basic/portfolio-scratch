@@ -47,11 +47,11 @@ const Navbar = () => {
       label: "Projects",
       active: pathname === "/projects",
     },
-    // {
-    //   href: "/skills",
-    //   label: "Skills",
-    //   active: pathname === "/skills",
-    // },
+    {
+      href: "/skills",
+      label: "Skills",
+      active: pathname === "/skills",
+    },
     {
       href: "/experience",
       label: "Experience",
@@ -66,12 +66,12 @@ const Navbar = () => {
       href: "/resume",
       label: "Resume",
       active: pathname === "/resume",
-    },
-    {
-      href: "/chat",
-      label: "Chat (coming soon)",
-      active: pathname === "/chat",
     }
+    // {
+    //   href: "/chat",
+    //   label: "Chat (coming soon)",
+    //   active: pathname === "/chat",
+    // }
   ]
 
   return (

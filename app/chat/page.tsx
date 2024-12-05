@@ -27,7 +27,7 @@ function ChatPage() {
   const [topP, setTopP] = useState(1.0)
   const [frequencyPenalty, setFrequencyPenalty] = useState(0.0)
   const [presencePenalty, setPresencePenalty] = useState(0.0)
-  const [model, setModel] = useState("gpt-4o")
+  const [model, setModel] = useState("o")
   const [isRateLimited, setIsRateLimited] = useState(false)
 
   const loadConversations = useCallback(async () => {
