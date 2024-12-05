@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
@@ -56,6 +56,10 @@ export default function Gallery() {
     }
   }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage])
 
+  const categories = ['All', 'Landscapes', 'Portraits', 'Abstract'];
+
+  const [activeCategory, setActiveCategory] = useState('All');
+
   if (isLoading) return <LoadingGallery />
   
   if (isError) {
@@ -68,6 +72,21 @@ export default function Gallery() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex gap-4 mb-6">
+        {categories.map(category => (
+          <button
+            key={category}
+            onClick={() => setActiveCategory(category)}
+            className={`px-4 py-2 rounded-full ${
+              activeCategory === category 
+                ? 'bg-primary text-white' 
+                : 'bg-gray-100 hover:bg-gray-200'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
       {data?.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
           {page.images.map((image: ImageData) => (
