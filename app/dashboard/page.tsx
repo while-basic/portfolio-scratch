@@ -7,6 +7,7 @@ import { withClientBoundary } from "@/components/client-wrapper"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileTextIcon, MessageSquare, SettingsIcon } from "lucide-react"
+import DashboardGrid from "@/components/dashboard/dashboard-grid"
 
 function DashboardPage() {
   const { user } = useAuth()
@@ -24,7 +25,8 @@ function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Quick Access Cards */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
           <Link href="/ai-editor">
             <Card className="hover:bg-accent/50 transition-colors cursor-pointer h-full">
               <CardHeader>
@@ -82,6 +84,9 @@ function DashboardPage() {
             </Card>
           </Link>
         </div>
+
+        {/* Dashboard Widgets */}
+        <DashboardGrid />
       </div>
     </ProtectedRoute>
   )

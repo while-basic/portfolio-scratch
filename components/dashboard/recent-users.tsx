@@ -11,10 +11,34 @@ export interface User {
 }
 
 interface RecentUsersProps {
-  users: User[]
+  users?: User[]
 }
 
-export function RecentUsers({ users }: RecentUsersProps) {
+// todo: replace user emails with first names only
+const mockUsers: User[] = [
+  {
+    id: "1",
+    email: "john@example.com",
+    createdAt: "2024-01-01",
+  },
+  {
+    id: "2",
+    email: "sarah@example.com",
+    createdAt: "2024-01-02",
+  },
+  {
+    id: "3",
+    email: "mike@example.com",
+    createdAt: "2024-01-03",
+  },
+  {
+    id: "4",
+    email: "lisa@example.com",
+    createdAt: "2024-01-04",
+  },
+]
+
+export default function RecentUsers({ users = mockUsers }: RecentUsersProps) {
   return (
     <Card className="p-6">
       <h2 className="text-xl font-semibold mb-4">Recent Users</h2>

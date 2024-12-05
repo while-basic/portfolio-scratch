@@ -43,7 +43,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} 2025Christopher Celaya. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Christopher Celaya. All rights reserved.</p>
         </div>
       </div>
     </footer>

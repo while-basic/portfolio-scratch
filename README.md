@@ -1,3 +1,28 @@
+# Todo List
+- [ ] Integrate bitcoin price api
+  - [ ] curl --location 'https://api.coindesk.com/v1/bpi/currentprice.json'
+- [ ] add web3 login
+- [ ] interactive art gallery where users can share their creations, uploads, and view others' work
+- [ ] add a comments section for images
+- [ ] use vercel ai sdk for chat and streaming
+- [ ] add a chatbot for signed-in users
+- [ ] add a dashboard for signed-in users (in progress)
+- [ ] add a secret audio page
+  - [ ] add a resume page with ai podcast clips
+- [ ] add daily ai tip or fact dialog alert when user signs in
+- [ ] include token usage metrics in dashboard
+  - [ ] total conversations
+  - [ ] total characters generated
+  - [ ] total generations
+  - [ ] total cost
+  - [ ] remaining monthly quota
+  - [ ] show graphs or progress bars for better visualization
+- [ ] add gallery for generated images to navlinks
+- [ ] add shortcuts for frequently used tools
+  - [ ] Start a New Chat
+  - [ ] Generate an Image
+
+
 # Christopher Celaya Portfolio
 
 A modern, responsive portfolio website built with Next.js 14, Tailwind CSS, and shadcn/ui.
