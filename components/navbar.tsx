@@ -94,7 +94,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4">
           {user ? (
             <>
-              <DashboardDropdown onSignOut={handleSignOut} />
+              <DashboardDropdown user={user} onSignOut={handleSignOut} />
               <ModeToggle />
             </>
           ) : (
@@ -151,7 +151,7 @@ const Navbar = () => {
           <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
             {user ? (
               <div className="flex items-center space-x-4">
-                <DashboardDropdown onSignOut={handleSignOut} />
+                <DashboardDropdown user={user} onSignOut={handleSignOut} />
               </div>
             ) : (
               <Link
