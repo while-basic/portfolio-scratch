@@ -1,18 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { Card } from "@/components/ui/card"
+import { useInView } from "react-intersection-observer"
 import { Badge } from "@/components/ui/badge"
 import { ImageCarouselModal } from "@/components/ui/image-carousel-modal"
-import Image from "next/image"
-import { Breadcrumb } from "@/components/breadcrumb"
+// import { Skeleton } from "@/components/ui/skeleton"
+import { PostCard } from "@/components/shared/post-card"
 
 interface GalleryItem {
+  id: string
   title: string
   category: string
-  description: string
+  content: string
   imageSrc: string
   additionalImages?: string[]
+  user: {
+    name: string
+    image: string
+    username: string
+  }
+  likes: number
+  comments: number
+  createdAt: string
 }
 
 export default function GalleryPage() {
@@ -20,161 +29,107 @@ export default function GalleryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null)
+  const { ref } = useInView({
+    onChange: (/* inView */) => {
+      // Load more content when the ref element comes into view
+      loadMoreContent();
+    },
+  });
+  const [/* loading */] = useState(false)
+
+  const loadMoreContent = () => {
+    // Implement load more logic here
+  };
 
   const categories = [
     { name: "All", count: 16 },
-    { name: "Software Development", count: 4 },
-    { name: "Mechatronics", count: 4 },
-    { name: "Industrial Automation", count: 4 },
-    { name: "Personal Projects", count: 4 },
-  ];
+    { name: "AI Art", count: 8 },
+    { name: "Text Generation", count: 4 },
+    { name: "Image Generation", count: 4 },
+  ]
 
-  const galleryItems: GalleryItem[] = [
-    { 
-      title: "Electrical Panels", 
-      category: "Electrical Panels",
-      description: "Managing and optimizing electrical panels",
-      imageSrc: "/images/electrical/dist1.jpg",
-      additionalImages: [
-        "/images/gallery/electrical/wiring1.jpg",
-        "/images/gallery/electrical/wiring2.jpg",
-        "/images/gallery/electrical/wiring3.jpg",
-        "/images/gallery/electrical/wiring4.jpg",
-        "/images/gallery/electrical/wiring5.jpg",
-        "/images/gallery/electrical/wiring6.jpg",
-        "/images/gallery/electrical/wiring7.jpg",
-        "/images/gallery/electrical/wiring8.jpg",
-        "/images/gallery/electrical/wiring9.jpg",
-        "/images/gallery/electrical/wiring10.jpg",
-        "/images/gallery/electrical/wiring11.jpg",
-        "/images/gallery/electrical/wiring12.jpg",
-        "/images/gallery/electrical/wiring13.jpg",
-        "/images/gallery/electrical/wiring14.jpg",
-        "/images/gallery/electrical/wiring15.jpg",
-        "/images/gallery/electrical/wiring16.jpg",
-      ]
+  // Mock data - replace with actual API call
+  const galleryItems: GalleryItem[] = Array(12).fill(null).map((_, i) => ({
+    id: `gallery-${i}`,
+    title: `AI Artwork ${i + 1}`,
+    category: categories[Math.floor(Math.random() * (categories.length - 1)) + 1].name,
+    content: "This amazing piece was created using AI. #AIArt #Creative",
+    imageSrc: `/placeholder-${(i % 3) + 1}.jpg`,
+    user: {
+      name: `Artist ${i + 1}`,
+      image: `/placeholder-avatar.jpg`,
+      username: `artist${i + 1}`,
     },
-    { 
-      title: "Industrial Manufacturing", 
-      category: "Industrial Automation",
-      description: "Automated manufacturing systems and process control",
-      imageSrc: "/images/gallery/manufacturing.jpg",
-      additionalImages: [
-        "/images/gallery/manufacturing/1.jpg",
-        "/images/gallery/manufacturing/2.jpg",
-        "/images/gallery/manufacturing/3.jpg",
-      ]
-    },
-    {
-      title: "Electrical Wiring",
-      category: "Electrical Wiring",
-      description: "Wired electrical panels",
-      imageSrc: "/images/electrical/wiring-1.jpg",
-      additionalImages: [
-        "/images/electrical/wiring-2.jpg",
-        "/images/electrical/wiring-3.jpg",
-        "/images/electrical/wiring-4.jpg",
-        "/images/electrical/wiring-5.jpg",
-        "/images/electrical/wiring-6.jpg",
-        "/images/electrical/wiring-7.jpg",
-      ]
-    },
-  ];
-
-  const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category);
-  };
+    likes: Math.floor(Math.random() * 1000),
+    comments: Math.floor(Math.random() * 100),
+    createdAt: new Date(Date.now() - Math.random() * 10000000).toISOString(),
+  }))
 
   const handleImageClick = (item: GalleryItem) => {
-    setSelectedGalleryItem(item);
-    setSelectedImageIndex(0);
-    setIsModalOpen(true);
-  };
+    setSelectedGalleryItem(item)
+    setSelectedImageIndex(0)
+    setIsModalOpen(true)
+  }
 
   const filteredItems = galleryItems.filter(
     item => selectedCategory === "All" || item.category === selectedCategory
-  );
+  )
 
-  const getCarouselImages = (item: GalleryItem) => {
-    const images = [
-      {
-        src: item.imageSrc,
-        alt: item.title,
-        title: item.title,
-        description: item.description,
-      },
-    ];
-
-    if (item.additionalImages) {
-      item.additionalImages.forEach((src, index) => {
-        images.push({
-          src,
-          alt: `${item.title} - Image ${index + 2}`,
-          title: item.title,
-          description: item.description,
-        });
-      });
-    }
-
-    return images;
-  };
+  const formatImageForCarousel = (src: string) => ({
+    src,
+    alt: "AI-generated artwork",
+    title: selectedGalleryItem?.title,
+    description: selectedGalleryItem?.content,
+  })
 
   return (
-    <div className="container mx-auto px-4 pt-24 pb-8">
-      <Breadcrumb />
-      <h1 className="text-4xl font-bold mb-8">Gallery</h1>
-      
-      {/* Categories */}
-      <div className="mb-8">
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <Badge
-              key={category.name}
-              variant={selectedCategory === category.name ? "default" : "secondary"}
-              className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-              onClick={() => handleCategoryClick(category.name)}
-            >
-              {category.name} ({category.count})
-            </Badge>
-          ))}
-        </div>
-      </div>
-
-      {/* Gallery Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredItems.map((item, index) => (
-          <Card
-            key={index}
-            className="overflow-hidden group cursor-pointer hover:shadow-lg transition-all duration-300"
-            onClick={() => handleImageClick(item)}
+    <div className="container py-8">
+      <div className="flex flex-wrap gap-2 mb-8">
+        {categories.map((category) => (
+          <Badge
+            key={category.name}
+            variant={selectedCategory === category.name ? "default" : "outline"}
+            className="cursor-pointer"
+            onClick={() => setSelectedCategory(category.name)}
           >
-            <div className="relative h-48 w-full">
-              <Image
-                src={item.imageSrc}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <div className="p-4 space-y-2">
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-muted-foreground text-sm">{item.description}</p>
-              <Badge variant="secondary">{item.category}</Badge>
-            </div>
-          </Card>
+            {category.name} ({category.count})
+          </Badge>
         ))}
       </div>
 
-      {/* Image Carousel Modal */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredItems.map((item) => (
+          <PostCard
+            key={item.id}
+            post={item}
+            onImageClick={() => handleImageClick(item)}
+          />
+        ))}
+        
+        {/* loading && (
+          <>
+            <Skeleton className="h-[400px]" />
+            <Skeleton className="h-[400px]" />
+            <Skeleton className="h-[400px]" />
+          </>
+        )} */}
+      </div>
+
+      <div ref={ref} className="h-10" />
+
       {selectedGalleryItem && (
         <ImageCarouselModal
-          images={getCarouselImages(selectedGalleryItem)}
-          initialIndex={selectedImageIndex}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          images={[
+            formatImageForCarousel(selectedGalleryItem.imageSrc),
+            ...(selectedGalleryItem.additionalImages || []).map(formatImageForCarousel)
+          ]}
+          initialIndex={selectedImageIndex}
+          title={selectedGalleryItem.title}
+          description={selectedGalleryItem.content}
         />
       )}
     </div>
-  );
+  )
 }

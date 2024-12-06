@@ -65,16 +65,16 @@ const Navbar = () => {
       label: "Experience",
       active: pathname === "/experience",
     },
-    {
-      href: "/gallery",
-      label: "Gallery",
-      active: pathname === "/gallery",
-    },
-    {
-      href: "/ai-gallery",
-      label: "AI Gallery",
-      active: pathname === "/ai-gallery",
-    },
+    // {
+    //   href: "/gallery",
+    //   label: "Gallery",
+    //   active: pathname === "/gallery",
+    // },
+    // {
+    //   href: "/ai-gallery",
+    //   label: "AI Gallery",
+    //   active: pathname === "/ai-gallery",
+    // },
     {
       href: "/resume",
       label: "Resume",

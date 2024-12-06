@@ -1,28 +1,33 @@
 "use client"
 
+import * as React from "react"
+import { useState } from "react"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import Image from "next/image"
-import { useState, KeyboardEvent } from "react"
 
 interface ImageCarouselModalProps {
+  isOpen: boolean
+  onClose: () => void
   images: {
     src: string
     alt: string
     title?: string
     description?: string
   }[]
-  initialIndex: number
-  isOpen: boolean
-  onClose: () => void
+  initialIndex?: number
+  title?: string
+  description?: React.ReactNode
 }
 
 export function ImageCarouselModal({
-  images,
-  initialIndex,
   isOpen,
   onClose,
+  images,
+  initialIndex = 0,
+  title,
+  description,
 }: ImageCarouselModalProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
@@ -34,80 +39,77 @@ export function ImageCarouselModal({
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
   }
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowLeft") handlePrevious()
-    if (e.key === "ArrowRight") handleNext()
-    if (e.key === "Escape") onClose()
-  }
+  const currentImage = images[currentIndex]
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
-        className="max-w-[90vw] h-[90vh] p-0 border-none bg-transparent"
-        onKeyDown={handleKeyDown}
-      >
-        <div className="relative flex flex-col h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-lg overflow-hidden">
-          {/* Navigation buttons */}
-          <div className="absolute top-4 right-4 z-50">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full bg-background/20 hover:bg-background/40"
-              onClick={onClose}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-          
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 z-50">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full bg-background/20 hover:bg-background/40 text-foreground"
-              onClick={handlePrevious}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-          </div>
-          
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 z-50">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full bg-background/20 hover:bg-background/40 text-foreground"
-              onClick={handleNext}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
+      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-background/95 backdrop-blur-sm">
+        <div className="relative">
+          {/* Close button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-2 top-2 z-50"
+            onClick={onClose}
+          >
+            <X className="h-4 w-4" />
+          </Button>
 
           {/* Image container */}
-          <div className="relative flex-1 w-full">
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-              <div className="relative w-full h-full">
-                <Image
-                  src={images[currentIndex].src}
-                  alt={images[currentIndex].alt}
-                  fill
-                  className="object-contain"
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw"
-                />
-              </div>
-            </div>
+          <div className="relative aspect-[16/9] bg-muted">
+            <Image
+              src={currentImage.src}
+              alt={currentImage.alt}
+              fill
+              className="object-contain"
+            />
+
+            {/* Navigation buttons */}
+            {images.length > 1 && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute left-2 top-1/2 -translate-y-1/2"
+                  onClick={handlePrevious}
+                >
+                  <ChevronLeft className="h-8 w-8" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  onClick={handleNext}
+                >
+                  <ChevronRight className="h-8 w-8" />
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Image info */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background/90 to-transparent">
-            <h2 className="text-lg font-semibold text-foreground">
-              {images[currentIndex].title}
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              {images[currentIndex].description}
-            </p>
-            <div className="mt-2 text-sm font-medium text-muted-foreground">
-              Image {currentIndex + 1} of {images.length}
-            </div>
+          <div className="p-6">
+            {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
+            {description && (
+              <div className="text-muted-foreground">
+                {description}
+              </div>
+            )}
+            {images.length > 1 && (
+              <div className="flex justify-center mt-4 gap-1">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      index === currentIndex
+                        ? 'bg-primary'
+                        : 'bg-muted-foreground/20'
+                    }`}
+                    onClick={() => setCurrentIndex(index)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>
