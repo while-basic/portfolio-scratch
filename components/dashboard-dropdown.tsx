@@ -6,6 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
@@ -27,14 +28,33 @@ export function DashboardDropdown({ user, onSignOut }: DashboardDropdownProps) {
           Dashboard
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => router.push("/profile")}>
+      <DropdownMenuContent 
+        align="end" 
+        className="w-40 bg-[#1a1d24] border border-[#2a2e35]"
+      >
+        <DropdownMenuItem 
+          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+          onClick={() => router.push('/profile')}
+        >
           Profile
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => router.push("/dashboard")}>
+        <DropdownMenuItem 
+          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+          onClick={() => router.push('/dashboard')}
+        >
           Dashboard
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onSignOut}>
+        <DropdownMenuSeparator className="bg-[#2a2e35]" />
+        <DropdownMenuItem 
+          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+          onClick={() => router.push('/admin/login')}
+        >
+          Admin Login
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+          onClick={onSignOut}
+        >
           Sign Out
         </DropdownMenuItem>
       </DropdownMenuContent>

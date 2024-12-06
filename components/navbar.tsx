@@ -9,6 +9,13 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { User } from '@supabase/auth-helpers-nextjs'
 import { MobileNav } from "@/components/mobile-nav"
 import { DashboardDropdown } from "@/components/dashboard-dropdown"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -83,17 +90,45 @@ const Navbar = () => {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
-          {routes.map((route) => (
-            <Link
-              key={route.href}
-              href={route.href}
-              className={`text-sm font-medium transition-colors hover:opacity-80 ${
-                route.active ? "opacity-100" : "opacity-60"
-              }`}
-            >
-              {route.label}
-            </Link>
-          ))}
+          {routes.map((route) => {
+            if (route.href === "/dashboard") {
+              return (
+                <DropdownMenu key={route.href}>
+                  <DropdownMenuTrigger asChild>
+                    <button className="text-sm font-medium transition-colors hover:opacity-80 opacity-60">
+                      Dashboard
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40 bg-gray-900 border border-gray-800">
+                    <DropdownMenuItem className="hover:bg-gray-800 focus:bg-gray-800" onClick={() => router.push('/profile')}>
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-gray-800 focus:bg-gray-800" onClick={() => router.push('/dashboard')}>
+                      Dashboard
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-800" />
+                    <DropdownMenuItem className="hover:bg-gray-800 focus:bg-gray-800" onClick={() => router.push('/admin/login')}>
+                      Admin Login ⚙️
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-gray-800 focus:bg-gray-800" onClick={handleSignOut}>
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              );
+            }
+            return (
+              <Link
+                key={route.href}
+                href={route.href}
+                className={`text-sm font-medium transition-colors hover:opacity-80 ${
+                  route.active ? "opacity-100" : "opacity-60"
+                }`}
+              >
+                {route.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">

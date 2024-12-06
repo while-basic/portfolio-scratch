@@ -5,10 +5,25 @@ import AnalyticsChart from './analytics-chart';
 import RecentUsers from './recent-users';
 import StatsCard from './stats-card';
 import { Users, FolderGit, BarChart3 } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 
 export default function DashboardGrid() {
+  const handleSignOut = async () => {
+    await signOut({ redirect: true, callbackUrl: '/' });
+  };
+
   return (
     <div className="grid gap-6 p-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <button
+          onClick={handleSignOut}
+          className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+        >
+          Sign Out
+        </button>
+      </div>
+
       {/* Top Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard
