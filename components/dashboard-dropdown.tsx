@@ -19,8 +19,6 @@ interface DashboardDropdownProps {
 export function DashboardDropdown({ user, onSignOut }: DashboardDropdownProps) {
   const router = useRouter();
 
-  if (!user) return null;
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -32,31 +30,57 @@ export function DashboardDropdown({ user, onSignOut }: DashboardDropdownProps) {
         align="end" 
         className="w-40 bg-[#1a1d24] border border-[#2a2e35]"
       >
-        <DropdownMenuItem 
-          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
-          onClick={() => router.push('/profile')}
-        >
-          Profile
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
-          onClick={() => router.push('/dashboard')}
-        >
-          Dashboard
-        </DropdownMenuItem>
-        <DropdownMenuSeparator className="bg-[#2a2e35]" />
-        <DropdownMenuItem 
-          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
-          onClick={() => router.push('/admin/login')}
-        >
-          Admin Login
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
-          onClick={onSignOut}
-        >
-          Sign Out
-        </DropdownMenuItem>
+        {user ? (
+          <>
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={() => router.push('/profile')}
+            >
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={() => router.push('/dashboard')}
+            >
+              Dashboard
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-[#2a2e35]" />
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={() => router.push('/admin/login')}
+            >
+              Admin Login
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={onSignOut}
+            >
+              Sign Out
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <>
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={() => router.push('/auth/sign-in')}
+            >
+              Sign In
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={() => router.push('/auth/sign-up')}
+            >
+              Sign Up
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-[#2a2e35]" />
+            <DropdownMenuItem 
+              className="hover:bg-[#2a2e35] focus:bg-[#2a2e35] text-gray-200" 
+              onClick={() => router.push('/admin/login')}
+            >
+              Admin Login
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

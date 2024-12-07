@@ -1,28 +1,39 @@
-"use client";
+import { AdminNav } from "@/components/admin/admin-nav";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { AdminSidebar } from "@/components/admin/sidebar";
-import { usePathname } from "next/navigation";
+async function getIsAuthenticated() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/admin/check-auth`, {
+      headers: {
+        Cookie: cookies().toString()
+      }
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const isLoginPage = pathname === "/admin/login";
+  const isAuthenticated = await getIsAuthenticated();
 
-  if (isLoginPage) {
-    return <>{children}</>;
+  if (!isAuthenticated) {
+    redirect("/admin/login");
   }
 
   return (
-    <div className="h-full relative bg-black">
-      <div className="hidden h-full md:flex md:w-60 md:flex-col md:fixed md:inset-y-0 z-[80]">
-        <AdminSidebar />
+    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+      <AdminNav />
+      <div className="flex flex-col">
+        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+          {children}
+        </main>
       </div>
-      <main className="md:pl-60">
-        <div className="px-4 md:px-8 pt-2 pb-16">{children}</div>
-      </main>
     </div>
   );
 }

@@ -108,7 +108,7 @@ const Navbar = () => {
                     </DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-gray-800" />
                     <DropdownMenuItem className="hover:bg-gray-800 focus:bg-gray-800" onClick={() => router.push('/admin/login')}>
-                      Admin Login ⚙️
+                      Admin Login
                     </DropdownMenuItem>
                     <DropdownMenuItem className="hover:bg-gray-800 focus:bg-gray-800" onClick={handleSignOut}>
                       Sign Out
@@ -139,12 +139,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link
-                href="/auth/sign-in"
-                className="text-sm font-medium hover:opacity-80"
-              >
-                Sign In
-              </Link>
+              <DashboardDropdown user={user} onSignOut={handleSignOut} />
               <ModeToggle />
             </>
           )}
@@ -194,13 +189,9 @@ const Navbar = () => {
                 <DashboardDropdown user={user} onSignOut={handleSignOut} />
               </div>
             ) : (
-              <Link
-                href="/auth/sign-in"
-                className="text-sm font-medium hover:opacity-80"
-                onClick={() => setIsOpen(false)}
-              >
-                Sign In
-              </Link>
+              <div className="flex items-center space-x-4">
+                <DashboardDropdown user={user} onSignOut={handleSignOut} />
+              </div>
             )}
             <ModeToggle />
           </div>

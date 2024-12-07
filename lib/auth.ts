@@ -1,6 +1,7 @@
 "use client"
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
 const supabase = createClientComponentClient()
 
@@ -68,5 +69,19 @@ export async function resetPassword(email: string) {
   } catch (error) {
     console.error('Reset password error:', error)
     throw error
+  }
+}
+
+export async function checkAdminAuth() {
+  try {
+    const response = await fetch('/api/admin/check-auth', {
+      headers: {
+        Cookie: cookies().toString()
+      }
+    })
+    
+    return response.ok
+  } catch {
+    return false
   }
 }
