@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
-import { Menu, X } from "lucide-react"
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { User } from '@supabase/auth-helpers-nextjs'
 import { MobileNav } from "@/components/mobile-nav"
@@ -16,11 +15,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 
 const Navbar = () => {
   const pathname = usePathname()
   const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null)
   const supabase = createClientComponentClient()
 
@@ -131,72 +130,25 @@ const Navbar = () => {
           })}
         </nav>
 
-        <div className="hidden md:flex items-center space-x-4">
-          {user ? (
-            <>
-              <DashboardDropdown user={user} onSignOut={handleSignOut} />
-              <ModeToggle />
-            </>
-          ) : (
-            <>
-              <DashboardDropdown user={user} onSignOut={handleSignOut} />
-              <ModeToggle />
-            </>
-          )}
-        </div>
-
-        <div className="md:hidden">
+        <div className="flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <>
+                <DashboardDropdown user={user} onSignOut={handleSignOut} />
+                <ModeToggle />
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" onClick={() => router.push('/auth/sign-in')}>
+                  Sign In
+                </Button>
+                <ModeToggle />
+              </>
+            )}
+          </div>
           <MobileNav />
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2"
-        >
-          {isOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
       </div>
-
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-white/95 dark:bg-black/95 backdrop-blur-sm overflow-y-auto">
-          <div className="px-4 py-4 space-y-3 border-b border-gray-200 dark:border-gray-800">
-            {routes.map((route) => (
-              <Link
-                key={route.href}
-                href={route.href}
-                className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  route.active 
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {route.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Auth Section */}
-          <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 mt-4">
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <DashboardDropdown user={user} onSignOut={handleSignOut} />
-              </div>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <DashboardDropdown user={user} onSignOut={handleSignOut} />
-              </div>
-            )}
-            <ModeToggle />
-          </div>
-        </div>
-      )}
     </header>
   )
 }

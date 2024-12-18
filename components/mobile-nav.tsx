@@ -32,21 +32,16 @@ export const MobileNav = () => {
       label: "Experience",
       active: pathname === "/experience",
     },
-    {
-      href: "/gallery",
-      label: "Gallery",
-      active: pathname === "/gallery",
-    },
+    // {
+    //   href: "/gallery",
+    //   label: "Gallery",
+    //   active: pathname === "/gallery",
+    // },
     {
       href: "/resume",
       label: "Resume",
       active: pathname === "/resume",
     },
-    {
-      href: "/chat",
-      label: "Chat",
-      active: pathname === "/chat",
-    }
   ]
 
   return (
@@ -55,15 +50,15 @@ export const MobileNav = () => {
         <Button 
           variant="ghost" 
           size="icon"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+          className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
         >
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
       <SheetContent 
-        side="left" 
-        className="w-[280px] sm:w-[360px] pr-0"
+        side="right" 
+        className="w-[280px] sm:w-[360px] pl-0"
       >
         <nav className="flex flex-col space-y-4">
           {routes.map((route) => (
