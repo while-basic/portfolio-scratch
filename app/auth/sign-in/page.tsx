@@ -15,16 +15,23 @@ function SignInPage() {
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
+    console.log('Starting sign in process...')
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log('Attempting to sign in with:', { email })
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
+      console.log('Sign in response:', { data, error })
+
       if (error) throw error
-      router.push('/') // Redirect to home page after successful sign in
+
+      console.log('Sign in successful, redirecting to dashboard...')
+      router.push('/dashboard')
       router.refresh()
     } catch (error) {
+      console.error('Sign in error:', error)
       setError(error instanceof Error ? error.message : 'An error occurred during sign in')
     }
   }

@@ -7,7 +7,7 @@ import { withClientBoundary } from "@/components/client-wrapper"
 import Link from "next/link"
 import DashboardGrid from "@/components/dashboard/dashboard-grid"
 import { Button } from "@/components/ui/button"
-import { Download, Plus, Users, ImageIcon } from "lucide-react"
+import { Plus, Users } from "lucide-react"
 
 function DashboardPage() {
   const { user } = useAuth()
@@ -31,16 +31,6 @@ function DashboardPage() {
                 Social Feed
               </Button>
             </Link>
-            <Link href="/social/gallery">
-              <Button variant="outline">
-                <ImageIcon className="mr-2 h-4 w-4" />
-                AI Gallery
-              </Button>
-            </Link>
-            <Button variant="outline">
-              <Download className="mr-2 h-4 w-4" />
-              Export Data
-            </Button>
             <Link href="/dashboard/chat">
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
@@ -57,4 +47,4 @@ function DashboardPage() {
   )
 }
 
-export default withClientBoundary(DashboardPage)
+export default withClientBoundary(DashboardPage);

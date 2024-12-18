@@ -80,17 +80,17 @@ function HomePage() {
       {/* Contact Section */}
       <section className="py-20 bg-black">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-8 text-white">Let&apos;s Talk About Your Project</h2>
+          <h2 className="text-3xl font-bold mb-8 text-white">Let&apos;s Connect</h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Schedule a 30-minute call to discuss your ideas and how we can work together
+            Schedule a 30-minute call to discuss potential opportunities and how I can contribute to your team
           </p>
           <div className="bg-black border border-gray-800 rounded-lg p-8 max-w-md mx-auto">
             <h3 className="font-semibold mb-4 text-white">What to expect:</h3>
             <ul className="text-left text-gray-400 mb-6 space-y-2">
-              <li>• Project scope and requirements discussion</li>
-              <li>• Technical feasibility assessment</li>
-              <li>• Timeline and budget planning</li>
-              <li>• Next steps and collaboration approach</li>
+              <li>• Discussion of your team needs and requirements</li>
+              <li>• Overview of my technical skills and experience</li>
+              <li>• Exploration of potential role fit</li>
+              <li>• Q&A about my background and approach</li>
             </ul>
             <Link 
               href="https://cal.com/chriscelaya/30min" 
@@ -98,7 +98,7 @@ function HomePage() {
               rel="noopener noreferrer"
             >
               <Button className="w-full bg-white text-black hover:bg-gray-200">
-                Schedule a Call
+                Schedule an Interview
               </Button>
             </Link>
           </div>
