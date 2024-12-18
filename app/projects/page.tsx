@@ -8,6 +8,7 @@ import { withClientBoundary } from "@/components/client-wrapper";
 import { getProjects } from "@/lib/projects";
 import { useEffect, useState } from "react";
 import type { Project } from "@/lib/projects";
+import { PageLayout } from "@/components/page-layout";
 
 function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -21,8 +22,8 @@ function ProjectsPage() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-5xl mx-auto">
+    <PageLayout>
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-4">Projects</h1>
           <p className="text-xl text-muted-foreground">A showcase of my recent work and side projects</p>
@@ -59,7 +60,7 @@ function ProjectsPage() {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }
 
