@@ -22,7 +22,6 @@ export function RootLayoutClient({
 }: {
   children: React.ReactNode
 }) {
-  // Track page views
   usePageView()
 
   return (

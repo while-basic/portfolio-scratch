@@ -1,65 +1,72 @@
 "use client"
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { signInWithEmail } from '@/lib/auth'
-import { useRouter } from 'next/navigation'
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 
 export function SignInForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setLoading(true)
+    setIsLoading(true)
 
     try {
-      const { error } = await signInWithEmail(email, password)
-      if (error) throw error
-      router.push("/dashboard")
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message)
-      } else {
-        setError("An unexpected error occurred")
+      const result = await signIn("credentials", {
+        email: (event.currentTarget.elements.namedItem('email') as HTMLInputElement).value,
+        password: (event.currentTarget.elements.namedItem('password') as HTMLInputElement).value,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        toast({
+          title: "Error",
+          description: "Invalid credentials",
+          variant: "destructive",
+        })
+        return
       }
+
+      // Successful sign in - redirect to dashboard
+      router.push("/dashboard")
+      router.refresh()
+      
+    } catch (error: unknown) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        variant: "destructive",
+      })
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <Input
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      {error && <p className="text-sm text-red-500">{error}</p>}
-      <Button type="submit" disabled={loading} className="w-full">
-        {loading ? 'Signing in...' : 'Sign In'}
+    <form onSubmit={onSubmit} className="space-y-4">
+      <Input
+        name="email"
+        placeholder="name@example.com"
+        type="email"
+        autoCapitalize="none"
+        autoComplete="email"
+        autoCorrect="off"
+        disabled={isLoading}
+      />
+      <Input
+        name="password"
+        placeholder="Password"
+        type="password"
+        autoComplete="current-password"
+        disabled={isLoading}
+      />
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading ? "Signing in..." : "Sign in"}
       </Button>
     </form>
   )

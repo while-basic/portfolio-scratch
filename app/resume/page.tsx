@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Download, Mail, Github, Linkedin } from "lucide-react"
+import { Download, Github, Linkedin } from "lucide-react"
 import { CodeIcon, GlobeIcon, Settings2Icon, BotIcon, WrenchIcon } from "@/components/icons"
 import { AudioPlayer } from "@/components/ui/audio-player"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -17,12 +17,6 @@ export default function ResumePage() {
         <h1 className="text-4xl font-bold mb-2">Christopher Celaya</h1>
         <p className="text-xl mb-6 text-muted-foreground">Mechatronic Technician | Software Developer | Audio Engineer</p>
         <div className="flex flex-wrap gap-4">
-          <Button variant="outline" size="sm" asChild>
-            <a href="tel:915-279-0197">
-              <Mail className="mr-2 h-4 w-4" />
-              915-279-0197
-            </a>
-          </Button>
           <Button variant="outline" size="sm" asChild>
             <a href="https://github.com/while-basic" target="_blank" rel="noopener noreferrer">
               <Github className="mr-2 h-4 w-4" />

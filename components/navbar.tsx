@@ -84,8 +84,11 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
-        <Link href="/" className="text-lg font-semibold hover:opacity-80">
-          Christopher Celaya
+        <Link 
+          href="/" 
+          className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+        >
+          <span className="text-lg font-semibold md:inline">Christopher Celaya</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
@@ -139,14 +142,20 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Button variant="ghost" onClick={() => router.push('/auth/sign-in')}>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => router.push('/auth/sign-in')}
+                  className="hidden md:inline-flex"
+                >
                   Sign In
                 </Button>
                 <ModeToggle />
               </>
             )}
           </div>
-          <MobileNav />
+          <div className="md:hidden">
+            <MobileNav />
+          </div>
         </div>
       </div>
     </header>

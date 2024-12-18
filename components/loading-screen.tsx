@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
 export function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [dimensions, setDimensions] = useState({
@@ -32,7 +31,7 @@ export function LoadingScreen() {
     // Hide loading screen after 1.0 seconds
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -134,3 +133,4 @@ export function LoadingScreen() {
     </AnimatePresence>
   );
 }
+

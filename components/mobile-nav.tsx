@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
 import { useState } from "react"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export const MobileNav = () => {
   const pathname = usePathname()
@@ -32,11 +33,6 @@ export const MobileNav = () => {
       label: "Experience",
       active: pathname === "/experience",
     },
-    // {
-    //   href: "/gallery",
-    //   label: "Gallery",
-    //   active: pathname === "/gallery",
-    // },
     {
       href: "/resume",
       label: "Resume",
@@ -58,21 +54,31 @@ export const MobileNav = () => {
       </SheetTrigger>
       <SheetContent 
         side="right" 
-        className="w-[280px] sm:w-[360px] pl-0"
+        className="w-[280px] sm:w-[360px] pl-0 pr-0 bg-background/95 backdrop-blur-sm border-l"
       >
-        <nav className="flex flex-col space-y-4">
-          {routes.map((route) => (
-            <Link
-              key={route.href}
-              href={route.href}
-              onClick={() => setOpen(false)}
-              className={`px-2 py-1 text-sm font-medium transition-colors hover:text-primary ${
-                route.active ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              {route.label}
-            </Link>
-          ))}
+        <nav className="flex flex-col h-full py-4">
+          <div className="flex flex-col space-y-3 flex-1">
+            {routes.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                onClick={() => setOpen(false)}
+                className={`px-6 py-3 text-sm font-medium transition-colors hover:bg-accent/50 active:bg-accent/70 ${
+                  route.active ? "text-primary bg-accent" : "text-muted-foreground"
+                }`}
+              >
+                {route.label}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-auto border-t border-border/50 pt-4 px-6">
+            <div className="flex items-center justify-between">
+              <ModeToggle />
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/auth/sign-in">Sign In</Link>
+              </Button>
+            </div>
+          </div>
         </nav>
       </SheetContent>
     </Sheet>

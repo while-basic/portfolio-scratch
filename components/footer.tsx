@@ -22,15 +22,6 @@ export function Footer() {
             </ul>
           </div>
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-white">Resources</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li><Link href="/resume.pdf" className="hover:text-white">Resume</Link></li>
-              <li><Link href="/case-studies" className="hover:text-white">Case Studies</Link></li>
-              <li><Link href="/gallery" className="hover:text-white">Gallery</Link></li>
-              {/* <li><Link href="/chat" className="hover:text-white">Chat</Link></li> */}
-            </ul>
-          </div>
-          <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Connect</h4>
             <div className="flex space-x-4">
               <Link href="https://github.com/while-basic" className="text-gray-400 hover:text-white">
