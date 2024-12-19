@@ -7,17 +7,16 @@ export const projectData = {
     useCase: "Healthcare professionals can input patient symptoms and medical history, receiving AI-generated diagnostic suggestions and relevant medical literature references.",
     inspiration: "The project was inspired by the need to streamline the diagnostic process and make advanced AI capabilities accessible to medical practitioners.",
     projectDetails: {
-      duration: "6 months",
+      duration: "none",
       role: "Lead Developer",
-      team: "4 developers, 2 medical consultants",
-      stakeholders: ["Healthcare Professionals", "Medical Institutions", "AI Research Team"]
+      team: "Self",
+      stakeholders: ["none"]
     },
     technologyStack: {
       "Frontend": ["React.js", "Next.js", "TailwindCSS"],
-      "Backend": ["Node.js", "Express", "WebSocket"],
-      "AI/ML": ["Llama2", "LangChain"],
-      "Database": ["MongoDB"],
-      "Infrastructure": ["AWS", "Docker"]
+      "Backend": ["Node.js", "ollama", "WebSocket"],
+      "AI/ML": ["medllama2"],
+      "Infrastructure": ["Consumer Hardware"]
     },
     developmentProcess: [
       "Initial research and medical professional interviews",

@@ -1,0 +1,127 @@
+# Codebase Rules and Standards
+
+## 1. Project Structure
+- Follow Next.js 13+ app directory structure
+- Keep components organized by feature/domain in `/components` directory
+- Maintain clear separation between client and server components
+- Use appropriate file extensions: `.tsx` for React components, `.ts` for utilities
+
+## 2. Component Rules
+### Client Components
+- Mark with `'use client'` directive at top of file
+- Wrap with `withClientBoundary` HOC for error boundaries
+- Keep state management logic close to where it's used
+- Use proper type annotations for props
+
+### Server Components
+- Default to server components unless client interactivity needed
+- Avoid unnecessary `'use client'` directives
+- Leverage server-side data fetching where possible
+
+## 3. Styling Standards
+- Use Tailwind CSS for styling
+- Follow design system color tokens defined in `globals.css`
+- Maintain dark mode compatibility using CSS variables
+- Use `cn()` utility for conditional class names
+
+## 4. Type Safety
+- Strict TypeScript usage throughout
+- Define interfaces/types in separate files when reused
+- Use proper type imports from dependencies
+- No `any` types unless absolutely necessary
+
+## 5. State Management
+- Use React hooks for local state
+- Leverage context for global state (auth, theme, etc.)
+- Keep state minimal and close to where it's used
+- Document complex state interactions
+
+## 6. Performance Guidelines
+- Lazy load heavy components using dynamic imports
+- Optimize images using Next.js Image component
+- Implement proper code splitting
+- Monitor and optimize bundle sizes
+
+## 7. Security Practices
+- Implement proper authentication checks
+- Sanitize user inputs
+- Use HTTPS for all external requests
+- Follow CORS policies
+
+## 8. Testing Requirements
+- Write unit tests for critical functionality
+- Implement integration tests for user flows
+- Test both light and dark modes
+- Ensure mobile responsiveness
+
+## 9. Documentation
+- Document complex logic with inline comments
+- Maintain up-to-date README
+- Document API endpoints and their usage
+- Keep change logs updated
+
+## 10. Code Quality
+- Run linting before commits (husky pre-commit hook)
+- Follow consistent naming conventions
+- Keep functions small and focused
+- Use meaningful variable names
+
+## 11. Asset Management
+- Store static assets in `/public` directory
+- Optimize images before committing
+- Use appropriate file formats
+- Maintain organized asset structure
+
+## 12. Error Handling
+- Implement proper error boundaries
+- Log errors appropriately
+- Provide user-friendly error messages
+- Handle edge cases gracefully
+
+## 13. Accessibility
+- Maintain WCAG 2.1 compliance
+- Use semantic HTML elements
+- Provide proper ARIA labels
+- Ensure keyboard navigation
+
+## 14. Version Control
+- Follow conventional commits
+- Keep PRs focused and manageable
+- Write descriptive commit messages
+- Review code before merging
+
+## 15. Environment Configuration
+- Use `.env` files for environment variables
+- Never commit sensitive data
+- Document required environment variables
+- Maintain separate configs for different environments
+
+## 16. Dependencies
+- Keep dependencies up to date
+- Audit packages regularly
+- Remove unused dependencies
+- Document major dependency changes
+
+## 17. Build Process
+- Optimize build configuration
+- Monitor build times
+- Implement proper caching strategies
+- Document build requirements
+
+## 18. Deployment
+- Follow CI/CD best practices
+- Implement staging environment
+- Document deployment process
+- Monitor deployment metrics
+
+## 19. Monitoring
+- Implement error tracking
+- Monitor performance metrics
+- Track user analytics
+- Set up alerting for critical issues
+
+## 20. Maintenance
+- Regular dependency updates
+- Code cleanup and refactoring
+- Performance optimization
+- Security patches 
