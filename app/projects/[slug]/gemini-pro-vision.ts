@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Visual content creators use Gemini Pro Vision to enhance their workflow through AI-powered image analysis, editing suggestions, and automated processing while maintaining artistic integrity.",
     inspiration: "The project was inspired by the potential of Google's Gemini Pro to revolutionize image processing and the need for more intelligent tools in professional photography and videography.",
     projectDetails: {
-      duration: "5 months",
+      duration: "1 day",
       role: "AI Engineer & Full Stack Developer",
-      team: "2 developers, 1 UI designer, 2 professional photographers as consultants",
-      stakeholders: ["Photographers", "Videographers", "Content Creators"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Frontend": ["Next.js", "React", "TailwindCSS"],

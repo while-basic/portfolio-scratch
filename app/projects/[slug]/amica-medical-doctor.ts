@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Medical practitioners use Amica to streamline their workflow, from patient documentation to diagnostic assistance, while maintaining high standards of care.",
     inspiration: "The project was inspired by the need to reduce administrative burden on healthcare professionals while enhancing their decision-making capabilities through AI assistance.",
     projectDetails: {
-      duration: "8 months",
+      duration: "1 day",
       role: "Lead Full Stack Developer",
-      team: "3 developers, 2 medical consultants, 1 UI/UX designer",
-      stakeholders: ["Medical Practitioners", "Healthcare Administrators", "Medical Students"]
+      team: "1 developer",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Frontend": ["Next.js", "React", "TailwindCSS", "TypeScript"],

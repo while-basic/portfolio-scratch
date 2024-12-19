@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "The environment serves as both a technical demonstration and a playable game level, showcasing the possibilities of modern game engine technology.",
     inspiration: "The project was inspired by the revolutionary features of Unreal Engine 5, particularly Lumen and Nanite, and their potential to create unprecedented levels of detail and realism in games.",
     projectDetails: {
-      duration: "5 months",
+      duration: "1 day",
       role: "Environment Artist & Technical Artist",
-      team: "2 environment artists, 1 technical artist",
-      stakeholders: ["Game Developers", "Environment Artists", "Technical Artists"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Engine": ["Unreal Engine 5", "Lumen", "Nanite"],

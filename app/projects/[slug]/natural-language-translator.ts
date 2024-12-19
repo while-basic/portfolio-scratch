@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Users can translate complex text while maintaining context, tone, and cultural nuances, making it ideal for professional translation needs and international communication.",
     inspiration: "The project was inspired by the need for more accurate and context-aware translation tools that could handle the subtleties of natural language communication.",
     projectDetails: {
-      duration: "7 months",
+      duration: "1 day",
       role: "ML Engineer & Full Stack Developer",
-      team: "2 ML engineers, 1 full stack developer, 3 language experts",
-      stakeholders: ["Translation Services", "International Businesses", "Content Creators"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Frontend": ["Next.js", "React", "TailwindCSS"],

@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Legal professionals can use Law-GPT to quickly analyze case law, generate document drafts, and receive relevant legal precedents based on their queries.",
     inspiration: "The project was inspired by the need to make legal research more efficient and accessible while maintaining the high standards required in legal practice.",
     projectDetails: {
-      duration: "10 months",
+      duration: "1 day",
       role: "AI Engineer & Full Stack Developer",
-      team: "3 developers, 2 legal experts",
-      stakeholders: ["Lawyers", "Law Firms", "Legal Researchers", "Paralegals"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Frontend": ["Next.js", "React", "TailwindCSS"],

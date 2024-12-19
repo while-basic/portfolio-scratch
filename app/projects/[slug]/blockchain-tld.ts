@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Organizations and individuals can register, manage, and trade custom top-level domains using blockchain technology, ensuring ownership authenticity and transfer transparency.",
     inspiration: "The project was inspired by the need for a more democratic, transparent, and decentralized approach to domain name management in the modern internet.",
     projectDetails: {
-      duration: "12 months",
+      duration: "1 day",
       role: "Blockchain Developer & Technical Lead",
-      team: "4 developers, 1 blockchain architect",
-      stakeholders: ["Domain Registrars", "Website Owners", "Blockchain Enthusiasts"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Blockchain": ["Ethereum", "Solidity", "Web3.js"],

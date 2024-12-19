@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "The environment serves as a template for game developers, showing how to create optimized, interactive game worlds that can be easily adapted for different game types.",
     inspiration: "The project was inspired by the need for well-optimized, scalable game environments that don't compromise on visual quality or interactivity.",
     projectDetails: {
-      duration: "4 months",
+      duration: "1 day",
       role: "Technical Artist & Environment Developer",
-      team: "2 developers, 1 environment artist",
-      stakeholders: ["Game Developers", "Unity Developers", "Mobile Game Studios"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Engine": ["Unity 2022", "Universal Render Pipeline"],

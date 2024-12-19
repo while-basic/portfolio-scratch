@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Teams use Chattersync for real-time communication while benefiting from AI-powered features like smart message categorization, automated summaries, and contextual suggestions.",
     inspiration: "The project was inspired by the need for more intelligent communication tools that could help teams manage information overload while maintaining productive conversations.",
     projectDetails: {
-      duration: "6 months",
+      duration: "1 day",
       role: "Full Stack Developer",
-      team: "3 developers, 1 UI/UX designer",
-      stakeholders: ["Remote Teams", "Project Managers", "Enterprise Clients"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Frontend": ["React", "TypeScript", "TailwindCSS"],

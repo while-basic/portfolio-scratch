@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Musicians and producers can use MidiSaber to control various aspects of their music production through intuitive motion controls, from filter sweeps to note triggers.",
     inspiration: "The project was inspired by the natural movements of conductors and the desire to bring that level of physical expression to electronic music production.",
     projectDetails: {
-      duration: "8 months",
+      duration: "1 week",
       role: "Full Stack Developer",
-      team: "3 developers, 2 sound designers",
-      stakeholders: ["Musicians", "Music Producers", "Live Performers"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Hardware": ["Arduino", "MPU-6050 Sensors", "Custom PCB"],

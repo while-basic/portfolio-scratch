@@ -7,17 +7,17 @@ export const projectData = {
     useCase: "The animated short serves as both a technical showcase and a storytelling medium, demonstrating various animation techniques and rendering capabilities.",
     inspiration: "The project was inspired by the growing democratization of 3D animation tools and the desire to create emotionally resonant stories through digital animation.",
     projectDetails: {
-      duration: "4 months",
+      duration: "1 day",
       role: "3D Artist & Animator",
-      team: "Solo project with feedback from animation community",
-      stakeholders: ["Animation Studios", "Independent Animators", "Digital Artists"]
+      team: "Solo project",
+      stakeholders: ["None"]
     },
     technologyStack: {
-      "3D Software": ["Blender 3.0+", "Cycles Render Engine"],
-      "Post-Processing": ["Adobe After Effects", "DaVinci Resolve"],
-      "Asset Creation": ["Substance Painter", "Photoshop"],
-      "Sound Design": ["Audacity", "FL Studio"],
-      "Version Control": ["Git LFS"]
+      "3D Software": ["Blender"],
+      "Post-Processing": ["None"],
+      "Asset Creation": ["Blender"],
+      "Sound Design": ["None"],
+      "Version Control": ["Blender"]
     },
     developmentProcess: [
       "Story development and storyboarding",
@@ -26,7 +26,6 @@ export const projectData = {
       "Texture and material creation",
       "Lighting setup",
       "Rendering and post-processing",
-      "Sound design and music composition"
     ],
     features: [
       "Character animation with advanced rigging",
@@ -39,20 +38,13 @@ export const projectData = {
       "Portfolio enhancement",
       "Technical skill development",
       "Storytelling experience",
-      "Industry-standard workflow practice",
-      "Community engagement"
     ],
     challenges: [
       "Optimizing render times",
-      "Managing complex animation sequences",
       "Achieving desired artistic style",
-      "Hardware limitations"
     ],
     futurePlans: [
-      "Extended version development",
-      "Festival submissions",
-      "Tutorial series creation",
-      "Asset marketplace publication"
+      "Practice"
     ],
     conclusion: "This 3D Blender animation project showcases the potential of open-source tools for creating professional-quality animations while developing crucial skills in the 3D animation pipeline."
   }

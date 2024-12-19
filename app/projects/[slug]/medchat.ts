@@ -7,10 +7,10 @@ export const projectData = {
     useCase: "Healthcare professionals can input patient symptoms and medical history, receiving AI-generated diagnostic suggestions and relevant medical literature references.",
     inspiration: "The project was inspired by the need to streamline the diagnostic process and make advanced AI capabilities accessible to medical practitioners.",
     projectDetails: {
-      duration: "none",
+      duration: "1 week",
       role: "Lead Developer",
-      team: "Self",
-      stakeholders: ["none"]
+      team: "1 developert",
+      stakeholders: ["None"]
     },
     technologyStack: {
       "Frontend": ["React.js", "Next.js", "TailwindCSS"],

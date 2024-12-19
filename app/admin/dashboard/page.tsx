@@ -79,10 +79,10 @@ export default function DashboardPage() {
             <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Recent Sales</CardTitle>
-                <CardContent>
-                  <RecentSales />
-                </CardContent>
               </CardHeader>
+              <CardContent>
+                <RecentSales />
+              </CardContent>
             </Card>
           </div>
         </TabsContent>
