@@ -3,7 +3,6 @@
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
 import { Button } from "@/components/ui/button";
 import { 
   DropdownMenu,
@@ -30,20 +29,6 @@ const Editor = dynamic(
 
 export default function AIEditorPage() {
   const router = useRouter();
-  const { user, session, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-black dark:border-white"></div>
-      </div>
-    );
-  }
-
-  if (!session || !user) {
-    router.push('/login');
-    return null;
-  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
@@ -105,7 +90,7 @@ export default function AIEditorPage() {
               </div>
             </div>
           }>
-            <Editor user={user} session={session} />
+            <Editor />
           </Suspense>
         </div>
       </div>

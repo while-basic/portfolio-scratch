@@ -12,14 +12,8 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import CodeBlock from '@tiptap/extension-code-block';
 import { toast } from 'react-hot-toast';
-import { User, Session } from '@supabase/supabase-js';
 
-interface AIEditorProps {
-  user: User;
-  session: Session;
-}
-
-const AIEditor: React.FC<AIEditorProps> = ({ session }) => {
+const AIEditor: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [editorReady, setEditorReady] = useState(false);
   
@@ -58,7 +52,6 @@ const AIEditor: React.FC<AIEditorProps> = ({ session }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
           prompt,

@@ -38,8 +38,6 @@ const skillCategories: SkillCategory[] = [
       "React",
       "Next.js",
       "Node.js",
-      "HTML5",
-      "CSS3/Sass",
       "Tailwind CSS",
     ]
   },
@@ -65,9 +63,11 @@ const skillCategories: SkillCategory[] = [
       "Docker",
       "AWS",
       "Google Cloud",
+      "Vercel",
+      "Railway",
+      "Supabase",
+      "PlanetScale",
       "Azure",
-      "Linux",
-      "Bash Scripting"
     ]
   },
   {

@@ -1,11 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { ModeToggle } from "@/components/mode-toggle"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import type { User } from '@supabase/auth-helpers-nextjs'
 import { MobileNav } from "@/components/mobile-nav"
 import { DashboardDropdown } from "@/components/dashboard-dropdown"
 import {
@@ -20,26 +18,10 @@ import { Button } from "@/components/ui/button"
 const Navbar = () => {
   const pathname = usePathname()
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
-  const supabase = createClientComponentClient()
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-    }
-
-    getUser()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [supabase.auth])
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    setIsAuthenticated(false)
     router.refresh()
   }
 
@@ -64,16 +46,6 @@ const Navbar = () => {
       label: "Experience",
       active: pathname === "/experience",
     },
-    // {
-    //   href: "/gallery",
-    //   label: "Gallery",
-    //   active: pathname === "/gallery",
-    // },
-    // {
-    //   href: "/ai-gallery",
-    //   label: "AI Gallery",
-    //   active: pathname === "/ai-gallery",
-    // },
     {
       href: "/resume",
       label: "Resume",
@@ -135,9 +107,9 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex items-center space-x-4">
-            {user ? (
+            {isAuthenticated ? (
               <>
-                <DashboardDropdown user={user} onSignOut={handleSignOut} />
+                <DashboardDropdown onSignOut={handleSignOut} />
                 <ModeToggle />
               </>
             ) : (

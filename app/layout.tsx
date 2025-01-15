@@ -3,11 +3,11 @@
 import "./globals.css";
 import { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@/components/analytics";
 import { RootLayoutClient } from "@/components/root-layout";
 import { Suspense } from "react";
+import Script from "next/script";
 import Providers from './providers'
 
 export const metadata: Metadata = {
@@ -42,6 +42,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+            `,
+          }}
+        />
+      </head>
       <body>
         <Providers>
           <ThemeProvider
@@ -50,20 +68,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <AuthProvider>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Suspense fallback={<div>Loading...</div>}>
-                  <RootLayoutClient>
-                    {children}
-                  </RootLayoutClient>
-                </Suspense>
-                <Toaster />
-                <Analytics />
-              </Suspense>
-            </AuthProvider>
+            <Suspense fallback={<div>Loading...</div>}>
+              <RootLayoutClient>
+                {children}
+              </RootLayoutClient>
+              <Toaster />
+              <Analytics />
+            </Suspense>
           </ThemeProvider>
         </Providers>
-        <Toaster />
       </body>
     </html>
   );

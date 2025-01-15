@@ -1,7 +1,5 @@
 "use client"
 
-import { useAuth } from "@/lib/auth-context"
-import { ProtectedRoute } from "@/components/auth/protected-route"
 import { WelcomeDialog } from "@/components/welcome-dialog"
 import { withClientBoundary } from "@/components/client-wrapper"
 import Link from "next/link"
@@ -10,16 +8,14 @@ import { Button } from "@/components/ui/button"
 import { Plus, Users } from "lucide-react"
 
 function DashboardPage() {
-  const { user } = useAuth()
-
   return (
-    <ProtectedRoute>
+    <>
       <WelcomeDialog />
       <div className="container py-8">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Welcome back, {user?.email?.split('@')[0]}</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="mt-2 text-muted-foreground">
               Here&apos;s what&apos;s happening with your account
             </p>
@@ -43,7 +39,7 @@ function DashboardPage() {
         {/* Main Dashboard Content */}
         <DashboardGrid />
       </div>
-    </ProtectedRoute>
+    </>
   )
 }
 
